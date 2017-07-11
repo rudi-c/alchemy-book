@@ -1,0 +1,6 @@
+<h2>New document</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: document_path(@conn, :create) %>
+
+<%= link "Back", to: document_path(@conn, :index) %>

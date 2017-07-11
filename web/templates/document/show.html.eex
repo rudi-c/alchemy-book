@@ -1,0 +1,22 @@
+<h2>Show document</h2>
+
+<ul>
+
+  <li>
+    <strong>User:</strong>
+    <%= @document.user_id %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @document.title %>
+  </li>
+
+  <li>
+    <strong>Contents:</strong>
+    <%= @document.contents %>
+  </li>
+
+</ul>
+
+<%= link "Back", to: document_path(@conn, :index) %>

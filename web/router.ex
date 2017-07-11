@@ -15,11 +15,12 @@ defmodule AlchemyBook.Router do
   end
 
   scope "/", AlchemyBook do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser] # use default browser stack
 
     get "/", PageController, :index
     resources "/users", UserController, only: [:new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/documents", DocumentController, only: [:new, :create, :show, :index]
   end
 
   # Other scopes may use custom stacks.

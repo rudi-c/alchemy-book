@@ -2,7 +2,7 @@
   <h2><%= gettext "Welcome to %{name}", name: "The Alchemy Book!" %></h2>
   <p class="lead">A collaborative text editor for alchemists to share their secret formulas!</p>
   <%= if @current_user do %>
-    <p><%= link "Go to recipes", to: page_path(@conn, :index) %></p>
+    <p><%= link "Go to recipes", to: document_path(@conn, :index) %></p>
   <% else %>
     <p>Please <%= link "register", to: user_path(@conn, :new) %> or <%= link "log in", to: session_path(@conn, :new) %></p>
   <% end %>

@@ -1,0 +1,28 @@
+<h2>Listing documents</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Title</th>
+      <th>Contents</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for document <- @documents do %>
+    <tr>
+      <td><%= document.user_id %></td>
+      <td><%= document.title %></td>
+      <td><%= document.contents %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: document_path(@conn, :show, document), class: "btn btn-default btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New document", to: document_path(@conn, :new) %>

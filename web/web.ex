@@ -36,6 +36,7 @@ defmodule AlchemyBook.Web do
 
       import AlchemyBook.Router.Helpers
       import AlchemyBook.Gettext
+      import AlchemyBook.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -58,6 +59,8 @@ defmodule AlchemyBook.Web do
   def router do
     quote do
       use Phoenix.Router
+
+      import AlchemyBook.Auth, only: [authenticate_user: 2]
     end
   end
 
