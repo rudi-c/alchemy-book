@@ -8,7 +8,7 @@ defmodule AlchemyBook.Auth do
 
   def call(conn, repo) do
     user_id = get_session(conn, :user_id)
-    user    = user_id && repo.get(Rumbl.User, user_id)
+    user    = user_id && repo.get(AlchemyBook.User, user_id)
     assign(conn, :current_user, user)
   end
 

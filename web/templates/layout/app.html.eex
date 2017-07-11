@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello AlchemyBook!</title>
+    <title>The Alchemy Book</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -26,7 +26,6 @@
             <li><%= link "Log in", to: session_path(@conn, :new) %></li>
           <% end %>
         </ol>
-        <span class="logo"></span>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
