@@ -15,6 +15,6 @@ defmodule AlchemyBook.Document do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:title, :contents])
-    |> validate_required([:title])
+    #|> validate_required([:title, :contents])
   end
 end

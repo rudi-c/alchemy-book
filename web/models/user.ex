@@ -6,6 +6,7 @@ defmodule AlchemyBook.User do
     field :username, :string
     field :password, :string, virtual: true # not persisted
     field :password_hash, :string
+    has_many :documents, AlchemyBook.Document
 
     timestamps()
   end
