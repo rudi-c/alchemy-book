@@ -1,0 +1,2065 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'react-codemirror' ]
+2 info using npm@3.10.10
+3 info using node@v6.10.3
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData react-codemirror
+8 silly fetchNamedPackageData react-codemirror
+9 silly mapToRegistry name react-codemirror
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'react-codemirror',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   escapedName: 'react-codemirror',
+12 silly mapToRegistry   name: 'react-codemirror',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri https://registry.npmjs.org/react-codemirror
+14 verbose request uri https://registry.npmjs.org/react-codemirror
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 10:16:38 AM
+17 verbose request id 9e8b7da842eb6735
+18 verbose etag W/"595bb720-817e"
+19 verbose lastModified Tue, 04 Jul 2017 15:41:20 GMT
+20 http request GET https://registry.npmjs.org/react-codemirror
+21 http 304 https://registry.npmjs.org/react-codemirror
+22 verbose headers { date: 'Fri, 14 Jul 2017 15:16:40 GMT',
+22 verbose headers   via: '1.1 varnish',
+22 verbose headers   'cache-control': 'max-age=300',
+22 verbose headers   etag: 'W/"595bb720-817e"',
+22 verbose headers   age: '18',
+22 verbose headers   connection: 'keep-alive',
+22 verbose headers   'x-served-by': 'cache-jfk8122-JFK',
+22 verbose headers   'x-cache': 'HIT',
+22 verbose headers   'x-cache-hits': '1',
+22 verbose headers   'x-timer': 'S1500045401.545752,VS0,VE0',
+22 verbose headers   vary: 'Accept-Encoding, Accept' }
+23 silly get cb [ 304,
+23 silly get   { date: 'Fri, 14 Jul 2017 15:16:40 GMT',
+23 silly get     via: '1.1 varnish',
+23 silly get     'cache-control': 'max-age=300',
+23 silly get     etag: 'W/"595bb720-817e"',
+23 silly get     age: '18',
+23 silly get     connection: 'keep-alive',
+23 silly get     'x-served-by': 'cache-jfk8122-JFK',
+23 silly get     'x-cache': 'HIT',
+23 silly get     'x-cache-hits': '1',
+23 silly get     'x-timer': 'S1500045401.545752,VS0,VE0',
+23 silly get     vary: 'Accept-Encoding, Accept' } ]
+24 verbose etag https://registry.npmjs.org/react-codemirror from cache
+25 verbose get saving react-codemirror to /home/rudic/.npm/registry.npmjs.org/react-codemirror/.cache.json
+26 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+27 silly install normalizeTree
+28 silly loadCurrentTree Finishing
+29 silly loadIdealTree Starting
+30 silly install loadIdealTree
+31 silly cloneCurrentTree Starting
+32 silly install cloneCurrentTreeToIdealTree
+33 silly cloneCurrentTree Finishing
+34 silly loadShrinkwrap Starting
+35 silly install loadShrinkwrap
+36 silly loadShrinkwrap Finishing
+37 silly loadAllDepsIntoIdealTree Starting
+38 silly install loadAllDepsIntoIdealTree
+39 silly resolveWithNewModule react-codemirror@1.0.0 checking installable status
+40 silly cache add args [ 'react-codemirror', null ]
+41 verbose cache add spec react-codemirror
+42 silly cache add parsed spec Result {
+42 silly cache add   raw: 'react-codemirror',
+42 silly cache add   scope: null,
+42 silly cache add   escapedName: 'react-codemirror',
+42 silly cache add   name: 'react-codemirror',
+42 silly cache add   rawSpec: '',
+42 silly cache add   spec: 'latest',
+42 silly cache add   type: 'tag' }
+43 silly addNamed react-codemirror@latest
+44 verbose addNamed "latest" is being treated as a dist-tag for react-codemirror
+45 info addNameTag [ 'react-codemirror', 'latest' ]
+46 silly mapToRegistry name react-codemirror
+47 silly mapToRegistry using default registry
+48 silly mapToRegistry registry https://registry.npmjs.org/
+49 silly mapToRegistry data Result {
+49 silly mapToRegistry   raw: 'react-codemirror',
+49 silly mapToRegistry   scope: null,
+49 silly mapToRegistry   escapedName: 'react-codemirror',
+49 silly mapToRegistry   name: 'react-codemirror',
+49 silly mapToRegistry   rawSpec: '',
+49 silly mapToRegistry   spec: 'latest',
+49 silly mapToRegistry   type: 'tag' }
+50 silly mapToRegistry uri https://registry.npmjs.org/react-codemirror
+51 verbose addNameTag registry:https://registry.npmjs.org/react-codemirror not in flight; fetching
+52 verbose get https://registry.npmjs.org/react-codemirror not expired, no request
+53 silly addNameTag next cb for react-codemirror with tag latest
+54 silly addNamed react-codemirror@1.0.0
+55 verbose addNamed "1.0.0" is a plain semver version for react-codemirror
+56 silly cache afterAdd react-codemirror@1.0.0
+57 verbose afterAdd /home/rudic/.npm/react-codemirror/1.0.0/package/package.json not in flight; writing
+58 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+59 verbose afterAdd /home/rudic/.npm/react-codemirror/1.0.0/package/package.json written
+60 silly fetchNamedPackageData codemirror
+61 silly mapToRegistry name codemirror
+62 silly mapToRegistry using default registry
+63 silly mapToRegistry registry https://registry.npmjs.org/
+64 silly mapToRegistry data Result {
+64 silly mapToRegistry   raw: 'codemirror',
+64 silly mapToRegistry   scope: null,
+64 silly mapToRegistry   escapedName: 'codemirror',
+64 silly mapToRegistry   name: 'codemirror',
+64 silly mapToRegistry   rawSpec: '',
+64 silly mapToRegistry   spec: 'latest',
+64 silly mapToRegistry   type: 'tag' }
+65 silly mapToRegistry uri https://registry.npmjs.org/codemirror
+66 silly fetchNamedPackageData lodash.debounce
+67 silly mapToRegistry name lodash.debounce
+68 silly mapToRegistry using default registry
+69 silly mapToRegistry registry https://registry.npmjs.org/
+70 silly mapToRegistry data Result {
+70 silly mapToRegistry   raw: 'lodash.debounce',
+70 silly mapToRegistry   scope: null,
+70 silly mapToRegistry   escapedName: 'lodash.debounce',
+70 silly mapToRegistry   name: 'lodash.debounce',
+70 silly mapToRegistry   rawSpec: '',
+70 silly mapToRegistry   spec: 'latest',
+70 silly mapToRegistry   type: 'tag' }
+71 silly mapToRegistry uri https://registry.npmjs.org/lodash.debounce
+72 silly fetchNamedPackageData lodash.isequal
+73 silly mapToRegistry name lodash.isequal
+74 silly mapToRegistry using default registry
+75 silly mapToRegistry registry https://registry.npmjs.org/
+76 silly mapToRegistry data Result {
+76 silly mapToRegistry   raw: 'lodash.isequal',
+76 silly mapToRegistry   scope: null,
+76 silly mapToRegistry   escapedName: 'lodash.isequal',
+76 silly mapToRegistry   name: 'lodash.isequal',
+76 silly mapToRegistry   rawSpec: '',
+76 silly mapToRegistry   spec: 'latest',
+76 silly mapToRegistry   type: 'tag' }
+77 silly mapToRegistry uri https://registry.npmjs.org/lodash.isequal
+78 verbose request uri https://registry.npmjs.org/lodash.debounce
+79 verbose request no auth needed
+80 info attempt registry request try #1 at 10:16:39 AM
+81 verbose etag W/"59659cd8-931f"
+82 verbose lastModified Wed, 12 Jul 2017 03:51:52 GMT
+83 http request GET https://registry.npmjs.org/lodash.debounce
+84 verbose request uri https://registry.npmjs.org/lodash.isequal
+85 verbose request no auth needed
+86 info attempt registry request try #1 at 10:16:39 AM
+87 verbose etag W/"58b06647-9970"
+88 verbose lastModified Fri, 24 Feb 2017 16:58:47 GMT
+89 http request GET https://registry.npmjs.org/lodash.isequal
+90 verbose request uri https://registry.npmjs.org/codemirror
+91 verbose request no auth needed
+92 info attempt registry request try #1 at 10:16:39 AM
+93 verbose etag W/"5960dd78-cc16d"
+94 verbose lastModified Sat, 08 Jul 2017 13:26:16 GMT
+95 http request GET https://registry.npmjs.org/codemirror
+96 http 304 https://registry.npmjs.org/lodash.debounce
+97 verbose headers { date: 'Fri, 14 Jul 2017 15:16:40 GMT',
+97 verbose headers   via: '1.1 varnish',
+97 verbose headers   'cache-control': 'max-age=300',
+97 verbose headers   etag: 'W/"59659cd8-931f"',
+97 verbose headers   age: '269',
+97 verbose headers   connection: 'keep-alive',
+97 verbose headers   'x-served-by': 'cache-jfk8122-JFK',
+97 verbose headers   'x-cache': 'HIT',
+97 verbose headers   'x-cache-hits': '423',
+97 verbose headers   'x-timer': 'S1500045401.949078,VS0,VE0',
+97 verbose headers   vary: 'Accept-Encoding, Accept' }
+98 silly get cb [ 304,
+98 silly get   { date: 'Fri, 14 Jul 2017 15:16:40 GMT',
+98 silly get     via: '1.1 varnish',
+98 silly get     'cache-control': 'max-age=300',
+98 silly get     etag: 'W/"59659cd8-931f"',
+98 silly get     age: '269',
+98 silly get     connection: 'keep-alive',
+98 silly get     'x-served-by': 'cache-jfk8122-JFK',
+98 silly get     'x-cache': 'HIT',
+98 silly get     'x-cache-hits': '423',
+98 silly get     'x-timer': 'S1500045401.949078,VS0,VE0',
+98 silly get     vary: 'Accept-Encoding, Accept' } ]
+99 verbose etag https://registry.npmjs.org/lodash.debounce from cache
+100 verbose get saving lodash.debounce to /home/rudic/.npm/registry.npmjs.org/lodash.debounce/.cache.json
+101 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+102 silly resolveWithNewModule lodash.debounce@4.0.8 checking installable status
+103 silly cache add args [ 'lodash.debounce@^4.0.8', null ]
+104 verbose cache add spec lodash.debounce@^4.0.8
+105 silly cache add parsed spec Result {
+105 silly cache add   raw: 'lodash.debounce@^4.0.8',
+105 silly cache add   scope: null,
+105 silly cache add   escapedName: 'lodash.debounce',
+105 silly cache add   name: 'lodash.debounce',
+105 silly cache add   rawSpec: '^4.0.8',
+105 silly cache add   spec: '>=4.0.8 <5.0.0',
+105 silly cache add   type: 'range' }
+106 silly addNamed lodash.debounce@>=4.0.8 <5.0.0
+107 verbose addNamed ">=4.0.8 <5.0.0" is a valid semver range for lodash.debounce
+108 silly addNameRange { name: 'lodash.debounce',
+108 silly addNameRange   range: '>=4.0.8 <5.0.0',
+108 silly addNameRange   hasData: false }
+109 silly mapToRegistry name lodash.debounce
+110 silly mapToRegistry using default registry
+111 silly mapToRegistry registry https://registry.npmjs.org/
+112 silly mapToRegistry data Result {
+112 silly mapToRegistry   raw: 'lodash.debounce',
+112 silly mapToRegistry   scope: null,
+112 silly mapToRegistry   escapedName: 'lodash.debounce',
+112 silly mapToRegistry   name: 'lodash.debounce',
+112 silly mapToRegistry   rawSpec: '',
+112 silly mapToRegistry   spec: 'latest',
+112 silly mapToRegistry   type: 'tag' }
+113 silly mapToRegistry uri https://registry.npmjs.org/lodash.debounce
+114 verbose addNameRange registry:https://registry.npmjs.org/lodash.debounce not in flight; fetching
+115 verbose get https://registry.npmjs.org/lodash.debounce not expired, no request
+116 silly addNameRange number 2 { name: 'lodash.debounce',
+116 silly addNameRange   range: '>=4.0.8 <5.0.0',
+116 silly addNameRange   hasData: true }
+117 silly addNameRange versions [ 'lodash.debounce',
+117 silly addNameRange   [ '2.0.0',
+117 silly addNameRange     '2.1.0',
+117 silly addNameRange     '2.2.0',
+117 silly addNameRange     '2.2.1',
+117 silly addNameRange     '2.3.0',
+117 silly addNameRange     '2.4.0',
+117 silly addNameRange     '2.4.1',
+117 silly addNameRange     '3.0.0',
+117 silly addNameRange     '3.0.1',
+117 silly addNameRange     '3.0.2',
+117 silly addNameRange     '3.0.3',
+117 silly addNameRange     '3.1.0',
+117 silly addNameRange     '3.1.1',
+117 silly addNameRange     '4.0.0',
+117 silly addNameRange     '4.0.1',
+117 silly addNameRange     '4.0.2',
+117 silly addNameRange     '4.0.3',
+117 silly addNameRange     '4.0.4',
+117 silly addNameRange     '4.0.5',
+117 silly addNameRange     '4.0.6',
+117 silly addNameRange     '4.0.7',
+117 silly addNameRange     '4.0.8' ] ]
+118 silly addNamed lodash.debounce@4.0.8
+119 verbose addNamed "4.0.8" is a plain semver version for lodash.debounce
+120 http 304 https://registry.npmjs.org/lodash.isequal
+121 verbose headers { date: 'Fri, 14 Jul 2017 15:16:41 GMT',
+121 verbose headers   via: '1.1 varnish',
+121 verbose headers   'cache-control': 'max-age=300',
+121 verbose headers   etag: 'W/"58b06647-9970"',
+121 verbose headers   age: '179',
+121 verbose headers   connection: 'keep-alive',
+121 verbose headers   'x-served-by': 'cache-jfk8150-JFK',
+121 verbose headers   'x-cache': 'HIT',
+121 verbose headers   'x-cache-hits': '1',
+121 verbose headers   'x-timer': 'S1500045401.002719,VS0,VE0',
+121 verbose headers   vary: 'Accept-Encoding' }
+122 silly get cb [ 304,
+122 silly get   { date: 'Fri, 14 Jul 2017 15:16:41 GMT',
+122 silly get     via: '1.1 varnish',
+122 silly get     'cache-control': 'max-age=300',
+122 silly get     etag: 'W/"58b06647-9970"',
+122 silly get     age: '179',
+122 silly get     connection: 'keep-alive',
+122 silly get     'x-served-by': 'cache-jfk8150-JFK',
+122 silly get     'x-cache': 'HIT',
+122 silly get     'x-cache-hits': '1',
+122 silly get     'x-timer': 'S1500045401.002719,VS0,VE0',
+122 silly get     vary: 'Accept-Encoding' } ]
+123 verbose etag https://registry.npmjs.org/lodash.isequal from cache
+124 verbose get saving lodash.isequal to /home/rudic/.npm/registry.npmjs.org/lodash.isequal/.cache.json
+125 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+126 http 304 https://registry.npmjs.org/codemirror
+127 verbose headers { date: 'Fri, 14 Jul 2017 15:16:41 GMT',
+127 verbose headers   via: '1.1 varnish',
+127 verbose headers   'cache-control': 'max-age=300',
+127 verbose headers   etag: 'W/"5960dd78-cc16d"',
+127 verbose headers   age: '18',
+127 verbose headers   connection: 'keep-alive',
+127 verbose headers   'x-served-by': 'cache-jfk8149-JFK',
+127 verbose headers   'x-cache': 'HIT',
+127 verbose headers   'x-cache-hits': '1',
+127 verbose headers   'x-timer': 'S1500045401.004194,VS0,VE1',
+127 verbose headers   vary: 'Accept-Encoding, Accept' }
+128 silly get cb [ 304,
+128 silly get   { date: 'Fri, 14 Jul 2017 15:16:41 GMT',
+128 silly get     via: '1.1 varnish',
+128 silly get     'cache-control': 'max-age=300',
+128 silly get     etag: 'W/"5960dd78-cc16d"',
+128 silly get     age: '18',
+128 silly get     connection: 'keep-alive',
+128 silly get     'x-served-by': 'cache-jfk8149-JFK',
+128 silly get     'x-cache': 'HIT',
+128 silly get     'x-cache-hits': '1',
+128 silly get     'x-timer': 'S1500045401.004194,VS0,VE1',
+128 silly get     vary: 'Accept-Encoding, Accept' } ]
+129 verbose etag https://registry.npmjs.org/codemirror from cache
+130 verbose get saving codemirror to /home/rudic/.npm/registry.npmjs.org/codemirror/.cache.json
+131 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+132 silly cache afterAdd lodash.debounce@4.0.8
+133 verbose afterAdd /home/rudic/.npm/lodash.debounce/4.0.8/package/package.json not in flight; writing
+134 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+135 silly resolveWithNewModule lodash.isequal@4.5.0 checking installable status
+136 silly cache add args [ 'lodash.isequal@^4.5.0', null ]
+137 verbose cache add spec lodash.isequal@^4.5.0
+138 silly cache add parsed spec Result {
+138 silly cache add   raw: 'lodash.isequal@^4.5.0',
+138 silly cache add   scope: null,
+138 silly cache add   escapedName: 'lodash.isequal',
+138 silly cache add   name: 'lodash.isequal',
+138 silly cache add   rawSpec: '^4.5.0',
+138 silly cache add   spec: '>=4.5.0 <5.0.0',
+138 silly cache add   type: 'range' }
+139 silly addNamed lodash.isequal@>=4.5.0 <5.0.0
+140 verbose addNamed ">=4.5.0 <5.0.0" is a valid semver range for lodash.isequal
+141 silly addNameRange { name: 'lodash.isequal',
+141 silly addNameRange   range: '>=4.5.0 <5.0.0',
+141 silly addNameRange   hasData: false }
+142 silly mapToRegistry name lodash.isequal
+143 silly mapToRegistry using default registry
+144 silly mapToRegistry registry https://registry.npmjs.org/
+145 silly mapToRegistry data Result {
+145 silly mapToRegistry   raw: 'lodash.isequal',
+145 silly mapToRegistry   scope: null,
+145 silly mapToRegistry   escapedName: 'lodash.isequal',
+145 silly mapToRegistry   name: 'lodash.isequal',
+145 silly mapToRegistry   rawSpec: '',
+145 silly mapToRegistry   spec: 'latest',
+145 silly mapToRegistry   type: 'tag' }
+146 silly mapToRegistry uri https://registry.npmjs.org/lodash.isequal
+147 verbose addNameRange registry:https://registry.npmjs.org/lodash.isequal not in flight; fetching
+148 silly resolveWithNewModule codemirror@5.27.4 checking installable status
+149 silly cache add args [ 'codemirror@^5.18.2', null ]
+150 verbose cache add spec codemirror@^5.18.2
+151 silly cache add parsed spec Result {
+151 silly cache add   raw: 'codemirror@^5.18.2',
+151 silly cache add   scope: null,
+151 silly cache add   escapedName: 'codemirror',
+151 silly cache add   name: 'codemirror',
+151 silly cache add   rawSpec: '^5.18.2',
+151 silly cache add   spec: '>=5.18.2 <6.0.0',
+151 silly cache add   type: 'range' }
+152 silly addNamed codemirror@>=5.18.2 <6.0.0
+153 verbose addNamed ">=5.18.2 <6.0.0" is a valid semver range for codemirror
+154 silly addNameRange { name: 'codemirror', range: '>=5.18.2 <6.0.0', hasData: false }
+155 silly mapToRegistry name codemirror
+156 silly mapToRegistry using default registry
+157 silly mapToRegistry registry https://registry.npmjs.org/
+158 silly mapToRegistry data Result {
+158 silly mapToRegistry   raw: 'codemirror',
+158 silly mapToRegistry   scope: null,
+158 silly mapToRegistry   escapedName: 'codemirror',
+158 silly mapToRegistry   name: 'codemirror',
+158 silly mapToRegistry   rawSpec: '',
+158 silly mapToRegistry   spec: 'latest',
+158 silly mapToRegistry   type: 'tag' }
+159 silly mapToRegistry uri https://registry.npmjs.org/codemirror
+160 verbose addNameRange registry:https://registry.npmjs.org/codemirror not in flight; fetching
+161 verbose get https://registry.npmjs.org/lodash.isequal not expired, no request
+162 silly addNameRange number 2 { name: 'lodash.isequal',
+162 silly addNameRange   range: '>=4.5.0 <5.0.0',
+162 silly addNameRange   hasData: true }
+163 silly addNameRange versions [ 'lodash.isequal',
+163 silly addNameRange   [ '2.0.0',
+163 silly addNameRange     '2.1.0',
+163 silly addNameRange     '2.2.0',
+163 silly addNameRange     '2.2.1',
+163 silly addNameRange     '2.3.0',
+163 silly addNameRange     '2.4.0',
+163 silly addNameRange     '2.4.1',
+163 silly addNameRange     '3.0.0',
+163 silly addNameRange     '3.0.1',
+163 silly addNameRange     '3.0.2',
+163 silly addNameRange     '3.0.3',
+163 silly addNameRange     '3.0.4',
+163 silly addNameRange     '4.0.0',
+163 silly addNameRange     '4.1.0',
+163 silly addNameRange     '4.1.1',
+163 silly addNameRange     '4.1.2',
+163 silly addNameRange     '4.1.3',
+163 silly addNameRange     '4.1.4',
+163 silly addNameRange     '4.2.0',
+163 silly addNameRange     '4.3.0',
+163 silly addNameRange     '4.3.1',
+163 silly addNameRange     '4.4.0',
+163 silly addNameRange     '4.5.0' ] ]
+164 silly addNamed lodash.isequal@4.5.0
+165 verbose addNamed "4.5.0" is a plain semver version for lodash.isequal
+166 verbose afterAdd /home/rudic/.npm/lodash.debounce/4.0.8/package/package.json written
+167 verbose get https://registry.npmjs.org/codemirror not expired, no request
+168 silly addNameRange number 2 { name: 'codemirror', range: '>=5.18.2 <6.0.0', hasData: true }
+169 silly addNameRange versions [ 'codemirror',
+169 silly addNameRange   [ '2.33.0',
+169 silly addNameRange     '3.14.1',
+169 silly addNameRange     '3.15.0',
+169 silly addNameRange     '3.16.0',
+169 silly addNameRange     '3.17.0',
+169 silly addNameRange     '3.18.0',
+169 silly addNameRange     '3.19.0',
+169 silly addNameRange     '3.20.0',
+169 silly addNameRange     '3.21.0',
+169 silly addNameRange     '3.22.0',
+169 silly addNameRange     '3.23.0',
+169 silly addNameRange     '4.0.3',
+169 silly addNameRange     '3.24.0',
+169 silly addNameRange     '4.1.0',
+169 silly addNameRange     '4.2.0',
+169 silly addNameRange     '4.3.0',
+169 silly addNameRange     '4.4.0',
+169 silly addNameRange     '4.5.0',
+169 silly addNameRange     '4.6.0',
+169 silly addNameRange     '4.7.0',
+169 silly addNameRange     '4.8.0',
+169 silly addNameRange     '4.9.0',
+169 silly addNameRange     '4.10.0',
+169 silly addNameRange     '4.11.0',
+169 silly addNameRange     '4.12.0',
+169 silly addNameRange     '4.13.0',
+169 silly addNameRange     '5.0.0',
+169 silly addNameRange     '5.1.0',
+169 silly addNameRange     '5.2.0',
+169 silly addNameRange     '5.3.0',
+169 silly addNameRange     '5.4.0',
+169 silly addNameRange     '5.5.0',
+169 silly addNameRange     '5.6.0',
+169 silly addNameRange     '5.7.0',
+169 silly addNameRange     '5.8.0',
+169 silly addNameRange     '5.9.0',
+169 silly addNameRange     '5.10.0',
+169 silly addNameRange     '5.11.0',
+169 silly addNameRange     '5.12.0',
+169 silly addNameRange     '5.13.0',
+169 silly addNameRange     '5.13.2',
+169 silly addNameRange     '5.13.4',
+169 silly addNameRange     '5.14.0',
+169 silly addNameRange     '5.14.2',
+169 silly addNameRange     '5.15.0',
+169 silly addNameRange     '5.15.2',
+169 silly addNameRange     '5.16.0',
+169 silly addNameRange     '5.17.0',
+169 silly addNameRange     '5.18.0',
+169 silly addNameRange     '5.18.2',
+169 silly addNameRange     '5.18.3',
+169 silly addNameRange     '5.19.0',
+169 silly addNameRange     '5.20.0',
+169 silly addNameRange     '5.20.2',
+169 silly addNameRange     '5.21.0',
+169 silly addNameRange     '5.22.0',
+169 silly addNameRange     '5.22.2',
+169 silly addNameRange     '5.23.0',
+169 silly addNameRange     '5.24.0',
+169 silly addNameRange     '5.24.2',
+169 silly addNameRange     '5.25.0',
+169 silly addNameRange     '5.25.2',
+169 silly addNameRange     '5.26.0',
+169 silly addNameRange     '5.27.0',
+169 silly addNameRange     '5.27.2',
+169 silly addNameRange     '5.27.4',
+169 silly addNameRange     '3.11.1',
+169 silly addNameRange     '3.12.0',
+169 silly addNameRange     '3.13.0' ] ]
+170 silly addNamed codemirror@5.27.4
+171 verbose addNamed "5.27.4" is a plain semver version for codemirror
+172 silly cache afterAdd lodash.isequal@4.5.0
+173 verbose afterAdd /home/rudic/.npm/lodash.isequal/4.5.0/package/package.json not in flight; writing
+174 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+175 silly cache afterAdd codemirror@5.27.4
+176 verbose afterAdd /home/rudic/.npm/codemirror/5.27.4/package/package.json not in flight; writing
+177 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+178 verbose afterAdd /home/rudic/.npm/lodash.isequal/4.5.0/package/package.json written
+179 verbose afterAdd /home/rudic/.npm/codemirror/5.27.4/package/package.json written
+180 silly fetchNamedPackageData fsevents
+181 silly mapToRegistry name fsevents
+182 silly mapToRegistry using default registry
+183 silly mapToRegistry registry https://registry.npmjs.org/
+184 silly mapToRegistry data Result {
+184 silly mapToRegistry   raw: 'fsevents',
+184 silly mapToRegistry   scope: null,
+184 silly mapToRegistry   escapedName: 'fsevents',
+184 silly mapToRegistry   name: 'fsevents',
+184 silly mapToRegistry   rawSpec: '',
+184 silly mapToRegistry   spec: 'latest',
+184 silly mapToRegistry   type: 'tag' }
+185 silly mapToRegistry uri https://registry.npmjs.org/fsevents
+186 verbose request uri https://registry.npmjs.org/fsevents
+187 verbose request no auth needed
+188 info attempt registry request try #1 at 10:16:40 AM
+189 verbose etag W/"595a4ef8-dcd1"
+190 verbose lastModified Mon, 03 Jul 2017 14:04:40 GMT
+191 http request GET https://registry.npmjs.org/fsevents
+192 http 304 https://registry.npmjs.org/fsevents
+193 verbose headers { date: 'Fri, 14 Jul 2017 15:16:41 GMT',
+193 verbose headers   via: '1.1 varnish',
+193 verbose headers   'cache-control': 'max-age=300',
+193 verbose headers   etag: 'W/"595a4ef8-dcd1"',
+193 verbose headers   age: '172',
+193 verbose headers   connection: 'keep-alive',
+193 verbose headers   'x-served-by': 'cache-jfk8122-JFK',
+193 verbose headers   'x-cache': 'HIT',
+193 verbose headers   'x-cache-hits': '11',
+193 verbose headers   'x-timer': 'S1500045401.486220,VS0,VE0',
+193 verbose headers   vary: 'Accept-Encoding' }
+194 silly get cb [ 304,
+194 silly get   { date: 'Fri, 14 Jul 2017 15:16:41 GMT',
+194 silly get     via: '1.1 varnish',
+194 silly get     'cache-control': 'max-age=300',
+194 silly get     etag: 'W/"595a4ef8-dcd1"',
+194 silly get     age: '172',
+194 silly get     connection: 'keep-alive',
+194 silly get     'x-served-by': 'cache-jfk8122-JFK',
+194 silly get     'x-cache': 'HIT',
+194 silly get     'x-cache-hits': '11',
+194 silly get     'x-timer': 'S1500045401.486220,VS0,VE0',
+194 silly get     vary: 'Accept-Encoding' } ]
+195 verbose etag https://registry.npmjs.org/fsevents from cache
+196 verbose get saving fsevents to /home/rudic/.npm/registry.npmjs.org/fsevents/.cache.json
+197 verbose correctMkdir /home/rudic/.npm correctMkdir not in flight; initializing
+198 silly resolveWithNewModule fsevents@1.1.2 checking installable status
+199 silly loadAllDepsIntoIdealTree Finishing
+200 silly loadIdealTree Finishing
+201 silly currentTree alchemy_book
+201 silly currentTree ├── @types/react-dom@15.5.1
+201 silly currentTree ├── @types/react@15.0.38
+201 silly currentTree ├─┬ acorn-dynamic-import@2.0.2
+201 silly currentTree │ └── acorn@4.0.13
+201 silly currentTree ├── acorn@5.1.1
+201 silly currentTree ├── ajv-keywords@2.1.0
+201 silly currentTree ├── ajv@5.2.2
+201 silly currentTree ├── align-text@0.1.4
+201 silly currentTree ├── alphanum-sort@1.0.2
+201 silly currentTree ├── ansi-regex@2.1.1
+201 silly currentTree ├── ansi-styles@2.2.1
+201 silly currentTree ├── ansicolors@0.2.1
+201 silly currentTree ├── anymatch@1.3.0
+201 silly currentTree ├── argparse@1.0.9
+201 silly currentTree ├── arr-diff@2.0.0
+201 silly currentTree ├── arr-flatten@1.1.0
+201 silly currentTree ├── array-unique@0.2.1
+201 silly currentTree ├── arrify@1.0.1
+201 silly currentTree ├── asap@2.0.6
+201 silly currentTree ├── asn1.js@4.9.1
+201 silly currentTree ├── assert@1.4.1
+201 silly currentTree ├── async-each@1.0.1
+201 silly currentTree ├── async@2.5.0
+201 silly currentTree ├── autoprefixer@6.7.7
+201 silly currentTree ├── babel-code-frame@6.22.0
+201 silly currentTree ├── babel-core@6.25.0
+201 silly currentTree ├── babel-generator@6.25.0
+201 silly currentTree ├── babel-helper-builder-react-jsx@6.24.1
+201 silly currentTree ├── babel-helper-call-delegate@6.24.1
+201 silly currentTree ├── babel-helper-define-map@6.24.1
+201 silly currentTree ├── babel-helper-function-name@6.24.1
+201 silly currentTree ├── babel-helper-get-function-arity@6.24.1
+201 silly currentTree ├── babel-helper-hoist-variables@6.24.1
+201 silly currentTree ├── babel-helper-optimise-call-expression@6.24.1
+201 silly currentTree ├── babel-helper-regex@6.24.1
+201 silly currentTree ├── babel-helper-replace-supers@6.24.1
+201 silly currentTree ├── babel-helpers@6.24.1
+201 silly currentTree ├── babel-loader@7.1.1
+201 silly currentTree ├── babel-messages@6.23.0
+201 silly currentTree ├── babel-plugin-check-es2015-constants@6.22.0
+201 silly currentTree ├── babel-plugin-syntax-flow@6.18.0
+201 silly currentTree ├── babel-plugin-syntax-jsx@6.18.0
+201 silly currentTree ├── babel-plugin-transform-es2015-arrow-functions@6.22.0
+201 silly currentTree ├── babel-plugin-transform-es2015-block-scoped-functions@6.22.0
+201 silly currentTree ├── babel-plugin-transform-es2015-block-scoping@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-classes@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-computed-properties@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-destructuring@6.23.0
+201 silly currentTree ├── babel-plugin-transform-es2015-duplicate-keys@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-for-of@6.23.0
+201 silly currentTree ├── babel-plugin-transform-es2015-function-name@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-literals@6.22.0
+201 silly currentTree ├── babel-plugin-transform-es2015-modules-amd@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-modules-commonjs@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-modules-systemjs@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-modules-umd@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-object-super@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-parameters@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-shorthand-properties@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-spread@6.22.0
+201 silly currentTree ├── babel-plugin-transform-es2015-sticky-regex@6.24.1
+201 silly currentTree ├── babel-plugin-transform-es2015-template-literals@6.22.0
+201 silly currentTree ├── babel-plugin-transform-es2015-typeof-symbol@6.23.0
+201 silly currentTree ├── babel-plugin-transform-es2015-unicode-regex@6.24.1
+201 silly currentTree ├── babel-plugin-transform-flow-strip-types@6.22.0
+201 silly currentTree ├── babel-plugin-transform-react-display-name@6.25.0
+201 silly currentTree ├── babel-plugin-transform-react-jsx-self@6.22.0
+201 silly currentTree ├── babel-plugin-transform-react-jsx-source@6.22.0
+201 silly currentTree ├── babel-plugin-transform-react-jsx@6.24.1
+201 silly currentTree ├── babel-plugin-transform-regenerator@6.24.1
+201 silly currentTree ├── babel-plugin-transform-strict-mode@6.24.1
+201 silly currentTree ├── babel-preset-es2015@6.24.1
+201 silly currentTree ├── babel-preset-flow@6.23.0
+201 silly currentTree ├── babel-preset-react@6.24.1
+201 silly currentTree ├── babel-register@6.24.1
+201 silly currentTree ├── babel-runtime@6.23.0
+201 silly currentTree ├── babel-template@6.25.0
+201 silly currentTree ├── babel-traverse@6.25.0
+201 silly currentTree ├── babel-types@6.25.0
+201 silly currentTree ├── babylon@6.17.4
+201 silly currentTree ├── balanced-match@1.0.0
+201 silly currentTree ├── base64-js@1.2.1
+201 silly currentTree ├── big.js@3.1.3
+201 silly currentTree ├── binary-extensions@1.8.0
+201 silly currentTree ├── bluebird@2.11.0
+201 silly currentTree ├── bn.js@4.11.7
+201 silly currentTree ├── brace-expansion@1.1.8
+201 silly currentTree ├── braces@1.8.5
+201 silly currentTree ├── brorand@1.1.0
+201 silly currentTree ├── browserify-aes@1.0.6
+201 silly currentTree ├── browserify-cipher@1.0.0
+201 silly currentTree ├── browserify-des@1.0.0
+201 silly currentTree ├── browserify-rsa@4.0.1
+201 silly currentTree ├── browserify-sign@4.0.4
+201 silly currentTree ├── browserify-zlib@0.1.4
+201 silly currentTree ├── browserslist@1.7.7
+201 silly currentTree ├── buffer-xor@1.0.3
+201 silly currentTree ├── buffer@4.9.1
+201 silly currentTree ├── builtin-modules@1.1.1
+201 silly currentTree ├── builtin-status-codes@3.0.0
+201 silly currentTree ├── camelcase@1.2.1
+201 silly currentTree ├── caniuse-api@1.6.1
+201 silly currentTree ├── caniuse-db@1.0.30000700
+201 silly currentTree ├── cardinal@1.0.0
+201 silly currentTree ├── center-align@0.1.3
+201 silly currentTree ├─┬ chalk@1.1.3
+201 silly currentTree │ └── supports-color@2.0.0
+201 silly currentTree ├── chokidar@1.7.0
+201 silly currentTree ├── cipher-base@1.0.4
+201 silly currentTree ├── clap@1.2.0
+201 silly currentTree ├── classnames@2.2.5
+201 silly currentTree ├─┬ cli-table@0.3.1
+201 silly currentTree │ └── colors@1.0.3
+201 silly currentTree ├── cli-usage@0.1.4
+201 silly currentTree ├── cliui@2.1.0
+201 silly currentTree ├── clone@1.0.2
+201 silly currentTree ├── co@4.6.0
+201 silly currentTree ├── coa@1.0.4
+201 silly currentTree ├── code-point-at@1.1.0
+201 silly currentTree ├── color-convert@1.9.0
+201 silly currentTree ├── color-name@1.1.2
+201 silly currentTree ├── color-string@0.3.0
+201 silly currentTree ├── color@0.11.4
+201 silly currentTree ├── colormin@1.1.2
+201 silly currentTree ├── colors@1.1.2
+201 silly currentTree ├── commondir@1.0.1
+201 silly currentTree ├── concat-map@0.0.1
+201 silly currentTree ├── console-browserify@1.1.0
+201 silly currentTree ├── constants-browserify@1.0.0
+201 silly currentTree ├── convert-source-map@1.5.0
+201 silly currentTree ├─┬ copy-webpack-plugin@4.0.1
+201 silly currentTree │ ├── is-extglob@2.1.1
+201 silly currentTree │ ├── is-glob@3.1.0
+201 silly currentTree │ └── loader-utils@0.2.17
+201 silly currentTree ├── core-js@2.4.1
+201 silly currentTree ├── core-util-is@1.0.2
+201 silly currentTree ├── create-ecdh@4.0.0
+201 silly currentTree ├── create-hash@1.1.3
+201 silly currentTree ├── create-hmac@1.1.6
+201 silly currentTree ├── create-react-class@15.6.0
+201 silly currentTree ├── crypto-browserify@3.11.1
+201 silly currentTree ├── css-color-names@0.0.4
+201 silly currentTree ├─┬ css-loader@0.28.4
+201 silly currentTree │ └── source-list-map@0.1.8
+201 silly currentTree ├─┬ css-selector-tokenizer@0.7.0
+201 silly currentTree │ └── regexpu-core@1.0.0
+201 silly currentTree ├── cssesc@0.1.0
+201 silly currentTree ├── cssnano@3.10.0
+201 silly currentTree ├── csso@2.3.2
+201 silly currentTree ├── d@1.0.0
+201 silly currentTree ├── date-now@0.1.4
+201 silly currentTree ├── debug@2.6.8
+201 silly currentTree ├── decamelize@1.2.0
+201 silly currentTree ├── defined@1.0.0
+201 silly currentTree ├── des.js@1.0.0
+201 silly currentTree ├── detect-indent@4.0.0
+201 silly currentTree ├── diffie-hellman@5.0.2
+201 silly currentTree ├── domain-browser@1.1.7
+201 silly currentTree ├── electron-to-chromium@1.3.15
+201 silly currentTree ├── elliptic@6.4.0
+201 silly currentTree ├── emojis-list@2.1.0
+201 silly currentTree ├── encoding@0.1.12
+201 silly currentTree ├── enhanced-resolve@3.3.0
+201 silly currentTree ├── errno@0.1.4
+201 silly currentTree ├── error-ex@1.3.1
+201 silly currentTree ├── es5-ext@0.10.24
+201 silly currentTree ├── es6-iterator@2.0.1
+201 silly currentTree ├── es6-map@0.1.5
+201 silly currentTree ├── es6-set@0.1.5
+201 silly currentTree ├── es6-symbol@3.1.1
+201 silly currentTree ├── es6-weak-map@2.0.2
+201 silly currentTree ├── escape-string-regexp@1.0.5
+201 silly currentTree ├── escope@3.6.0
+201 silly currentTree ├── esprima@2.7.3
+201 silly currentTree ├── esrecurse@4.2.0
+201 silly currentTree ├── estraverse@4.2.0
+201 silly currentTree ├── esutils@2.0.2
+201 silly currentTree ├── event-emitter@0.3.5
+201 silly currentTree ├── events@1.1.1
+201 silly currentTree ├── evp_bytestokey@1.0.0
+201 silly currentTree ├── expand-brackets@0.1.5
+201 silly currentTree ├── expand-range@1.8.2
+201 silly currentTree ├── extglob@0.3.2
+201 silly currentTree ├── extract-text-webpack-plugin@3.0.0
+201 silly currentTree ├── fast-deep-equal@1.0.0
+201 silly currentTree ├── fastparse@1.1.1
+201 silly currentTree ├─┬ fbjs@0.8.12
+201 silly currentTree │ └── core-js@1.2.7
+201 silly currentTree ├── file-loader@0.11.2
+201 silly currentTree ├── filename-regex@2.0.1
+201 silly currentTree ├── fill-range@2.2.3
+201 silly currentTree ├── find-cache-dir@1.0.0
+201 silly currentTree ├── find-up@1.1.2
+201 silly currentTree ├── flatten@1.0.2
+201 silly currentTree ├── for-in@1.0.2
+201 silly currentTree ├── for-own@0.1.5
+201 silly currentTree ├── fs-extra@0.26.7
+201 silly currentTree ├── fs.realpath@1.0.0
+201 silly currentTree ├── function-bind@1.1.0
+201 silly currentTree ├── get-caller-file@1.0.2
+201 silly currentTree ├── glob-base@0.3.0
+201 silly currentTree ├── glob-parent@2.0.0
+201 silly currentTree ├── glob@6.0.4
+201 silly currentTree ├── globals@9.18.0
+201 silly currentTree ├── graceful-fs@4.1.11
+201 silly currentTree ├── growly@1.3.0
+201 silly currentTree ├── has-ansi@2.0.0
+201 silly currentTree ├── has-flag@1.0.0
+201 silly currentTree ├── has@1.0.1
+201 silly currentTree ├── hash-base@2.0.2
+201 silly currentTree ├── hash.js@1.1.3
+201 silly currentTree ├── hmac-drbg@1.0.1
+201 silly currentTree ├── home-or-tmp@2.0.0
+201 silly currentTree ├── hosted-git-info@2.5.0
+201 silly currentTree ├── html-comment-regex@1.1.1
+201 silly currentTree ├── https-browserify@0.0.1
+201 silly currentTree ├── iconv-lite@0.4.18
+201 silly currentTree ├── icss-replace-symbols@1.1.0
+201 silly currentTree ├─┬ icss-utils@2.1.0
+201 silly currentTree │ ├── ansi-styles@3.1.0
+201 silly currentTree │ ├── chalk@2.0.1
+201 silly currentTree │ ├── has-flag@2.0.0
+201 silly currentTree │ ├── postcss@6.0.6
+201 silly currentTree │ └── supports-color@4.2.0
+201 silly currentTree ├── ieee754@1.1.8
+201 silly currentTree ├── indexes-of@1.0.1
+201 silly currentTree ├── indexof@0.0.1
+201 silly currentTree ├── inflight@1.0.6
+201 silly currentTree ├── inherits@2.0.3
+201 silly currentTree ├── interpret@1.0.3
+201 silly currentTree ├── invariant@2.2.2
+201 silly currentTree ├── invert-kv@1.0.0
+201 silly currentTree ├── is-absolute-url@2.1.0
+201 silly currentTree ├── is-arrayish@0.2.1
+201 silly currentTree ├── is-binary-path@1.0.1
+201 silly currentTree ├── is-buffer@1.1.5
+201 silly currentTree ├── is-builtin-module@1.0.0
+201 silly currentTree ├── is-dotfile@1.0.3
+201 silly currentTree ├── is-equal-shallow@0.1.3
+201 silly currentTree ├── is-extendable@0.1.1
+201 silly currentTree ├── is-extglob@1.0.0
+201 silly currentTree ├── is-finite@1.0.2
+201 silly currentTree ├── is-fullwidth-code-point@1.0.0
+201 silly currentTree ├── is-glob@2.0.1
+201 silly currentTree ├── is-number@2.1.0
+201 silly currentTree ├── is-plain-obj@1.1.0
+201 silly currentTree ├── is-posix-bracket@0.1.1
+201 silly currentTree ├── is-primitive@2.0.0
+201 silly currentTree ├── is-stream@1.1.0
+201 silly currentTree ├── is-svg@2.1.0
+201 silly currentTree ├── is-utf8@0.2.1
+201 silly currentTree ├── isarray@1.0.0
+201 silly currentTree ├── isexe@2.0.0
+201 silly currentTree ├── isobject@2.1.0
+201 silly currentTree ├── isomorphic-fetch@2.2.1
+201 silly currentTree ├── js-base64@2.1.9
+201 silly currentTree ├── js-tokens@3.0.2
+201 silly currentTree ├── js-yaml@3.7.0
+201 silly currentTree ├── jsesc@1.3.0
+201 silly currentTree ├── json-loader@0.5.4
+201 silly currentTree ├── json-schema-traverse@0.3.1
+201 silly currentTree ├── json-stable-stringify@1.0.1
+201 silly currentTree ├── json5@0.5.1
+201 silly currentTree ├── jsonfile@2.4.0
+201 silly currentTree ├── jsonify@0.0.0
+201 silly currentTree ├── kind-of@3.2.2
+201 silly currentTree ├── klaw@1.3.1
+201 silly currentTree ├── lazy-cache@1.0.4
+201 silly currentTree ├── lcid@1.0.0
+201 silly currentTree ├── load-json-file@1.1.0
+201 silly currentTree ├── loader-runner@2.3.0
+201 silly currentTree ├── loader-utils@1.1.0
+201 silly currentTree ├─┬ locate-path@2.0.0
+201 silly currentTree │ └── path-exists@3.0.0
+201 silly currentTree ├── lodash._arraycopy@3.0.0
+201 silly currentTree ├── lodash._arrayeach@3.0.0
+201 silly currentTree ├── lodash._baseassign@3.2.0
+201 silly currentTree ├── lodash._baseclone@3.3.0
+201 silly currentTree ├── lodash._basecopy@3.0.1
+201 silly currentTree ├── lodash._basefor@3.0.3
+201 silly currentTree ├── lodash._bindcallback@3.0.1
+201 silly currentTree ├── lodash._getnative@3.9.1
+201 silly currentTree ├── lodash.assign@4.2.0
+201 silly currentTree ├── lodash.camelcase@4.3.0
+201 silly currentTree ├── lodash.clonedeep@3.0.2
+201 silly currentTree ├── lodash.isarguments@3.1.0
+201 silly currentTree ├── lodash.isarray@3.0.4
+201 silly currentTree ├── lodash.keys@3.1.2
+201 silly currentTree ├── lodash.memoize@4.1.2
+201 silly currentTree ├── lodash.toarray@4.4.0
+201 silly currentTree ├── lodash.uniq@4.5.0
+201 silly currentTree ├── lodash@4.17.4
+201 silly currentTree ├── longest@1.0.1
+201 silly currentTree ├── loose-envify@1.3.1
+201 silly currentTree ├── macaddress@0.2.8
+201 silly currentTree ├── make-dir@1.0.0
+201 silly currentTree ├── marked-terminal@1.7.0
+201 silly currentTree ├── marked@0.3.6
+201 silly currentTree ├── math-expression-evaluator@1.2.17
+201 silly currentTree ├── memory-fs@0.4.1
+201 silly currentTree ├── micromatch@2.3.11
+201 silly currentTree ├── miller-rabin@4.0.0
+201 silly currentTree ├── mime@1.3.6
+201 silly currentTree ├── minimalistic-assert@1.0.0
+201 silly currentTree ├── minimalistic-crypto-utils@1.0.1
+201 silly currentTree ├── minimatch@3.0.4
+201 silly currentTree ├── minimist@0.0.8
+201 silly currentTree ├── mkdirp@0.5.1
+201 silly currentTree ├── ms@2.0.0
+201 silly currentTree ├── node-dir@0.1.17
+201 silly currentTree ├── node-emoji@1.7.0
+201 silly currentTree ├── node-fetch@1.7.1
+201 silly currentTree ├─┬ node-libs-browser@2.0.0
+201 silly currentTree │ └── string_decoder@0.10.31
+201 silly currentTree ├─┬ node-notifier@4.6.1
+201 silly currentTree │ └── minimist@1.2.0
+201 silly currentTree ├── normalize-package-data@2.4.0
+201 silly currentTree ├── normalize-path@2.1.1
+201 silly currentTree ├── normalize-range@0.1.2
+201 silly currentTree ├── normalize-url@1.9.1
+201 silly currentTree ├── num2fraction@1.2.2
+201 silly currentTree ├── number-is-nan@1.0.1
+201 silly currentTree ├── object-assign@4.1.1
+201 silly currentTree ├── object.omit@2.0.1
+201 silly currentTree ├── once@1.4.0
+201 silly currentTree ├── os-browserify@0.2.1
+201 silly currentTree ├── os-homedir@1.0.2
+201 silly currentTree ├── os-locale@1.4.0
+201 silly currentTree ├── os-tmpdir@1.0.2
+201 silly currentTree ├── p-limit@1.1.0
+201 silly currentTree ├── p-locate@2.0.0
+201 silly currentTree ├── pako@0.2.9
+201 silly currentTree ├── parse-asn1@5.1.0
+201 silly currentTree ├── parse-glob@3.0.4
+201 silly currentTree ├── parse-json@2.2.0
+201 silly currentTree ├── path-browserify@0.0.0
+201 silly currentTree ├── path-exists@2.1.0
+201 silly currentTree ├── path-is-absolute@1.0.1
+201 silly currentTree ├── path-type@1.1.0
+201 silly currentTree ├── pbkdf2@3.0.12
+201 silly currentTree ├── phoenix_html@2.9.3
+201 silly currentTree ├── phoenix@1.2.4
+201 silly currentTree ├── pify@2.3.0
+201 silly currentTree ├── pinkie-promise@2.0.1
+201 silly currentTree ├── pinkie@2.0.4
+201 silly currentTree ├─┬ pkg-dir@2.0.0
+201 silly currentTree │ └── find-up@2.1.0
+201 silly currentTree ├── postcss-calc@5.3.1
+201 silly currentTree ├── postcss-colormin@2.2.2
+201 silly currentTree ├── postcss-convert-values@2.6.1
+201 silly currentTree ├── postcss-discard-comments@2.0.4
+201 silly currentTree ├── postcss-discard-duplicates@2.1.0
+201 silly currentTree ├── postcss-discard-empty@2.1.0
+201 silly currentTree ├── postcss-discard-overridden@0.1.1
+201 silly currentTree ├── postcss-discard-unused@2.2.3
+201 silly currentTree ├── postcss-filter-plugins@2.0.2
+201 silly currentTree ├── postcss-merge-idents@2.1.7
+201 silly currentTree ├── postcss-merge-longhand@2.0.2
+201 silly currentTree ├── postcss-merge-rules@2.1.2
+201 silly currentTree ├── postcss-message-helpers@2.0.0
+201 silly currentTree ├── postcss-minify-font-values@1.0.5
+201 silly currentTree ├── postcss-minify-gradients@1.0.5
+201 silly currentTree ├── postcss-minify-params@1.2.2
+201 silly currentTree ├── postcss-minify-selectors@2.1.1
+201 silly currentTree ├─┬ postcss-modules-extract-imports@1.1.0
+201 silly currentTree │ ├── ansi-styles@3.1.0
+201 silly currentTree │ ├── chalk@2.0.1
+201 silly currentTree │ ├── has-flag@2.0.0
+201 silly currentTree │ ├── postcss@6.0.6
+201 silly currentTree │ └── supports-color@4.2.0
+201 silly currentTree ├─┬ postcss-modules-local-by-default@1.2.0
+201 silly currentTree │ ├── ansi-styles@3.1.0
+201 silly currentTree │ ├── chalk@2.0.1
+201 silly currentTree │ ├── has-flag@2.0.0
+201 silly currentTree │ ├── postcss@6.0.6
+201 silly currentTree │ └── supports-color@4.2.0
+201 silly currentTree ├─┬ postcss-modules-scope@1.1.0
+201 silly currentTree │ ├── ansi-styles@3.1.0
+201 silly currentTree │ ├── chalk@2.0.1
+201 silly currentTree │ ├── has-flag@2.0.0
+201 silly currentTree │ ├── postcss@6.0.6
+201 silly currentTree │ └── supports-color@4.2.0
+201 silly currentTree ├─┬ postcss-modules-values@1.3.0
+201 silly currentTree │ ├── ansi-styles@3.1.0
+201 silly currentTree │ ├── chalk@2.0.1
+201 silly currentTree │ ├── has-flag@2.0.0
+201 silly currentTree │ ├── postcss@6.0.6
+201 silly currentTree │ └── supports-color@4.2.0
+201 silly currentTree ├── postcss-normalize-charset@1.1.1
+201 silly currentTree ├── postcss-normalize-url@3.0.8
+201 silly currentTree ├── postcss-ordered-values@2.2.3
+201 silly currentTree ├── postcss-reduce-idents@2.4.0
+201 silly currentTree ├── postcss-reduce-initial@1.0.1
+201 silly currentTree ├── postcss-reduce-transforms@1.0.4
+201 silly currentTree ├── postcss-selector-parser@2.2.3
+201 silly currentTree ├── postcss-svgo@2.1.6
+201 silly currentTree ├── postcss-unique-selectors@2.0.2
+201 silly currentTree ├── postcss-value-parser@3.3.0
+201 silly currentTree ├── postcss-zindex@2.2.0
+201 silly currentTree ├── postcss@5.2.17
+201 silly currentTree ├── prepend-http@1.0.4
+201 silly currentTree ├── preserve@0.2.0
+201 silly currentTree ├── private@0.1.7
+201 silly currentTree ├── process-nextick-args@1.0.7
+201 silly currentTree ├── process@0.11.10
+201 silly currentTree ├── promise@7.3.1
+201 silly currentTree ├── prop-types@15.5.10
+201 silly currentTree ├── prr@0.0.0
+201 silly currentTree ├── public-encrypt@4.0.0
+201 silly currentTree ├── punycode@1.4.1
+201 silly currentTree ├── q@1.5.0
+201 silly currentTree ├── query-string@4.3.4
+201 silly currentTree ├── querystring-es3@0.2.1
+201 silly currentTree ├── querystring@0.2.0
+201 silly currentTree ├─┬ randomatic@1.1.7
+201 silly currentTree │ ├─┬ is-number@3.0.0
+201 silly currentTree │ │ └── kind-of@3.2.2
+201 silly currentTree │ └── kind-of@4.0.0
+201 silly currentTree ├── randombytes@2.0.5
+201 silly currentTree ├── react-dom@15.6.1
+201 silly currentTree ├── react@15.6.1
+201 silly currentTree ├── read-pkg-up@1.0.1
+201 silly currentTree ├── read-pkg@1.1.0
+201 silly currentTree ├── readable-stream@2.3.3
+201 silly currentTree ├── readdirp@2.1.0
+201 silly currentTree ├─┬ redeyed@1.0.1
+201 silly currentTree │ └── esprima@3.0.0
+201 silly currentTree ├─┬ reduce-css-calc@1.3.0
+201 silly currentTree │ └── balanced-match@0.4.2
+201 silly currentTree ├─┬ reduce-function-call@1.0.2
+201 silly currentTree │ └── balanced-match@0.4.2
+201 silly currentTree ├── regenerate@1.3.2
+201 silly currentTree ├── regenerator-runtime@0.10.5
+201 silly currentTree ├── regenerator-transform@0.9.11
+201 silly currentTree ├── regex-cache@0.4.3
+201 silly currentTree ├── regexpu-core@2.0.0
+201 silly currentTree ├── regjsgen@0.2.0
+201 silly currentTree ├─┬ regjsparser@0.1.5
+201 silly currentTree │ └── jsesc@0.5.0
+201 silly currentTree ├── remove-trailing-separator@1.0.2
+201 silly currentTree ├── repeat-element@1.1.2
+201 silly currentTree ├── repeat-string@1.6.1
+201 silly currentTree ├── repeating@2.0.1
+201 silly currentTree ├── require-directory@2.1.1
+201 silly currentTree ├── require-main-filename@1.0.1
+201 silly currentTree ├── right-align@0.1.3
+201 silly currentTree ├─┬ rimraf@2.6.1
+201 silly currentTree │ └── glob@7.1.2
+201 silly currentTree ├── ripemd160@2.0.1
+201 silly currentTree ├── safe-buffer@5.1.1
+201 silly currentTree ├── sax@1.2.4
+201 silly currentTree ├── schema-utils@0.3.0
+201 silly currentTree ├── semver@5.3.0
+201 silly currentTree ├── set-blocking@2.0.0
+201 silly currentTree ├── set-immediate-shim@1.0.1
+201 silly currentTree ├── setimmediate@1.0.5
+201 silly currentTree ├── sha.js@2.4.8
+201 silly currentTree ├── shellwords@0.1.0
+201 silly currentTree ├── slash@1.0.0
+201 silly currentTree ├── sort-keys@1.1.2
+201 silly currentTree ├── source-list-map@2.0.0
+201 silly currentTree ├── source-map-support@0.4.15
+201 silly currentTree ├── source-map@0.5.6
+201 silly currentTree ├── spdx-correct@1.0.2
+201 silly currentTree ├── spdx-expression-parse@1.0.4
+201 silly currentTree ├── spdx-license-ids@1.2.2
+201 silly currentTree ├── sprintf-js@1.0.3
+201 silly currentTree ├── stream-browserify@2.0.1
+201 silly currentTree ├── stream-http@2.7.2
+201 silly currentTree ├── strict-uri-encode@1.1.0
+201 silly currentTree ├── string_decoder@1.0.3
+201 silly currentTree ├── string-width@1.0.2
+201 silly currentTree ├── string.prototype.codepointat@0.2.0
+201 silly currentTree ├── strip-ansi@3.0.1
+201 silly currentTree ├── strip-bom@2.0.0
+201 silly currentTree ├── style-loader@0.18.2
+201 silly currentTree ├── supports-color@3.2.3
+201 silly currentTree ├── svgo@0.7.2
+201 silly currentTree ├── tapable@0.2.6
+201 silly currentTree ├── timers-browserify@2.0.2
+201 silly currentTree ├── to-arraybuffer@1.0.1
+201 silly currentTree ├── to-fast-properties@1.0.3
+201 silly currentTree ├── trim-right@1.0.1
+201 silly currentTree ├── ts-loader@2.2.2
+201 silly currentTree ├── tty-browserify@0.0.0
+201 silly currentTree ├── typescript@2.4.1
+201 silly currentTree ├── ua-parser-js@0.7.13
+201 silly currentTree ├─┬ uglify-js@2.8.29
+201 silly currentTree │ └── yargs@3.10.0
+201 silly currentTree ├── uglify-to-browserify@1.0.2
+201 silly currentTree ├── uglifyjs-webpack-plugin@0.4.6
+201 silly currentTree ├── uniq@1.0.1
+201 silly currentTree ├── uniqid@4.1.1
+201 silly currentTree ├── uniqs@2.0.0
+201 silly currentTree ├── url-loader@0.5.9
+201 silly currentTree ├─┬ url@0.11.0
+201 silly currentTree │ └── punycode@1.3.2
+201 silly currentTree ├── util-deprecate@1.0.2
+201 silly currentTree ├─┬ util@0.10.3
+201 silly currentTree │ └── inherits@2.0.1
+201 silly currentTree ├── validate-npm-package-license@3.0.1
+201 silly currentTree ├── vendors@1.0.1
+201 silly currentTree ├── vm-browserify@0.0.4
+201 silly currentTree ├── watchpack@1.3.1
+201 silly currentTree ├── webpack-notifier@1.5.0
+201 silly currentTree ├── webpack-sources@1.0.1
+201 silly currentTree ├── webpack@3.2.0
+201 silly currentTree ├── whatwg-fetch@2.0.3
+201 silly currentTree ├── whet.extend@0.9.9
+201 silly currentTree ├── which-module@1.0.0
+201 silly currentTree ├── which@1.2.14
+201 silly currentTree ├── window-size@0.1.0
+201 silly currentTree ├── wordwrap@0.0.2
+201 silly currentTree ├── wrap-ansi@2.1.0
+201 silly currentTree ├── wrappy@1.0.2
+201 silly currentTree ├── xtend@4.0.1
+201 silly currentTree ├── y18n@3.2.1
+201 silly currentTree ├─┬ yargs-parser@4.2.1
+201 silly currentTree │ └── camelcase@3.0.0
+201 silly currentTree └─┬ yargs@6.6.0
+201 silly currentTree   ├── camelcase@3.0.0
+201 silly currentTree   └── cliui@3.2.0
+202 silly idealTree alchemy_book
+202 silly idealTree ├── @types/react-dom@15.5.1
+202 silly idealTree ├── @types/react@15.0.38
+202 silly idealTree ├─┬ acorn-dynamic-import@2.0.2
+202 silly idealTree │ └── acorn@4.0.13
+202 silly idealTree ├── acorn@5.1.1
+202 silly idealTree ├── ajv-keywords@2.1.0
+202 silly idealTree ├── ajv@5.2.2
+202 silly idealTree ├── align-text@0.1.4
+202 silly idealTree ├── alphanum-sort@1.0.2
+202 silly idealTree ├── ansi-regex@2.1.1
+202 silly idealTree ├── ansi-styles@2.2.1
+202 silly idealTree ├── ansicolors@0.2.1
+202 silly idealTree ├── anymatch@1.3.0
+202 silly idealTree ├── argparse@1.0.9
+202 silly idealTree ├── arr-diff@2.0.0
+202 silly idealTree ├── arr-flatten@1.1.0
+202 silly idealTree ├── array-unique@0.2.1
+202 silly idealTree ├── arrify@1.0.1
+202 silly idealTree ├── asap@2.0.6
+202 silly idealTree ├── asn1.js@4.9.1
+202 silly idealTree ├── assert@1.4.1
+202 silly idealTree ├── async-each@1.0.1
+202 silly idealTree ├── async@2.5.0
+202 silly idealTree ├── autoprefixer@6.7.7
+202 silly idealTree ├── babel-code-frame@6.22.0
+202 silly idealTree ├── babel-core@6.25.0
+202 silly idealTree ├── babel-generator@6.25.0
+202 silly idealTree ├── babel-helper-builder-react-jsx@6.24.1
+202 silly idealTree ├── babel-helper-call-delegate@6.24.1
+202 silly idealTree ├── babel-helper-define-map@6.24.1
+202 silly idealTree ├── babel-helper-function-name@6.24.1
+202 silly idealTree ├── babel-helper-get-function-arity@6.24.1
+202 silly idealTree ├── babel-helper-hoist-variables@6.24.1
+202 silly idealTree ├── babel-helper-optimise-call-expression@6.24.1
+202 silly idealTree ├── babel-helper-regex@6.24.1
+202 silly idealTree ├── babel-helper-replace-supers@6.24.1
+202 silly idealTree ├── babel-helpers@6.24.1
+202 silly idealTree ├── babel-loader@7.1.1
+202 silly idealTree ├── babel-messages@6.23.0
+202 silly idealTree ├── babel-plugin-check-es2015-constants@6.22.0
+202 silly idealTree ├── babel-plugin-syntax-flow@6.18.0
+202 silly idealTree ├── babel-plugin-syntax-jsx@6.18.0
+202 silly idealTree ├── babel-plugin-transform-es2015-arrow-functions@6.22.0
+202 silly idealTree ├── babel-plugin-transform-es2015-block-scoped-functions@6.22.0
+202 silly idealTree ├── babel-plugin-transform-es2015-block-scoping@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-classes@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-computed-properties@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-destructuring@6.23.0
+202 silly idealTree ├── babel-plugin-transform-es2015-duplicate-keys@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-for-of@6.23.0
+202 silly idealTree ├── babel-plugin-transform-es2015-function-name@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-literals@6.22.0
+202 silly idealTree ├── babel-plugin-transform-es2015-modules-amd@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-modules-commonjs@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-modules-systemjs@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-modules-umd@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-object-super@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-parameters@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-shorthand-properties@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-spread@6.22.0
+202 silly idealTree ├── babel-plugin-transform-es2015-sticky-regex@6.24.1
+202 silly idealTree ├── babel-plugin-transform-es2015-template-literals@6.22.0
+202 silly idealTree ├── babel-plugin-transform-es2015-typeof-symbol@6.23.0
+202 silly idealTree ├── babel-plugin-transform-es2015-unicode-regex@6.24.1
+202 silly idealTree ├── babel-plugin-transform-flow-strip-types@6.22.0
+202 silly idealTree ├── babel-plugin-transform-react-display-name@6.25.0
+202 silly idealTree ├── babel-plugin-transform-react-jsx-self@6.22.0
+202 silly idealTree ├── babel-plugin-transform-react-jsx-source@6.22.0
+202 silly idealTree ├── babel-plugin-transform-react-jsx@6.24.1
+202 silly idealTree ├── babel-plugin-transform-regenerator@6.24.1
+202 silly idealTree ├── babel-plugin-transform-strict-mode@6.24.1
+202 silly idealTree ├── babel-preset-es2015@6.24.1
+202 silly idealTree ├── babel-preset-flow@6.23.0
+202 silly idealTree ├── babel-preset-react@6.24.1
+202 silly idealTree ├── babel-register@6.24.1
+202 silly idealTree ├── babel-runtime@6.23.0
+202 silly idealTree ├── babel-template@6.25.0
+202 silly idealTree ├── babel-traverse@6.25.0
+202 silly idealTree ├── babel-types@6.25.0
+202 silly idealTree ├── babylon@6.17.4
+202 silly idealTree ├── balanced-match@1.0.0
+202 silly idealTree ├── base64-js@1.2.1
+202 silly idealTree ├── big.js@3.1.3
+202 silly idealTree ├── binary-extensions@1.8.0
+202 silly idealTree ├── bluebird@2.11.0
+202 silly idealTree ├── bn.js@4.11.7
+202 silly idealTree ├── brace-expansion@1.1.8
+202 silly idealTree ├── braces@1.8.5
+202 silly idealTree ├── brorand@1.1.0
+202 silly idealTree ├── browserify-aes@1.0.6
+202 silly idealTree ├── browserify-cipher@1.0.0
+202 silly idealTree ├── browserify-des@1.0.0
+202 silly idealTree ├── browserify-rsa@4.0.1
+202 silly idealTree ├── browserify-sign@4.0.4
+202 silly idealTree ├── browserify-zlib@0.1.4
+202 silly idealTree ├── browserslist@1.7.7
+202 silly idealTree ├── buffer-xor@1.0.3
+202 silly idealTree ├── buffer@4.9.1
+202 silly idealTree ├── builtin-modules@1.1.1
+202 silly idealTree ├── builtin-status-codes@3.0.0
+202 silly idealTree ├── camelcase@1.2.1
+202 silly idealTree ├── caniuse-api@1.6.1
+202 silly idealTree ├── caniuse-db@1.0.30000700
+202 silly idealTree ├── cardinal@1.0.0
+202 silly idealTree ├── center-align@0.1.3
+202 silly idealTree ├─┬ chalk@1.1.3
+202 silly idealTree │ └── supports-color@2.0.0
+202 silly idealTree ├── chokidar@1.7.0
+202 silly idealTree ├── cipher-base@1.0.4
+202 silly idealTree ├── clap@1.2.0
+202 silly idealTree ├── classnames@2.2.5
+202 silly idealTree ├─┬ cli-table@0.3.1
+202 silly idealTree │ └── colors@1.0.3
+202 silly idealTree ├── cli-usage@0.1.4
+202 silly idealTree ├── cliui@2.1.0
+202 silly idealTree ├── clone@1.0.2
+202 silly idealTree ├── co@4.6.0
+202 silly idealTree ├── coa@1.0.4
+202 silly idealTree ├── code-point-at@1.1.0
+202 silly idealTree ├── codemirror@5.27.4
+202 silly idealTree ├── color-convert@1.9.0
+202 silly idealTree ├── color-name@1.1.2
+202 silly idealTree ├── color-string@0.3.0
+202 silly idealTree ├── color@0.11.4
+202 silly idealTree ├── colormin@1.1.2
+202 silly idealTree ├── colors@1.1.2
+202 silly idealTree ├── commondir@1.0.1
+202 silly idealTree ├── concat-map@0.0.1
+202 silly idealTree ├── console-browserify@1.1.0
+202 silly idealTree ├── constants-browserify@1.0.0
+202 silly idealTree ├── convert-source-map@1.5.0
+202 silly idealTree ├─┬ copy-webpack-plugin@4.0.1
+202 silly idealTree │ ├── is-extglob@2.1.1
+202 silly idealTree │ ├── is-glob@3.1.0
+202 silly idealTree │ └── loader-utils@0.2.17
+202 silly idealTree ├── core-js@2.4.1
+202 silly idealTree ├── core-util-is@1.0.2
+202 silly idealTree ├── create-ecdh@4.0.0
+202 silly idealTree ├── create-hash@1.1.3
+202 silly idealTree ├── create-hmac@1.1.6
+202 silly idealTree ├── create-react-class@15.6.0
+202 silly idealTree ├── crypto-browserify@3.11.1
+202 silly idealTree ├── css-color-names@0.0.4
+202 silly idealTree ├─┬ css-loader@0.28.4
+202 silly idealTree │ └── source-list-map@0.1.8
+202 silly idealTree ├─┬ css-selector-tokenizer@0.7.0
+202 silly idealTree │ └── regexpu-core@1.0.0
+202 silly idealTree ├── cssesc@0.1.0
+202 silly idealTree ├── cssnano@3.10.0
+202 silly idealTree ├── csso@2.3.2
+202 silly idealTree ├── d@1.0.0
+202 silly idealTree ├── date-now@0.1.4
+202 silly idealTree ├── debug@2.6.8
+202 silly idealTree ├── decamelize@1.2.0
+202 silly idealTree ├── defined@1.0.0
+202 silly idealTree ├── des.js@1.0.0
+202 silly idealTree ├── detect-indent@4.0.0
+202 silly idealTree ├── diffie-hellman@5.0.2
+202 silly idealTree ├── domain-browser@1.1.7
+202 silly idealTree ├── electron-to-chromium@1.3.15
+202 silly idealTree ├── elliptic@6.4.0
+202 silly idealTree ├── emojis-list@2.1.0
+202 silly idealTree ├── encoding@0.1.12
+202 silly idealTree ├── enhanced-resolve@3.3.0
+202 silly idealTree ├── errno@0.1.4
+202 silly idealTree ├── error-ex@1.3.1
+202 silly idealTree ├── es5-ext@0.10.24
+202 silly idealTree ├── es6-iterator@2.0.1
+202 silly idealTree ├── es6-map@0.1.5
+202 silly idealTree ├── es6-set@0.1.5
+202 silly idealTree ├── es6-symbol@3.1.1
+202 silly idealTree ├── es6-weak-map@2.0.2
+202 silly idealTree ├── escape-string-regexp@1.0.5
+202 silly idealTree ├── escope@3.6.0
+202 silly idealTree ├── esprima@2.7.3
+202 silly idealTree ├── esrecurse@4.2.0
+202 silly idealTree ├── estraverse@4.2.0
+202 silly idealTree ├── esutils@2.0.2
+202 silly idealTree ├── event-emitter@0.3.5
+202 silly idealTree ├── events@1.1.1
+202 silly idealTree ├── evp_bytestokey@1.0.0
+202 silly idealTree ├── expand-brackets@0.1.5
+202 silly idealTree ├── expand-range@1.8.2
+202 silly idealTree ├── extglob@0.3.2
+202 silly idealTree ├── extract-text-webpack-plugin@3.0.0
+202 silly idealTree ├── fast-deep-equal@1.0.0
+202 silly idealTree ├── fastparse@1.1.1
+202 silly idealTree ├─┬ fbjs@0.8.12
+202 silly idealTree │ └── core-js@1.2.7
+202 silly idealTree ├── file-loader@0.11.2
+202 silly idealTree ├── filename-regex@2.0.1
+202 silly idealTree ├── fill-range@2.2.3
+202 silly idealTree ├── find-cache-dir@1.0.0
+202 silly idealTree ├── find-up@1.1.2
+202 silly idealTree ├── flatten@1.0.2
+202 silly idealTree ├── for-in@1.0.2
+202 silly idealTree ├── for-own@0.1.5
+202 silly idealTree ├── fs-extra@0.26.7
+202 silly idealTree ├── fs.realpath@1.0.0
+202 silly idealTree ├── function-bind@1.1.0
+202 silly idealTree ├── get-caller-file@1.0.2
+202 silly idealTree ├── glob-base@0.3.0
+202 silly idealTree ├── glob-parent@2.0.0
+202 silly idealTree ├── glob@6.0.4
+202 silly idealTree ├── globals@9.18.0
+202 silly idealTree ├── graceful-fs@4.1.11
+202 silly idealTree ├── growly@1.3.0
+202 silly idealTree ├── has-ansi@2.0.0
+202 silly idealTree ├── has-flag@1.0.0
+202 silly idealTree ├── has@1.0.1
+202 silly idealTree ├── hash-base@2.0.2
+202 silly idealTree ├── hash.js@1.1.3
+202 silly idealTree ├── hmac-drbg@1.0.1
+202 silly idealTree ├── home-or-tmp@2.0.0
+202 silly idealTree ├── hosted-git-info@2.5.0
+202 silly idealTree ├── html-comment-regex@1.1.1
+202 silly idealTree ├── https-browserify@0.0.1
+202 silly idealTree ├── iconv-lite@0.4.18
+202 silly idealTree ├── icss-replace-symbols@1.1.0
+202 silly idealTree ├─┬ icss-utils@2.1.0
+202 silly idealTree │ ├── ansi-styles@3.1.0
+202 silly idealTree │ ├── chalk@2.0.1
+202 silly idealTree │ ├── has-flag@2.0.0
+202 silly idealTree │ ├── postcss@6.0.6
+202 silly idealTree │ └── supports-color@4.2.0
+202 silly idealTree ├── ieee754@1.1.8
+202 silly idealTree ├── indexes-of@1.0.1
+202 silly idealTree ├── indexof@0.0.1
+202 silly idealTree ├── inflight@1.0.6
+202 silly idealTree ├── inherits@2.0.3
+202 silly idealTree ├── interpret@1.0.3
+202 silly idealTree ├── invariant@2.2.2
+202 silly idealTree ├── invert-kv@1.0.0
+202 silly idealTree ├── is-absolute-url@2.1.0
+202 silly idealTree ├── is-arrayish@0.2.1
+202 silly idealTree ├── is-binary-path@1.0.1
+202 silly idealTree ├── is-buffer@1.1.5
+202 silly idealTree ├── is-builtin-module@1.0.0
+202 silly idealTree ├── is-dotfile@1.0.3
+202 silly idealTree ├── is-equal-shallow@0.1.3
+202 silly idealTree ├── is-extendable@0.1.1
+202 silly idealTree ├── is-extglob@1.0.0
+202 silly idealTree ├── is-finite@1.0.2
+202 silly idealTree ├── is-fullwidth-code-point@1.0.0
+202 silly idealTree ├── is-glob@2.0.1
+202 silly idealTree ├── is-number@2.1.0
+202 silly idealTree ├── is-plain-obj@1.1.0
+202 silly idealTree ├── is-posix-bracket@0.1.1
+202 silly idealTree ├── is-primitive@2.0.0
+202 silly idealTree ├── is-stream@1.1.0
+202 silly idealTree ├── is-svg@2.1.0
+202 silly idealTree ├── is-utf8@0.2.1
+202 silly idealTree ├── isarray@1.0.0
+202 silly idealTree ├── isexe@2.0.0
+202 silly idealTree ├── isobject@2.1.0
+202 silly idealTree ├── isomorphic-fetch@2.2.1
+202 silly idealTree ├── js-base64@2.1.9
+202 silly idealTree ├── js-tokens@3.0.2
+202 silly idealTree ├── js-yaml@3.7.0
+202 silly idealTree ├── jsesc@1.3.0
+202 silly idealTree ├── json-loader@0.5.4
+202 silly idealTree ├── json-schema-traverse@0.3.1
+202 silly idealTree ├── json-stable-stringify@1.0.1
+202 silly idealTree ├── json5@0.5.1
+202 silly idealTree ├── jsonfile@2.4.0
+202 silly idealTree ├── jsonify@0.0.0
+202 silly idealTree ├── kind-of@3.2.2
+202 silly idealTree ├── klaw@1.3.1
+202 silly idealTree ├── lazy-cache@1.0.4
+202 silly idealTree ├── lcid@1.0.0
+202 silly idealTree ├── load-json-file@1.1.0
+202 silly idealTree ├── loader-runner@2.3.0
+202 silly idealTree ├── loader-utils@1.1.0
+202 silly idealTree ├─┬ locate-path@2.0.0
+202 silly idealTree │ └── path-exists@3.0.0
+202 silly idealTree ├── lodash._arraycopy@3.0.0
+202 silly idealTree ├── lodash._arrayeach@3.0.0
+202 silly idealTree ├── lodash._baseassign@3.2.0
+202 silly idealTree ├── lodash._baseclone@3.3.0
+202 silly idealTree ├── lodash._basecopy@3.0.1
+202 silly idealTree ├── lodash._basefor@3.0.3
+202 silly idealTree ├── lodash._bindcallback@3.0.1
+202 silly idealTree ├── lodash._getnative@3.9.1
+202 silly idealTree ├── lodash.assign@4.2.0
+202 silly idealTree ├── lodash.camelcase@4.3.0
+202 silly idealTree ├── lodash.clonedeep@3.0.2
+202 silly idealTree ├── lodash.debounce@4.0.8
+202 silly idealTree ├── lodash.isarguments@3.1.0
+202 silly idealTree ├── lodash.isarray@3.0.4
+202 silly idealTree ├── lodash.isequal@4.5.0
+202 silly idealTree ├── lodash.keys@3.1.2
+202 silly idealTree ├── lodash.memoize@4.1.2
+202 silly idealTree ├── lodash.toarray@4.4.0
+202 silly idealTree ├── lodash.uniq@4.5.0
+202 silly idealTree ├── lodash@4.17.4
+202 silly idealTree ├── longest@1.0.1
+202 silly idealTree ├── loose-envify@1.3.1
+202 silly idealTree ├── macaddress@0.2.8
+202 silly idealTree ├── make-dir@1.0.0
+202 silly idealTree ├── marked-terminal@1.7.0
+202 silly idealTree ├── marked@0.3.6
+202 silly idealTree ├── math-expression-evaluator@1.2.17
+202 silly idealTree ├── memory-fs@0.4.1
+202 silly idealTree ├── micromatch@2.3.11
+202 silly idealTree ├── miller-rabin@4.0.0
+202 silly idealTree ├── mime@1.3.6
+202 silly idealTree ├── minimalistic-assert@1.0.0
+202 silly idealTree ├── minimalistic-crypto-utils@1.0.1
+202 silly idealTree ├── minimatch@3.0.4
+202 silly idealTree ├── minimist@0.0.8
+202 silly idealTree ├── mkdirp@0.5.1
+202 silly idealTree ├── ms@2.0.0
+202 silly idealTree ├── node-dir@0.1.17
+202 silly idealTree ├── node-emoji@1.7.0
+202 silly idealTree ├── node-fetch@1.7.1
+202 silly idealTree ├─┬ node-libs-browser@2.0.0
+202 silly idealTree │ └── string_decoder@0.10.31
+202 silly idealTree ├─┬ node-notifier@4.6.1
+202 silly idealTree │ └── minimist@1.2.0
+202 silly idealTree ├── normalize-package-data@2.4.0
+202 silly idealTree ├── normalize-path@2.1.1
+202 silly idealTree ├── normalize-range@0.1.2
+202 silly idealTree ├── normalize-url@1.9.1
+202 silly idealTree ├── num2fraction@1.2.2
+202 silly idealTree ├── number-is-nan@1.0.1
+202 silly idealTree ├── object-assign@4.1.1
+202 silly idealTree ├── object.omit@2.0.1
+202 silly idealTree ├── once@1.4.0
+202 silly idealTree ├── os-browserify@0.2.1
+202 silly idealTree ├── os-homedir@1.0.2
+202 silly idealTree ├── os-locale@1.4.0
+202 silly idealTree ├── os-tmpdir@1.0.2
+202 silly idealTree ├── p-limit@1.1.0
+202 silly idealTree ├── p-locate@2.0.0
+202 silly idealTree ├── pako@0.2.9
+202 silly idealTree ├── parse-asn1@5.1.0
+202 silly idealTree ├── parse-glob@3.0.4
+202 silly idealTree ├── parse-json@2.2.0
+202 silly idealTree ├── path-browserify@0.0.0
+202 silly idealTree ├── path-exists@2.1.0
+202 silly idealTree ├── path-is-absolute@1.0.1
+202 silly idealTree ├── path-type@1.1.0
+202 silly idealTree ├── pbkdf2@3.0.12
+202 silly idealTree ├── phoenix_html@2.9.3
+202 silly idealTree ├── phoenix@1.2.4
+202 silly idealTree ├── pify@2.3.0
+202 silly idealTree ├── pinkie-promise@2.0.1
+202 silly idealTree ├── pinkie@2.0.4
+202 silly idealTree ├─┬ pkg-dir@2.0.0
+202 silly idealTree │ └── find-up@2.1.0
+202 silly idealTree ├── postcss-calc@5.3.1
+202 silly idealTree ├── postcss-colormin@2.2.2
+202 silly idealTree ├── postcss-convert-values@2.6.1
+202 silly idealTree ├── postcss-discard-comments@2.0.4
+202 silly idealTree ├── postcss-discard-duplicates@2.1.0
+202 silly idealTree ├── postcss-discard-empty@2.1.0
+202 silly idealTree ├── postcss-discard-overridden@0.1.1
+202 silly idealTree ├── postcss-discard-unused@2.2.3
+202 silly idealTree ├── postcss-filter-plugins@2.0.2
+202 silly idealTree ├── postcss-merge-idents@2.1.7
+202 silly idealTree ├── postcss-merge-longhand@2.0.2
+202 silly idealTree ├── postcss-merge-rules@2.1.2
+202 silly idealTree ├── postcss-message-helpers@2.0.0
+202 silly idealTree ├── postcss-minify-font-values@1.0.5
+202 silly idealTree ├── postcss-minify-gradients@1.0.5
+202 silly idealTree ├── postcss-minify-params@1.2.2
+202 silly idealTree ├── postcss-minify-selectors@2.1.1
+202 silly idealTree ├─┬ postcss-modules-extract-imports@1.1.0
+202 silly idealTree │ ├── ansi-styles@3.1.0
+202 silly idealTree │ ├── chalk@2.0.1
+202 silly idealTree │ ├── has-flag@2.0.0
+202 silly idealTree │ ├── postcss@6.0.6
+202 silly idealTree │ └── supports-color@4.2.0
+202 silly idealTree ├─┬ postcss-modules-local-by-default@1.2.0
+202 silly idealTree │ ├── ansi-styles@3.1.0
+202 silly idealTree │ ├── chalk@2.0.1
+202 silly idealTree │ ├── has-flag@2.0.0
+202 silly idealTree │ ├── postcss@6.0.6
+202 silly idealTree │ └── supports-color@4.2.0
+202 silly idealTree ├─┬ postcss-modules-scope@1.1.0
+202 silly idealTree │ ├── ansi-styles@3.1.0
+202 silly idealTree │ ├── chalk@2.0.1
+202 silly idealTree │ ├── has-flag@2.0.0
+202 silly idealTree │ ├── postcss@6.0.6
+202 silly idealTree │ └── supports-color@4.2.0
+202 silly idealTree ├─┬ postcss-modules-values@1.3.0
+202 silly idealTree │ ├── ansi-styles@3.1.0
+202 silly idealTree │ ├── chalk@2.0.1
+202 silly idealTree │ ├── has-flag@2.0.0
+202 silly idealTree │ ├── postcss@6.0.6
+202 silly idealTree │ └── supports-color@4.2.0
+202 silly idealTree ├── postcss-normalize-charset@1.1.1
+202 silly idealTree ├── postcss-normalize-url@3.0.8
+202 silly idealTree ├── postcss-ordered-values@2.2.3
+202 silly idealTree ├── postcss-reduce-idents@2.4.0
+202 silly idealTree ├── postcss-reduce-initial@1.0.1
+202 silly idealTree ├── postcss-reduce-transforms@1.0.4
+202 silly idealTree ├── postcss-selector-parser@2.2.3
+202 silly idealTree ├── postcss-svgo@2.1.6
+202 silly idealTree ├── postcss-unique-selectors@2.0.2
+202 silly idealTree ├── postcss-value-parser@3.3.0
+202 silly idealTree ├── postcss-zindex@2.2.0
+202 silly idealTree ├── postcss@5.2.17
+202 silly idealTree ├── prepend-http@1.0.4
+202 silly idealTree ├── preserve@0.2.0
+202 silly idealTree ├── private@0.1.7
+202 silly idealTree ├── process-nextick-args@1.0.7
+202 silly idealTree ├── process@0.11.10
+202 silly idealTree ├── promise@7.3.1
+202 silly idealTree ├── prop-types@15.5.10
+202 silly idealTree ├── prr@0.0.0
+202 silly idealTree ├── public-encrypt@4.0.0
+202 silly idealTree ├── punycode@1.4.1
+202 silly idealTree ├── q@1.5.0
+202 silly idealTree ├── query-string@4.3.4
+202 silly idealTree ├── querystring-es3@0.2.1
+202 silly idealTree ├── querystring@0.2.0
+202 silly idealTree ├─┬ randomatic@1.1.7
+202 silly idealTree │ ├─┬ is-number@3.0.0
+202 silly idealTree │ │ └── kind-of@3.2.2
+202 silly idealTree │ └── kind-of@4.0.0
+202 silly idealTree ├── randombytes@2.0.5
+202 silly idealTree ├── react-codemirror@1.0.0
+202 silly idealTree ├── react-dom@15.6.1
+202 silly idealTree ├── react@15.6.1
+202 silly idealTree ├── read-pkg-up@1.0.1
+202 silly idealTree ├── read-pkg@1.1.0
+202 silly idealTree ├── readable-stream@2.3.3
+202 silly idealTree ├── readdirp@2.1.0
+202 silly idealTree ├─┬ redeyed@1.0.1
+202 silly idealTree │ └── esprima@3.0.0
+202 silly idealTree ├─┬ reduce-css-calc@1.3.0
+202 silly idealTree │ └── balanced-match@0.4.2
+202 silly idealTree ├─┬ reduce-function-call@1.0.2
+202 silly idealTree │ └── balanced-match@0.4.2
+202 silly idealTree ├── regenerate@1.3.2
+202 silly idealTree ├── regenerator-runtime@0.10.5
+202 silly idealTree ├── regenerator-transform@0.9.11
+202 silly idealTree ├── regex-cache@0.4.3
+202 silly idealTree ├── regexpu-core@2.0.0
+202 silly idealTree ├── regjsgen@0.2.0
+202 silly idealTree ├─┬ regjsparser@0.1.5
+202 silly idealTree │ └── jsesc@0.5.0
+202 silly idealTree ├── remove-trailing-separator@1.0.2
+202 silly idealTree ├── repeat-element@1.1.2
+202 silly idealTree ├── repeat-string@1.6.1
+202 silly idealTree ├── repeating@2.0.1
+202 silly idealTree ├── require-directory@2.1.1
+202 silly idealTree ├── require-main-filename@1.0.1
+202 silly idealTree ├── right-align@0.1.3
+202 silly idealTree ├─┬ rimraf@2.6.1
+202 silly idealTree │ └── glob@7.1.2
+202 silly idealTree ├── ripemd160@2.0.1
+202 silly idealTree ├── safe-buffer@5.1.1
+202 silly idealTree ├── sax@1.2.4
+202 silly idealTree ├── schema-utils@0.3.0
+202 silly idealTree ├── semver@5.3.0
+202 silly idealTree ├── set-blocking@2.0.0
+202 silly idealTree ├── set-immediate-shim@1.0.1
+202 silly idealTree ├── setimmediate@1.0.5
+202 silly idealTree ├── sha.js@2.4.8
+202 silly idealTree ├── shellwords@0.1.0
+202 silly idealTree ├── slash@1.0.0
+202 silly idealTree ├── sort-keys@1.1.2
+202 silly idealTree ├── source-list-map@2.0.0
+202 silly idealTree ├── source-map-support@0.4.15
+202 silly idealTree ├── source-map@0.5.6
+202 silly idealTree ├── spdx-correct@1.0.2
+202 silly idealTree ├── spdx-expression-parse@1.0.4
+202 silly idealTree ├── spdx-license-ids@1.2.2
+202 silly idealTree ├── sprintf-js@1.0.3
+202 silly idealTree ├── stream-browserify@2.0.1
+202 silly idealTree ├── stream-http@2.7.2
+202 silly idealTree ├── strict-uri-encode@1.1.0
+202 silly idealTree ├── string_decoder@1.0.3
+202 silly idealTree ├── string-width@1.0.2
+202 silly idealTree ├── string.prototype.codepointat@0.2.0
+202 silly idealTree ├── strip-ansi@3.0.1
+202 silly idealTree ├── strip-bom@2.0.0
+202 silly idealTree ├── style-loader@0.18.2
+202 silly idealTree ├── supports-color@3.2.3
+202 silly idealTree ├── svgo@0.7.2
+202 silly idealTree ├── tapable@0.2.6
+202 silly idealTree ├── timers-browserify@2.0.2
+202 silly idealTree ├── to-arraybuffer@1.0.1
+202 silly idealTree ├── to-fast-properties@1.0.3
+202 silly idealTree ├── trim-right@1.0.1
+202 silly idealTree ├── ts-loader@2.2.2
+202 silly idealTree ├── tty-browserify@0.0.0
+202 silly idealTree ├── typescript@2.4.1
+202 silly idealTree ├── ua-parser-js@0.7.13
+202 silly idealTree ├─┬ uglify-js@2.8.29
+202 silly idealTree │ └── yargs@3.10.0
+202 silly idealTree ├── uglify-to-browserify@1.0.2
+202 silly idealTree ├── uglifyjs-webpack-plugin@0.4.6
+202 silly idealTree ├── uniq@1.0.1
+202 silly idealTree ├── uniqid@4.1.1
+202 silly idealTree ├── uniqs@2.0.0
+202 silly idealTree ├── url-loader@0.5.9
+202 silly idealTree ├─┬ url@0.11.0
+202 silly idealTree │ └── punycode@1.3.2
+202 silly idealTree ├── util-deprecate@1.0.2
+202 silly idealTree ├─┬ util@0.10.3
+202 silly idealTree │ └── inherits@2.0.1
+202 silly idealTree ├── validate-npm-package-license@3.0.1
+202 silly idealTree ├── vendors@1.0.1
+202 silly idealTree ├── vm-browserify@0.0.4
+202 silly idealTree ├── watchpack@1.3.1
+202 silly idealTree ├── webpack-notifier@1.5.0
+202 silly idealTree ├── webpack-sources@1.0.1
+202 silly idealTree ├── webpack@3.2.0
+202 silly idealTree ├── whatwg-fetch@2.0.3
+202 silly idealTree ├── whet.extend@0.9.9
+202 silly idealTree ├── which-module@1.0.0
+202 silly idealTree ├── which@1.2.14
+202 silly idealTree ├── window-size@0.1.0
+202 silly idealTree ├── wordwrap@0.0.2
+202 silly idealTree ├── wrap-ansi@2.1.0
+202 silly idealTree ├── wrappy@1.0.2
+202 silly idealTree ├── xtend@4.0.1
+202 silly idealTree ├── y18n@3.2.1
+202 silly idealTree ├─┬ yargs-parser@4.2.1
+202 silly idealTree │ └── camelcase@3.0.0
+202 silly idealTree └─┬ yargs@6.6.0
+202 silly idealTree   ├── camelcase@3.0.0
+202 silly idealTree   └── cliui@3.2.0
+203 silly generateActionsToTake Starting
+204 silly install generateActionsToTake
+205 silly generateActionsToTake Finishing
+206 silly diffTrees action count 4
+207 silly diffTrees add codemirror@5.27.4
+208 silly diffTrees add lodash.debounce@4.0.8
+209 silly diffTrees add lodash.isequal@4.5.0
+210 silly diffTrees add react-codemirror@1.0.0
+211 silly decomposeActions action count 32
+212 silly decomposeActions fetch codemirror@5.27.4
+213 silly decomposeActions extract codemirror@5.27.4
+214 silly decomposeActions test codemirror@5.27.4
+215 silly decomposeActions preinstall codemirror@5.27.4
+216 silly decomposeActions build codemirror@5.27.4
+217 silly decomposeActions install codemirror@5.27.4
+218 silly decomposeActions postinstall codemirror@5.27.4
+219 silly decomposeActions finalize codemirror@5.27.4
+220 silly decomposeActions fetch lodash.debounce@4.0.8
+221 silly decomposeActions extract lodash.debounce@4.0.8
+222 silly decomposeActions test lodash.debounce@4.0.8
+223 silly decomposeActions preinstall lodash.debounce@4.0.8
+224 silly decomposeActions build lodash.debounce@4.0.8
+225 silly decomposeActions install lodash.debounce@4.0.8
+226 silly decomposeActions postinstall lodash.debounce@4.0.8
+227 silly decomposeActions finalize lodash.debounce@4.0.8
+228 silly decomposeActions fetch lodash.isequal@4.5.0
+229 silly decomposeActions extract lodash.isequal@4.5.0
+230 silly decomposeActions test lodash.isequal@4.5.0
+231 silly decomposeActions preinstall lodash.isequal@4.5.0
+232 silly decomposeActions build lodash.isequal@4.5.0
+233 silly decomposeActions install lodash.isequal@4.5.0
+234 silly decomposeActions postinstall lodash.isequal@4.5.0
+235 silly decomposeActions finalize lodash.isequal@4.5.0
+236 silly decomposeActions fetch react-codemirror@1.0.0
+237 silly decomposeActions extract react-codemirror@1.0.0
+238 silly decomposeActions test react-codemirror@1.0.0
+239 silly decomposeActions preinstall react-codemirror@1.0.0
+240 silly decomposeActions build react-codemirror@1.0.0
+241 silly decomposeActions install react-codemirror@1.0.0
+242 silly decomposeActions postinstall react-codemirror@1.0.0
+243 silly decomposeActions finalize react-codemirror@1.0.0
+244 silly runTopLevelLifecycles Starting
+245 silly executeActions Starting
+246 silly install executeActions
+247 silly doSerial global-install 0
+248 silly doParallel fetch 4
+249 verbose correctMkdir /home/rudic/.npm/_locks correctMkdir not in flight; initializing
+250 verbose lock using /home/rudic/.npm/_locks/staging-1798c1f7566d13f1.lock for /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging
+251 silly doParallel extract 4
+252 silly extract codemirror@5.27.4
+253 silly extract lodash.debounce@4.0.8
+254 silly extract lodash.isequal@4.5.0
+255 silly extract react-codemirror@1.0.0
+256 verbose unbuild node_modules/.staging/codemirror-ec360309
+257 verbose unbuild node_modules/.staging/lodash.isequal-d7cd8970
+258 verbose unbuild node_modules/.staging/lodash.debounce-475f34a8
+259 verbose unbuild node_modules/.staging/react-codemirror-f58997ce
+260 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309 is being purged from base /mnt/c/Users/rudic/Documents/Coding/alchemy_book
+261 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309
+262 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.isequal-d7cd8970 is being purged from base /mnt/c/Users/rudic/Documents/Coding/alchemy_book
+263 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.isequal-d7cd8970
+264 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.debounce-475f34a8 is being purged from base /mnt/c/Users/rudic/Documents/Coding/alchemy_book
+265 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.debounce-475f34a8
+266 verbose tar unpack /home/rudic/.npm/codemirror/5.27.4/package.tgz
+267 verbose tar unpacking to /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309
+268 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309 is being purged
+269 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309
+270 verbose tar unpack /home/rudic/.npm/lodash.isequal/4.5.0/package.tgz
+271 verbose tar unpacking to /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.isequal-d7cd8970
+272 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.isequal-d7cd8970 is being purged
+273 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.isequal-d7cd8970
+274 verbose tar unpack /home/rudic/.npm/lodash.debounce/4.0.8/package.tgz
+275 verbose tar unpacking to /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.debounce-475f34a8
+276 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.debounce-475f34a8 is being purged
+277 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.debounce-475f34a8
+278 silly gunzTarPerm modes [ '755', '644' ]
+279 silly gunzTarPerm modes [ '755', '644' ]
+280 silly gunzTarPerm modes [ '755', '644' ]
+281 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/react-codemirror-f58997ce is being purged from base /mnt/c/Users/rudic/Documents/Coding/alchemy_book
+282 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/react-codemirror-f58997ce
+283 verbose tar unpack /home/rudic/.npm/react-codemirror/1.0.0/package.tgz
+284 verbose tar unpacking to /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/react-codemirror-f58997ce
+285 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/react-codemirror-f58997ce is being purged
+286 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/react-codemirror-f58997ce
+287 silly gunzTarPerm modes [ '755', '644' ]
+288 silly gunzTarPerm extractEntry package.json
+289 silly gunzTarPerm extractEntry package.json
+290 silly gunzTarPerm extractEntry package.json
+291 silly gunzTarPerm extractEntry package.json
+292 silly gunzTarPerm extractEntry README.md
+293 silly gunzTarPerm extractEntry LICENSE
+294 silly gunzTarPerm extractEntry README.md
+295 silly gunzTarPerm extractEntry LICENSE
+296 silly gunzTarPerm extractEntry README.md
+297 silly gunzTarPerm extractEntry LICENSE
+298 silly gunzTarPerm extractEntry .npmignore
+299 silly gunzTarPerm extractEntry README.md
+300 silly gunzTarPerm extractEntry index.js
+301 silly gunzTarPerm extractEntry rollup.config.js
+302 silly gunzTarPerm extractEntry AUTHORS
+303 silly gunzTarPerm extractEntry index.js
+304 silly gunzTarPerm extractEntry LICENSE
+305 silly gunzTarPerm extractEntry gulpfile.js
+306 silly gunzTarPerm extractEntry CHANGELOG.md
+307 silly gunzTarPerm extractEntry dist/react-codemirror.js
+308 silly gunzTarPerm extractEntry CONTRIBUTING.md
+309 silly gunzTarPerm extractEntry addon/merge/merge.js
+310 silly gunzTarPerm extractEntry addon/merge/merge.css
+311 silly gunzTarPerm extractEntry addon/comment/comment.js
+312 silly gunzTarPerm extractEntry dist/react-codemirror.min.js
+313 silly gunzTarPerm extractEntry addon/comment/continuecomment.js
+314 silly gunzTarPerm extractEntry addon/display/autorefresh.js
+315 silly gunzTarPerm extractEntry addon/display/fullscreen.js
+316 silly gunzTarPerm extractEntry addon/display/panel.js
+317 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.debounce-475f34a8/node_modules is being purged
+318 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.debounce-475f34a8/node_modules
+319 silly gunzTarPerm extractEntry addon/display/placeholder.js
+320 silly gunzTarPerm extractEntry addon/display/rulers.js
+321 silly gunzTarPerm extractEntry bower.json
+322 silly gunzTarPerm extractEntry addon/display/fullscreen.css
+323 silly gunzTarPerm extractEntry example/src/.npmignore
+324 silly gunzTarPerm extractEntry example/src/example.js
+325 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.isequal-d7cd8970/node_modules is being purged
+326 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.isequal-d7cd8970/node_modules
+327 silly gunzTarPerm extractEntry example/src/example.less
+328 silly gunzTarPerm extractEntry example/src/index.html
+329 silly gunzTarPerm extractEntry .editorconfig
+330 silly gunzTarPerm extractEntry lib/Codemirror.js
+331 silly gunzTarPerm extractEntry addon/edit/closebrackets.js
+332 silly gunzTarPerm extractEntry addon/edit/closetag.js
+333 silly gunzTarPerm extractEntry src/Codemirror.js
+334 silly gunzTarPerm extractEntry HISTORY.md
+335 silly gunzTarPerm extractEntry addon/edit/continuelist.js
+336 silly gunzTarPerm extractEntry addon/edit/matchbrackets.js
+337 silly gunzTarPerm extractEntry addon/edit/matchtags.js
+338 silly gunzTarPerm extractEntry addon/edit/trailingspace.js
+339 silly gunzTarPerm extractEntry addon/fold/brace-fold.js
+340 silly gunzTarPerm extractEntry addon/fold/comment-fold.js
+341 silly gunzTarPerm extractEntry addon/fold/foldcode.js
+342 silly gunzTarPerm extractEntry addon/fold/foldgutter.js
+343 silly gunzTarPerm extractEntry addon/fold/indent-fold.js
+344 silly gunzTarPerm extractEntry addon/fold/markdown-fold.js
+345 silly gunzTarPerm extractEntry addon/fold/xml-fold.js
+346 silly gunzTarPerm extractEntry addon/fold/foldgutter.css
+347 silly gunzTarPerm extractEntry addon/hint/anyword-hint.js
+348 silly gunzTarPerm extractEntry addon/hint/css-hint.js
+349 silly gunzTarPerm extractEntry addon/hint/html-hint.js
+350 silly gunzTarPerm extractEntry addon/hint/javascript-hint.js
+351 silly gunzTarPerm extractEntry addon/hint/show-hint.js
+352 silly gunzTarPerm extractEntry addon/hint/sql-hint.js
+353 silly gunzTarPerm extractEntry addon/hint/xml-hint.js
+354 silly gunzTarPerm extractEntry addon/hint/show-hint.css
+355 silly gunzTarPerm extractEntry addon/lint/coffeescript-lint.js
+356 silly gunzTarPerm extractEntry addon/lint/css-lint.js
+357 silly gunzTarPerm extractEntry addon/lint/html-lint.js
+358 silly gunzTarPerm extractEntry addon/lint/javascript-lint.js
+359 silly gunzTarPerm extractEntry addon/lint/json-lint.js
+360 silly gunzTarPerm extractEntry addon/lint/lint.js
+361 silly gunzTarPerm extractEntry addon/lint/yaml-lint.js
+362 silly gunzTarPerm extractEntry addon/lint/lint.css
+363 silly gunzTarPerm extractEntry addon/dialog/dialog.js
+364 silly gunzTarPerm extractEntry addon/dialog/dialog.css
+365 silly gunzTarPerm extractEntry addon/mode/loadmode.js
+366 silly gunzTarPerm extractEntry addon/mode/multiplex.js
+367 silly gunzTarPerm extractEntry addon/mode/multiplex_test.js
+368 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/react-codemirror-f58997ce/node_modules is being purged
+369 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/react-codemirror-f58997ce/node_modules
+370 silly gunzTarPerm extractEntry addon/mode/overlay.js
+371 silly gunzTarPerm extractEntry addon/mode/simple.js
+372 silly gunzTarPerm extractEntry addon/runmode/colorize.js
+373 silly gunzTarPerm extractEntry addon/runmode/runmode-standalone.js
+374 silly gunzTarPerm extractEntry addon/runmode/runmode.js
+375 silly gunzTarPerm extractEntry addon/runmode/runmode.node.js
+376 silly gunzTarPerm extractEntry addon/scroll/annotatescrollbar.js
+377 silly gunzTarPerm extractEntry addon/scroll/scrollpastend.js
+378 silly gunzTarPerm extractEntry addon/scroll/simplescrollbars.js
+379 silly gunzTarPerm extractEntry addon/scroll/simplescrollbars.css
+380 silly gunzTarPerm extractEntry addon/search/jump-to-line.js
+381 silly gunzTarPerm extractEntry addon/search/match-highlighter.js
+382 silly gunzTarPerm extractEntry addon/search/matchesonscrollbar.js
+383 silly gunzTarPerm extractEntry addon/search/search.js
+384 silly gunzTarPerm extractEntry addon/search/searchcursor.js
+385 silly gunzTarPerm extractEntry addon/search/matchesonscrollbar.css
+386 silly gunzTarPerm extractEntry addon/selection/active-line.js
+387 silly gunzTarPerm extractEntry addon/selection/mark-selection.js
+388 silly gunzTarPerm extractEntry addon/selection/selection-pointer.js
+389 silly gunzTarPerm extractEntry addon/tern/tern.js
+390 silly gunzTarPerm extractEntry addon/tern/worker.js
+391 silly gunzTarPerm extractEntry addon/tern/tern.css
+392 silly gunzTarPerm extractEntry addon/wrap/hardwrap.js
+393 silly gunzTarPerm extractEntry keymap/emacs.js
+394 silly gunzTarPerm extractEntry keymap/sublime.js
+395 silly gunzTarPerm extractEntry keymap/vim.js
+396 silly gunzTarPerm extractEntry lib/codemirror.js
+397 silly gunzTarPerm extractEntry lib/codemirror.css
+398 silly gunzTarPerm extractEntry mode/meta.js
+399 silly gunzTarPerm extractEntry mode/nsis/nsis.js
+400 silly gunzTarPerm extractEntry mode/asn.1/asn.1.js
+401 silly gunzTarPerm extractEntry mode/asterisk/asterisk.js
+402 silly gunzTarPerm extractEntry mode/brainfuck/brainfuck.js
+403 silly gunzTarPerm extractEntry mode/clike/clike.js
+404 silly gunzTarPerm extractEntry mode/clojure/clojure.js
+405 silly gunzTarPerm extractEntry mode/cmake/cmake.js
+406 silly gunzTarPerm extractEntry mode/cobol/cobol.js
+407 silly gunzTarPerm extractEntry mode/coffeescript/coffeescript.js
+408 silly gunzTarPerm extractEntry mode/commonlisp/commonlisp.js
+409 silly gunzTarPerm extractEntry mode/crystal/crystal.js
+410 silly gunzTarPerm extractEntry mode/css/css.js
+411 silly gunzTarPerm extractEntry mode/cypher/cypher.js
+412 silly gunzTarPerm extractEntry mode/d/d.js
+413 silly gunzTarPerm extractEntry mode/dart/dart.js
+414 silly gunzTarPerm extractEntry mode/diff/diff.js
+415 silly gunzTarPerm extractEntry mode/django/django.js
+416 silly gunzTarPerm extractEntry mode/dockerfile/dockerfile.js
+417 silly gunzTarPerm extractEntry mode/dtd/dtd.js
+418 silly gunzTarPerm extractEntry mode/dylan/dylan.js
+419 silly gunzTarPerm extractEntry mode/ebnf/ebnf.js
+420 silly gunzTarPerm extractEntry mode/ecl/ecl.js
+421 silly gunzTarPerm extractEntry mode/eiffel/eiffel.js
+422 silly gunzTarPerm extractEntry mode/elm/elm.js
+423 silly gunzTarPerm extractEntry mode/erlang/erlang.js
+424 silly gunzTarPerm extractEntry mode/factor/factor.js
+425 silly gunzTarPerm extractEntry mode/fcl/fcl.js
+426 silly gunzTarPerm extractEntry mode/forth/forth.js
+427 silly gunzTarPerm extractEntry mode/fortran/fortran.js
+428 silly gunzTarPerm extractEntry mode/gas/gas.js
+429 silly gunzTarPerm extractEntry mode/gfm/gfm.js
+430 silly gunzTarPerm extractEntry mode/gherkin/gherkin.js
+431 silly gunzTarPerm extractEntry mode/go/go.js
+432 silly gunzTarPerm extractEntry mode/groovy/groovy.js
+433 silly gunzTarPerm extractEntry mode/haml/haml.js
+434 silly gunzTarPerm extractEntry mode/handlebars/handlebars.js
+435 silly gunzTarPerm extractEntry mode/haskell/haskell.js
+436 silly gunzTarPerm extractEntry mode/haskell-literate/haskell-literate.js
+437 silly gunzTarPerm extractEntry mode/haxe/haxe.js
+438 silly gunzTarPerm extractEntry mode/htmlembedded/htmlembedded.js
+439 silly gunzTarPerm extractEntry mode/htmlmixed/htmlmixed.js
+440 silly gunzTarPerm extractEntry mode/http/http.js
+441 silly gunzTarPerm extractEntry mode/idl/idl.js
+442 silly gunzTarPerm extractEntry mode/javascript/javascript.js
+443 silly gunzTarPerm extractEntry mode/jinja2/jinja2.js
+444 silly gunzTarPerm extractEntry mode/jsx/jsx.js
+445 silly gunzTarPerm extractEntry mode/julia/julia.js
+446 silly gunzTarPerm extractEntry mode/livescript/livescript.js
+447 silly gunzTarPerm extractEntry mode/lua/lua.js
+448 silly gunzTarPerm extractEntry mode/markdown/markdown.js
+449 silly gunzTarPerm extractEntry mode/mathematica/mathematica.js
+450 silly gunzTarPerm extractEntry mode/mbox/mbox.js
+451 silly gunzTarPerm extractEntry mode/apl/apl.js
+452 silly gunzTarPerm extractEntry mode/mirc/mirc.js
+453 silly gunzTarPerm extractEntry mode/mllike/mllike.js
+454 silly gunzTarPerm extractEntry mode/modelica/modelica.js
+455 silly gunzTarPerm extractEntry mode/mscgen/mscgen.js
+456 silly gunzTarPerm extractEntry mode/mumps/mumps.js
+457 silly gunzTarPerm extractEntry mode/nginx/nginx.js
+458 silly gunzTarPerm extractEntry mode/asciiarmor/asciiarmor.js
+459 silly gunzTarPerm extractEntry mode/ntriples/ntriples.js
+460 silly gunzTarPerm extractEntry mode/octave/octave.js
+461 silly gunzTarPerm extractEntry mode/oz/oz.js
+462 silly gunzTarPerm extractEntry mode/pascal/pascal.js
+463 silly gunzTarPerm extractEntry mode/pegjs/pegjs.js
+464 silly gunzTarPerm extractEntry mode/perl/perl.js
+465 silly gunzTarPerm extractEntry mode/php/php.js
+466 silly gunzTarPerm extractEntry mode/pig/pig.js
+467 silly gunzTarPerm extractEntry mode/powershell/powershell.js
+468 silly gunzTarPerm extractEntry mode/properties/properties.js
+469 silly gunzTarPerm extractEntry mode/protobuf/protobuf.js
+470 silly gunzTarPerm extractEntry mode/pug/pug.js
+471 silly gunzTarPerm extractEntry mode/puppet/puppet.js
+472 silly gunzTarPerm extractEntry mode/python/python.js
+473 silly gunzTarPerm extractEntry mode/q/q.js
+474 silly gunzTarPerm extractEntry mode/r/r.js
+475 silly gunzTarPerm extractEntry mode/rpm/rpm.js
+476 silly gunzTarPerm extractEntry mode/rpm/changes/index.html
+477 silly gunzTarPerm extractEntry mode/rst/rst.js
+478 silly gunzTarPerm extractEntry mode/ruby/ruby.js
+479 silly gunzTarPerm extractEntry mode/rust/rust.js
+480 silly gunzTarPerm extractEntry mode/sas/sas.js
+481 silly gunzTarPerm extractEntry mode/sass/sass.js
+482 silly gunzTarPerm extractEntry mode/scheme/scheme.js
+483 silly gunzTarPerm extractEntry mode/shell/shell.js
+484 silly gunzTarPerm extractEntry mode/sieve/sieve.js
+485 silly gunzTarPerm extractEntry mode/slim/slim.js
+486 silly gunzTarPerm extractEntry mode/smalltalk/smalltalk.js
+487 silly gunzTarPerm extractEntry mode/smarty/smarty.js
+488 silly gunzTarPerm extractEntry mode/solr/solr.js
+489 silly gunzTarPerm extractEntry mode/soy/soy.js
+490 silly gunzTarPerm extractEntry mode/sparql/sparql.js
+491 silly gunzTarPerm extractEntry mode/spreadsheet/spreadsheet.js
+492 silly gunzTarPerm extractEntry mode/sql/sql.js
+493 silly gunzTarPerm extractEntry mode/stex/stex.js
+494 silly gunzTarPerm extractEntry mode/stylus/stylus.js
+495 silly gunzTarPerm extractEntry mode/swift/swift.js
+496 silly gunzTarPerm extractEntry mode/tcl/tcl.js
+497 silly gunzTarPerm extractEntry mode/textile/textile.js
+498 silly gunzTarPerm extractEntry mode/tiddlywiki/tiddlywiki.js
+499 silly gunzTarPerm extractEntry mode/tiddlywiki/tiddlywiki.css
+500 silly gunzTarPerm extractEntry mode/tiki/tiki.js
+501 silly gunzTarPerm extractEntry mode/tiki/tiki.css
+502 silly gunzTarPerm extractEntry mode/toml/toml.js
+503 silly gunzTarPerm extractEntry mode/tornado/tornado.js
+504 silly gunzTarPerm extractEntry mode/troff/troff.js
+505 silly gunzTarPerm extractEntry mode/ttcn/ttcn.js
+506 silly gunzTarPerm extractEntry mode/ttcn-cfg/ttcn-cfg.js
+507 silly gunzTarPerm extractEntry mode/turtle/turtle.js
+508 silly gunzTarPerm extractEntry mode/twig/twig.js
+509 silly gunzTarPerm extractEntry mode/vb/vb.js
+510 silly gunzTarPerm extractEntry mode/vbscript/vbscript.js
+511 silly gunzTarPerm extractEntry mode/velocity/velocity.js
+512 silly gunzTarPerm extractEntry mode/verilog/verilog.js
+513 silly gunzTarPerm extractEntry mode/vhdl/vhdl.js
+514 silly gunzTarPerm extractEntry mode/vue/vue.js
+515 silly gunzTarPerm extractEntry mode/webidl/webidl.js
+516 silly gunzTarPerm extractEntry mode/xml/xml.js
+517 silly gunzTarPerm extractEntry mode/xquery/xquery.js
+518 silly gunzTarPerm extractEntry mode/yacas/yacas.js
+519 silly gunzTarPerm extractEntry mode/yaml/yaml.js
+520 silly gunzTarPerm extractEntry mode/yaml-frontmatter/yaml-frontmatter.js
+521 silly gunzTarPerm extractEntry mode/z80/z80.js
+522 silly gunzTarPerm extractEntry src/codemirror.js
+523 silly gunzTarPerm extractEntry src/modes.js
+524 silly gunzTarPerm extractEntry src/display/Display.js
+525 silly gunzTarPerm extractEntry src/display/line_numbers.js
+526 silly gunzTarPerm extractEntry src/display/mode_state.js
+527 silly gunzTarPerm extractEntry src/display/operations.js
+528 silly gunzTarPerm extractEntry src/display/highlight_worker.js
+529 silly gunzTarPerm extractEntry src/display/scrollbars.js
+530 silly gunzTarPerm extractEntry src/display/scrolling.js
+531 silly gunzTarPerm extractEntry src/display/selection.js
+532 silly gunzTarPerm extractEntry src/display/update_display.js
+533 silly gunzTarPerm extractEntry src/display/update_line.js
+534 silly gunzTarPerm extractEntry src/display/gutters.js
+535 silly gunzTarPerm extractEntry src/display/update_lines.js
+536 silly gunzTarPerm extractEntry src/display/focus.js
+537 silly gunzTarPerm extractEntry src/display/view_tracking.js
+538 silly gunzTarPerm extractEntry src/display/scroll_events.js
+539 silly gunzTarPerm extractEntry src/edit/CodeMirror.js
+540 silly gunzTarPerm extractEntry src/edit/drop_events.js
+541 silly gunzTarPerm extractEntry src/edit/fromTextArea.js
+542 silly gunzTarPerm extractEntry src/edit/global_events.js
+543 silly gunzTarPerm extractEntry src/edit/deleteNearSelection.js
+544 silly gunzTarPerm extractEntry src/edit/legacy.js
+545 silly gunzTarPerm extractEntry src/edit/main.js
+546 silly gunzTarPerm extractEntry src/edit/methods.js
+547 silly gunzTarPerm extractEntry src/edit/mouse_events.js
+548 silly gunzTarPerm extractEntry src/edit/options.js
+549 silly gunzTarPerm extractEntry src/edit/commands.js
+550 silly gunzTarPerm extractEntry src/edit/utils.js
+551 silly gunzTarPerm extractEntry src/edit/key_events.js
+552 silly gunzTarPerm extractEntry src/input/ContentEditableInput.js
+553 silly gunzTarPerm extractEntry src/input/TextareaInput.js
+554 silly gunzTarPerm extractEntry src/input/indent.js
+555 silly gunzTarPerm extractEntry src/input/input.js
+556 silly gunzTarPerm extractEntry src/input/keymap.js
+557 silly gunzTarPerm extractEntry src/input/keynames.js
+558 silly gunzTarPerm extractEntry src/input/movement.js
+559 silly gunzTarPerm extractEntry src/line/highlight.js
+560 silly gunzTarPerm extractEntry src/line/line_data.js
+561 silly gunzTarPerm extractEntry src/line/pos.js
+562 silly gunzTarPerm extractEntry src/line/saw_special_spans.js
+563 silly gunzTarPerm extractEntry src/line/spans.js
+564 silly gunzTarPerm extractEntry src/line/utils_line.js
+565 silly gunzTarPerm extractEntry src/measurement/position_measurement.js
+566 silly gunzTarPerm extractEntry src/measurement/widgets.js
+567 silly gunzTarPerm extractEntry src/model/Doc.js
+568 silly gunzTarPerm extractEntry src/model/change_measurement.js
+569 silly gunzTarPerm extractEntry src/model/changes.js
+570 silly gunzTarPerm extractEntry src/model/chunk.js
+571 silly gunzTarPerm extractEntry src/model/document_data.js
+572 silly gunzTarPerm extractEntry src/model/history.js
+573 silly gunzTarPerm extractEntry src/model/line_widget.js
+574 silly gunzTarPerm extractEntry src/model/mark_text.js
+575 silly gunzTarPerm extractEntry src/model/selection.js
+576 silly gunzTarPerm extractEntry src/model/selection_updates.js
+577 silly gunzTarPerm extractEntry src/util/StringStream.js
+578 silly gunzTarPerm extractEntry src/util/bidi.js
+579 silly gunzTarPerm extractEntry src/util/browser.js
+580 silly gunzTarPerm extractEntry src/util/dom.js
+581 silly gunzTarPerm extractEntry src/util/event.js
+582 silly gunzTarPerm extractEntry src/util/feature_detection.js
+583 silly gunzTarPerm extractEntry src/util/misc.js
+584 silly gunzTarPerm extractEntry src/util/operation_group.js
+585 silly gunzTarPerm extractEntry theme/mdn-like.css
+586 silly gunzTarPerm extractEntry theme/3024-day.css
+587 silly gunzTarPerm extractEntry theme/abcdef.css
+588 silly gunzTarPerm extractEntry theme/ambiance-mobile.css
+589 silly gunzTarPerm extractEntry theme/ambiance.css
+590 silly gunzTarPerm extractEntry theme/base16-dark.css
+591 silly gunzTarPerm extractEntry theme/base16-light.css
+592 silly gunzTarPerm extractEntry theme/bespin.css
+593 silly gunzTarPerm extractEntry theme/blackboard.css
+594 silly gunzTarPerm extractEntry theme/cobalt.css
+595 silly gunzTarPerm extractEntry theme/colorforth.css
+596 silly gunzTarPerm extractEntry theme/dracula.css
+597 silly gunzTarPerm extractEntry theme/duotone-dark.css
+598 silly gunzTarPerm extractEntry theme/duotone-light.css
+599 silly gunzTarPerm extractEntry theme/eclipse.css
+600 silly gunzTarPerm extractEntry theme/elegant.css
+601 silly gunzTarPerm extractEntry theme/erlang-dark.css
+602 silly gunzTarPerm extractEntry theme/hopscotch.css
+603 silly gunzTarPerm extractEntry theme/icecoder.css
+604 silly gunzTarPerm extractEntry theme/isotope.css
+605 silly gunzTarPerm extractEntry theme/lesser-dark.css
+606 silly gunzTarPerm extractEntry theme/liquibyte.css
+607 silly gunzTarPerm extractEntry theme/material.css
+608 silly gunzTarPerm extractEntry theme/mbo.css
+609 silly gunzTarPerm extractEntry theme/3024-night.css
+610 silly gunzTarPerm extractEntry theme/midnight.css
+611 silly gunzTarPerm extractEntry theme/monokai.css
+612 silly gunzTarPerm extractEntry theme/neat.css
+613 silly gunzTarPerm extractEntry theme/neo.css
+614 silly gunzTarPerm extractEntry theme/night.css
+615 silly gunzTarPerm extractEntry theme/panda-syntax.css
+616 silly gunzTarPerm extractEntry theme/paraiso-dark.css
+617 silly gunzTarPerm extractEntry theme/paraiso-light.css
+618 silly gunzTarPerm extractEntry theme/pastel-on-dark.css
+619 silly gunzTarPerm extractEntry theme/railscasts.css
+620 silly gunzTarPerm extractEntry theme/rubyblue.css
+621 silly gunzTarPerm extractEntry theme/seti.css
+622 silly gunzTarPerm extractEntry theme/solarized.css
+623 silly gunzTarPerm extractEntry theme/the-matrix.css
+624 silly gunzTarPerm extractEntry theme/tomorrow-night-bright.css
+625 silly gunzTarPerm extractEntry theme/tomorrow-night-eighties.css
+626 silly gunzTarPerm extractEntry theme/ttcn.css
+627 silly gunzTarPerm extractEntry theme/twilight.css
+628 silly gunzTarPerm extractEntry theme/vibrant-ink.css
+629 silly gunzTarPerm extractEntry theme/xq-dark.css
+630 silly gunzTarPerm extractEntry theme/xq-light.css
+631 silly gunzTarPerm extractEntry theme/yeti.css
+632 silly gunzTarPerm extractEntry theme/zenburn.css
+633 silly gentlyRm /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309/node_modules is being purged
+634 verbose gentlyRm don't care about contents; nuking /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309/node_modules
+635 silly doParallel preinstall 4
+636 silly preinstall codemirror@5.27.4 /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309
+637 info lifecycle codemirror@5.27.4~preinstall: codemirror@5.27.4
+638 silly preinstall lodash.debounce@4.0.8 /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.debounce-475f34a8
+639 info lifecycle lodash.debounce@4.0.8~preinstall: lodash.debounce@4.0.8
+640 silly preinstall lodash.isequal@4.5.0 /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/lodash.isequal-d7cd8970
+641 info lifecycle lodash.isequal@4.5.0~preinstall: lodash.isequal@4.5.0
+642 silly preinstall react-codemirror@1.0.0 /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/react-codemirror-f58997ce
+643 info lifecycle react-codemirror@1.0.0~preinstall: react-codemirror@1.0.0
+644 silly lifecycle codemirror@5.27.4~preinstall: no script for preinstall, continuing
+645 silly lifecycle lodash.debounce@4.0.8~preinstall: no script for preinstall, continuing
+646 silly lifecycle lodash.isequal@4.5.0~preinstall: no script for preinstall, continuing
+647 silly lifecycle react-codemirror@1.0.0~preinstall: no script for preinstall, continuing
+648 silly doReverseSerial remove 0
+649 silly doSerial move 0
+650 silly doSerial finalize 4
+651 silly finalize /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/codemirror
+652 verbose unlock done using /home/rudic/.npm/_locks/staging-1798c1f7566d13f1.lock for /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging
+653 silly rollbackFailedOptional Starting
+654 silly rollbackFailedOptional Finishing
+655 silly runTopLevelLifecycles Finishing
+656 silly install printInstalled
+657 warn optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules/chokidar/node_modules/fsevents):
+658 warn notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+659 verbose notsup SKIPPING OPTIONAL DEPENDENCY: Valid OS:    darwin
+659 verbose notsup SKIPPING OPTIONAL DEPENDENCY: Valid Arch:  any
+659 verbose notsup SKIPPING OPTIONAL DEPENDENCY: Actual OS:   linux
+659 verbose notsup SKIPPING OPTIONAL DEPENDENCY: Actual Arch: x64
+660 verbose stack Error: EACCES: permission denied, rename '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309' -> '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/codemirror'
+660 verbose stack     at destStatted (/usr/lib/node_modules/npm/lib/install/action/finalize.js:25:7)
+660 verbose stack     at /usr/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:264:29
+660 verbose stack     at FSReqWrap.oncomplete (fs.js:123:15)
+660 verbose stack
+660 verbose stack Error: EACCES: permission denied, rename '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309' -> '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/codemirror'
+660 verbose stack     at Error (native)
+661 verbose cwd /mnt/c/Users/rudic/Documents/Coding/alchemy_book/web/static/fonts
+662 error Linux 4.4.0-43-Microsoft
+663 error argv "/usr/bin/nodejs" "/usr/bin/npm" "install" "--save" "react-codemirror"
+664 error node v6.10.3
+665 error npm  v3.10.10
+666 error path /mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309
+667 error code EACCES
+668 error errno -13
+669 error syscall rename
+670 error Error: EACCES: permission denied, rename '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309' -> '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/codemirror'
+670 error     at destStatted (/usr/lib/node_modules/npm/lib/install/action/finalize.js:25:7)
+670 error     at /usr/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:264:29
+670 error     at FSReqWrap.oncomplete (fs.js:123:15)
+670 error
+670 error Error: EACCES: permission denied, rename '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309' -> '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/codemirror'
+670 error     at Error (native)
+670 error  Error: EACCES: permission denied, rename '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309' -> '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/codemirror'
+670 error     at destStatted (/usr/lib/node_modules/npm/lib/install/action/finalize.js:25:7)
+670 error     at /usr/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:264:29
+670 error     at FSReqWrap.oncomplete (fs.js:123:15)
+670 error
+670 error Error: EACCES: permission denied, rename '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/.staging/codemirror-ec360309' -> '/mnt/c/Users/rudic/Documents/Coding/alchemy_book/node_modules/codemirror'
+670 error     at Error (native)
+671 error Please try running this command again as root/Administrator.
+672 verbose exit [ -13, true ]

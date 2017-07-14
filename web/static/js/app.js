@@ -20,15 +20,9 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
-import React from "react"
-import ReactDOM from "react-dom"
+import renderEditor from "./editor"
 
-import Editor from "./editor"
-
-var editor = document.getElementById("editor")
+const editor = document.getElementById("editor");
 if (editor) {
-    ReactDOM.render(
-        (<div><Editor/></div>),
-        document.getElementById("editor")
-    )
+    renderEditor(editor);
 }
