@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@types/react": "^15.0.37",
+    "@types/react-codemirror": "^0.2.7",
     "@types/react-dom": "^15.5.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",

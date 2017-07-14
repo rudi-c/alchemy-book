@@ -1,5 +1,4 @@
 const path = require("path")
-// const WebpackNotifierPlugin = require('webpack-notifier')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 
@@ -12,8 +11,6 @@ const config = {
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx"],
         modules: ["deps", "node_modules"]
-        // Needed?
-        // , path.resolve(__dirname, "./web/static/js")
     },
     module: {
         rules: [
@@ -39,7 +36,6 @@ const config = {
         ]
     },
     plugins: [
-        //new WebpackNotifierPlugin({ alwaysNotify: true }),
         new ExtractTextPlugin("css/app.css"),
         new CopyWebpackPlugin([{ from: "./web/static/assets" }])
     ]

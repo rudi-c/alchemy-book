@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "es6",
+    "target": "es2015",
+    "module": "es2015",
+    "jsx": "preserve",
     "baseUrl": "web/static/js",
+    "moduleResolution": "node",
     "outDir": "ts-build",
-    "jsx": "preserve"
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
       "node_modules"
