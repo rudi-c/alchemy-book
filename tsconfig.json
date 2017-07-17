@@ -6,6 +6,7 @@
     "baseUrl": "web/static/js",
     "moduleResolution": "node",
     "outDir": "ts-build",
+    "allowJs": true,
     "allowSyntheticDefaultImports": true
   },
   "exclude": [

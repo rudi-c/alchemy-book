@@ -2,7 +2,7 @@ defmodule AlchemyBook.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", AlchemyBook.RoomChannel
+  channel "documents:*", AlchemyBook.DocumentChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
