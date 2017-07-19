@@ -3,9 +3,11 @@ import * as ReactDOM from "react-dom"
 
 import socket from "./socket"
 
-import CodeMirror from "react-codemirror"
+import CodeMirror from "codemirror"
 
 require('codemirror/lib/codemirror.css');
+
+const ignoreRemote = "ignore_remote";
 
 class Editor extends React.Component<any, any> {
     constructor() {
@@ -16,25 +18,36 @@ class Editor extends React.Component<any, any> {
         channel.join()
           .receive("ok", resp => console.log("joined the video channel ", resp))
           .receive("error", reason => console.log("join failed ", reason))
+        channel.on("change", this.onRemoteChange)
 
         // TODO: Handle error
         this.state = {channel};
     }
 
-    onChange = (doc: string, change: ReactCodeMirror.Change) => {
-        console.log(doc)
-        console.log(change)
-        this.state.channel.push("change", change)
-                          .receive("error", e => console.log(e));
+    onRemoteChange = ({userId, change}) => {
+        const doc: CodeMirror.Doc = this.state.codemirror.getDoc();
+        doc.replaceRange(change.text, change.from, change.to, ignoreRemote);
+    }
+
+    onLocalChange = (doc: CodeMirror.Editor, change: CodeMirror.EditorChangeLinkedList) => {
+        // TODO: Handle error
+        if (change.origin !== ignoreRemote) {
+            this.state.channel.push("change", change)
+                            .receive("error", e => { throw e });
+        }
+    }
+
+    componentDidMount() {
+        const codemirror = CodeMirror.fromTextArea(ReactDOM.findDOMNode(this), { 
+            lineNumbers: true,
+            value: "Time to do some alchemy!"
+        });
+        codemirror.on("change", this.onLocalChange)
+        this.setState({ codemirror })
     }
 
     render() {
-        return (
-            <CodeMirror
-                value="Time to do some alchemy!"
-                options={{lineNumbers: true}} 
-                onChange={this.onChange}
-            />)
+        return (<textarea />)
     }
 }
 

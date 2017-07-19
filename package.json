@@ -7,16 +7,16 @@
   },
   "dependencies": {
     "babel-preset-react": "^6.24.1",
+    "codemirror": "^5.27.4",
     "phoenix": "file:deps/phoenix",
     "phoenix_html": "file:deps/phoenix_html",
     "react": "^15.6.1",
-    "react-codemirror": "^1.0.0",
     "react-dom": "^15.6.1"
   },
   "devDependencies": {
+    "@types/codemirror": "0.0.42",
     "@types/phoenix": "0.0.4",
     "@types/react": "^15.0.37",
-    "@types/react-codemirror": "^0.2.7",
     "@types/react-dom": "^15.5.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
