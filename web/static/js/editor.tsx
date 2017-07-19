@@ -7,18 +7,20 @@ import CodeMirror from "codemirror"
 
 require('codemirror/lib/codemirror.css');
 
+// Needed for testing conflicts when you only have one keyboard
+const artificialDelay = 3 * 1000;
 const ignoreRemote = "ignore_remote";
 
 class Editor extends React.Component<any, any> {
     constructor() {
-        super()
+        super();
 
         socket.connect();
         const channel = socket.channel("documents:1");
         channel.join()
           .receive("ok", resp => console.log("joined the video channel ", resp))
-          .receive("error", reason => console.log("join failed ", reason))
-        channel.on("change", this.onRemoteChange)
+          .receive("error", reason => console.log("join failed ", reason));
+        channel.on("change", this.onRemoteChange);
 
         // TODO: Handle error
         this.state = {channel};
@@ -32,22 +34,24 @@ class Editor extends React.Component<any, any> {
     onLocalChange = (doc: CodeMirror.Editor, change: CodeMirror.EditorChangeLinkedList) => {
         // TODO: Handle error
         if (change.origin !== ignoreRemote) {
-            this.state.channel.push("change", change)
-                            .receive("error", e => { throw e });
+            setTimeout(() => {
+                this.state.channel.push("change", change)
+                                  .receive("error", e => { throw e });
+            }, artificialDelay);
         }
     }
 
     componentDidMount() {
         const codemirror = CodeMirror.fromTextArea(ReactDOM.findDOMNode(this), { 
             lineNumbers: true,
-            value: "Time to do some alchemy!"
         });
-        codemirror.on("change", this.onLocalChange)
-        this.setState({ codemirror })
+        codemirror.setValue("Time to do some alchemy!");
+        codemirror.on("change", this.onLocalChange);
+        this.setState({ codemirror });
     }
 
     render() {
-        return (<textarea />)
+        return (<textarea />);
     }
 }
 
@@ -55,5 +59,5 @@ export default function renderEditor(domNode) {
     ReactDOM.render(
         <Editor/>,
         domNode
-    )
+    );
 }
