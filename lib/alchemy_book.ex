@@ -12,6 +12,7 @@ defmodule AlchemyBook do
       supervisor(AlchemyBook.Repo, []),
       # Start the endpoint when the application starts
       supervisor(AlchemyBook.Endpoint, []),
+      supervisor(AlchemyBook.DocumentRegistry, []),
       # Start your own worker by calling: AlchemyBook.Worker.start_link(arg1, arg2, arg3)
       # worker(AlchemyBook.Worker, [arg1, arg2, arg3]),
     ]

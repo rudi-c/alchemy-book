@@ -1,9 +1,14 @@
 defmodule AlchemyBook.DocumentChannel do
     use AlchemyBook.Web, :channel
 
+    alias AlchemyBook.Document
+    alias AlchemyBook.DocumentRegistry
+    alias AlchemyBook.DocumentSession
+
     intercept ["change"]
 
     def join("documents:" <> document_id, _params, socket) do
+        send(self(), :after_join)
         {:ok, assign(socket, :document_id, String.to_integer(document_id))}
     end
 
@@ -22,6 +27,15 @@ defmodule AlchemyBook.DocumentChannel do
         if payload[:user_id] != socket.assigns.user_id do
             push socket, "change", payload
         end
+        {:noreply, socket}
+    end
+
+    def handle_info(:after_join, socket) do
+        init_value = 
+            DocumentRegistry.lookup(socket.assigns.document_id)
+            |> DocumentSession.get
+            |> Document.crdt_to_json_ready
+        push socket, "init", %{ state: init_value }
         {:noreply, socket}
     end
 end

@@ -19,8 +19,7 @@ defmodule AlchemyBook.DocumentController do
     #changeset = Document.changeset(%Document{})
     #render(conn, "new.html", changeset: changeset)
 
-    default = %{ "title" => "untitled", "contents" => "" }
-    create(conn, %{ "document" => default }, user)
+    create(conn, %{ "document" => Document.default() }, user)
   end
 
   def create(conn, params = %{"document" => document_params}, user) do
