@@ -8,6 +8,7 @@
   "dependencies": {
     "babel-preset-react": "^6.24.1",
     "codemirror": "^5.27.4",
+    "immutable": "^3.8.1",
     "phoenix": "file:deps/phoenix",
     "phoenix_html": "file:deps/phoenix_html",
     "react": "^15.6.1",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@types/codemirror": "0.0.42",
+    "@types/immutable": "^3.8.7",
     "@types/phoenix": "0.0.4",
     "@types/react": "^15.0.37",
     "@types/react-dom": "^15.5.1",

@@ -1,22 +1,16 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 
-import socket from "./socket"
-
 import CodeMirror from "codemirror"
+
+import { Crdt } from "./crdt"
+import socket from "./socket"
 
 require('codemirror/lib/codemirror.css');
 
 // Needed for testing conflicts when you only have one keyboard
 const artificialDelay = 3 * 1000;
 const ignoreRemote = "ignore_remote";
-
-function crdt_to_string(crdt: [[number, number], string][]) {
-    return crdt.map(elem => {
-        const [_, char] = elem;
-        return char;
-    }).join("");
-}
 
 class Editor extends React.Component<any, any> {
     constructor() {
@@ -25,6 +19,10 @@ class Editor extends React.Component<any, any> {
         const url = window.location.pathname;
         const documentId = url.substring(url.lastIndexOf('/') + 1);
         this.state = { documentId };
+    }
+
+    updateCrdtFromLocal(crdt: Crdt.t, change: CodeMirror.EditorChangeLinkedList) {
+
     }
 
     onRemoteChange = ({userId, change}) => {
@@ -36,6 +34,7 @@ class Editor extends React.Component<any, any> {
         // TODO: Handle error
         if (change.origin !== ignoreRemote && change.origin !== "setValue") {
             setTimeout(() => {
+                this.setState(previousState => ({ crdt: this.updateCrdtFromLocal(previousState.crdt, change) })) 
                 this.state.channel.push("change", change)
                                   .receive("error", e => { throw e });
             }, artificialDelay);
@@ -43,9 +42,9 @@ class Editor extends React.Component<any, any> {
     }
 
     onInit = (resp) => {
-        const crdt = resp.state;
-        this.setState({ crdt })
-        this.state.codemirror.setValue(crdt_to_string(crdt));
+        const crdt: Crdt.t = resp.state;
+        this.setState({ crdt });
+        this.state.codemirror.setValue(Crdt.to_string(crdt));
     }
 
     componentDidMount() {
