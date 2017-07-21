@@ -4,64 +4,54 @@ import * as ReactDOM from "react-dom"
 import CodeMirror from "codemirror"
 
 import { Crdt } from "./crdt"
-import socket from "./socket"
+import EditorSocket from "./editor-socket"
 
 require('codemirror/lib/codemirror.css');
 
-// Needed for testing conflicts when you only have one keyboard
-const artificialDelay = 3 * 1000;
 const ignoreRemote = "ignore_remote";
 
+// Yes, React is completely unecessary right now
 class Editor extends React.Component<any, any> {
+    editorSocket: EditorSocket
+    crdt: Crdt.t
+    lamport: number
+    codemirror: CodeMirror.Editor
+
     constructor() {
         super();
 
         const url = window.location.pathname;
         const documentId = url.substring(url.lastIndexOf('/') + 1);
+        this.editorSocket = new EditorSocket(documentId, this.onInit, this.onRemoteChange);
         this.state = { documentId };
-    }
-
-    updateCrdtFromLocal(crdt: Crdt.t, change: CodeMirror.EditorChangeLinkedList) {
-
-    }
-
-    onRemoteChange = ({userId, change}) => {
-        const doc: CodeMirror.Doc = this.state.codemirror.getDoc();
-        doc.replaceRange(change.text, change.from, change.to, ignoreRemote);
     }
 
     onLocalChange = (doc: CodeMirror.Editor, change: CodeMirror.EditorChangeLinkedList) => {
         // TODO: Handle error
         if (change.origin !== ignoreRemote && change.origin !== "setValue") {
-            setTimeout(() => {
-                this.setState(previousState => ({ crdt: this.updateCrdtFromLocal(previousState.crdt, change) })) 
-                this.state.channel.push("change", change)
-                                  .receive("error", e => { throw e });
-            }, artificialDelay);
+            this.lamport = this.lamport + 1;
+            this.editorSocket.sendChange(change, this.lamport);
         }
     }
 
+    onRemoteChange = ({userId, change, lamport}) => {
+        this.lamport = Math.max(this.lamport, lamport) + 1;
+        this.codemirror.getDoc().replaceRange(change.text, change.from, change.to, ignoreRemote);
+    }
+
     onInit = (resp) => {
-        const crdt: Crdt.t = resp.state;
-        this.setState({ crdt });
-        this.state.codemirror.setValue(Crdt.to_string(crdt));
+        this.crdt = resp.state;
+        this.lamport = 0;
+        this.codemirror.setValue(Crdt.to_string(this.crdt));
     }
 
     componentDidMount() {
-        socket.connect();
-        const channel = socket.channel("documents:" + this.state.documentId);
-        channel.join()
-          .receive("ok", resp => console.log("joined"))
-          .receive("error", reason => console.log("join failed ", reason));
-        channel.on("init", this.onInit);
-        channel.on("change", this.onRemoteChange);
+        this.editorSocket.connect();
 
-        const codemirror = CodeMirror.fromTextArea(ReactDOM.findDOMNode(this), { 
+        this.codemirror = CodeMirror.fromTextArea(ReactDOM.findDOMNode(this), { 
             lineNumbers: true,
         });
-        codemirror.on("change", this.onLocalChange);
-
-        this.setState({ channel, codemirror });
+        this.codemirror.on("change", this.onLocalChange);
     }
 
     render() {

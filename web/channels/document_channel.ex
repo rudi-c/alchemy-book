@@ -17,7 +17,8 @@ defmodule AlchemyBook.DocumentChannel do
         broadcast! socket, "change", %{
             user_id: socket.assigns.user_id,
             # TODO: probably should do some input validation
-            change: params
+            change: params["change"],
+            lamport: params["lamport"]
         }
         {:reply, :ok, socket}
     end

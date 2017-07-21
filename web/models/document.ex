@@ -41,8 +41,8 @@ defmodule AlchemyBook.Document do
   end
 
   def crdt_to_json_ready(crdt) do 
+    IO.puts inspect crdt
     crdt
-    |> Enum.concat
     |> Enum.map(fn {position_identifier, char} ->
       [Enum.map(position_identifier, fn {pos, site} -> [pos, site] end), char]
     end)
