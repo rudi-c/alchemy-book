@@ -30,8 +30,8 @@ defmodule AlchemyBook.Document do
   def json_to_crdt(json) do
     json
     |> Poison.decode!
-    |> Enum.map(fn [position_identifier, char] ->
-      {Enum.map(position_identifier, fn [pos, site] -> {pos, site} end), char}
+    |> Enum.map(fn [position_identifier, lamport, char] ->
+      {Enum.map(position_identifier, fn [pos, site] -> {pos, site} end), lamport, char}
     end)
   end
 
@@ -43,8 +43,8 @@ defmodule AlchemyBook.Document do
   def crdt_to_json_ready(crdt) do 
     IO.puts inspect crdt
     crdt
-    |> Enum.map(fn {position_identifier, char} ->
-      [Enum.map(position_identifier, fn {pos, site} -> [pos, site] end), char]
+    |> Enum.map(fn {position_identifier, lamport, char} ->
+      [Enum.map(position_identifier, fn {pos, site} -> [pos, site] end), lamport, char]
     end)
   end
 
@@ -60,7 +60,7 @@ defmodule AlchemyBook.Document do
     |> Enum.with_index
     |> Enum.map(fn {char, index} ->
       identifier = { trunc(index / String.length(string) * @crdt_base), @default_site }
-      { [identifier], to_string([char]) }
+      { [identifier], index, to_string([char]) }
     end)
   end
 

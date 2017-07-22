@@ -8,7 +8,7 @@ import EditorSocket from "./editor-socket"
 
 require('codemirror/lib/codemirror.css');
 
-const ignoreRemote = "ignore_remote";
+const IgnoreRemote = "ignore_remote";
 
 // Yes, React is completely unecessary right now
 class Editor extends React.Component<any, any> {
@@ -26,21 +26,28 @@ class Editor extends React.Component<any, any> {
         this.state = { documentId };
     }
 
-    onLocalChange = (doc: CodeMirror.Editor, change: CodeMirror.EditorChangeLinkedList) => {
+    onLocalChange = (doc: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
         // TODO: Handle error
-        if (change.origin !== ignoreRemote && change.origin !== "setValue") {
+        if (change.origin !== IgnoreRemote && change.origin !== "setValue") {
             this.lamport = this.lamport + 1;
-            this.editorSocket.sendChange(change, this.lamport);
+            const [newCrdt, changes] = Crdt.updateAndConvertLocalToRemote(this.crdt, change);
+            this.crdt = newCrdt;
+            changes.forEach(change => this.editorSocket.sendChange(change, this.lamport));
         }
     }
 
     onRemoteChange = ({userId, change, lamport}) => {
         this.lamport = Math.max(this.lamport, lamport) + 1;
-        this.codemirror.getDoc().replaceRange(change.text, change.from, change.to, ignoreRemote);
+        const [newCrdt, localChange] = Crdt.updateAndConvertRemoteToLocal(this.crdt, change);
+        this.crdt = newCrdt;
+        // TODO: deal with multiple lines
+        if (localChange) {
+            this.codemirror.getDoc().replaceRange(localChange.text, localChange.from, localChange.to, IgnoreRemote);
+        }
     }
 
     onInit = (resp) => {
-        this.crdt = resp.state;
+        this.crdt = Crdt.init(resp.state);
         this.lamport = 0;
         this.codemirror.setValue(Crdt.to_string(this.crdt));
     }

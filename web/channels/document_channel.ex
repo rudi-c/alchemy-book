@@ -15,7 +15,7 @@ defmodule AlchemyBook.DocumentChannel do
     def handle_in("change", params, socket) do
         IO.puts inspect params
         broadcast! socket, "change", %{
-            user_id: socket.assigns.user_id,
+            userId: socket.assigns.user_id,
             # TODO: probably should do some input validation
             change: params["change"],
             lamport: params["lamport"]
@@ -25,7 +25,7 @@ defmodule AlchemyBook.DocumentChannel do
 
     def handle_out("change", payload, socket) do
         # Don't send a change event to the originator of the change event
-        if payload[:user_id] != socket.assigns.user_id do
+        if payload[:userId] != socket.assigns.user_id do
             push socket, "change", payload
         end
         {:noreply, socket}
