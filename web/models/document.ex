@@ -23,7 +23,7 @@ defmodule AlchemyBook.Document do
 
   def default() do
     %{ "title" => "untitled", 
-       "contents" => crdt_to_json(string_to_crdt("Time to do some alchemy!"))
+       "contents" => crdt_to_json(string_to_crdt("Time to do some alchemy!\nReady to have some fun?"))
     }
   end
 

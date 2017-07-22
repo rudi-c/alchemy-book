@@ -40,7 +40,6 @@ class Editor extends React.Component<any, any> {
         this.lamport = Math.max(this.lamport, lamport) + 1;
         const [newCrdt, localChange] = Crdt.updateAndConvertRemoteToLocal(this.crdt, change);
         this.crdt = newCrdt;
-        // TODO: deal with multiple lines
         if (localChange) {
             this.codemirror.getDoc().replaceRange(localChange.text, localChange.from, localChange.to, IgnoreRemote);
         }

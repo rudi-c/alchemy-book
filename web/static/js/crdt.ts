@@ -1,4 +1,4 @@
-import * as Immutable from 'immutable'
+import { List } from 'immutable'
 
 import CodeMirror from "codemirror"
 
@@ -116,7 +116,7 @@ export module Crdt {
             return obj;
         }
     }
-    export type t = Immutable.List<Immutable.List<Char.t>>
+    export type t = List<List<Char.t>>
 
     export function updateAndConvertLocalToRemote(crdt: t, change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
         switch (change.origin) {
@@ -142,11 +142,16 @@ export module Crdt {
                 const [line, ch, found] = findPosition(crdt, char);
                 if (found === "found" && Char.equals(crdt.get(line).get(ch), char)) {
                     const newLine = crdt.get(line).remove(ch);
-                    if (newLine.isEmpty()) {
-                        // TODO: deal with empty lines
-                        throw "TODO";
+                    const nextLine = crdt.get(line + 1);
+
+                    let updatedCrdt;
+                    if (findNewline(newLine) < 0 && nextLine) {
+                        // Newline character was removed, need to join with the next line
+                        const change = LocalChange.create({line, ch}, {line: line + 1, ch: 0}, "");
+                        return [crdt.splice(line, 2, newLine.concat(nextLine)).toList(), change];
                     } else {
-                        return [crdt.set(line, newLine), LocalChange.create({line, ch}, {line, ch: ch+1}, "")];
+                        const change = LocalChange.create({line, ch}, {line, ch: ch+1}, "");
+                        return [crdt.set(line, newLine), change];
                     }
                 } else {
                     return [crdt, null];
@@ -157,14 +162,14 @@ export module Crdt {
     }
 
     export function init(init: Char.Serial[]): t {
-        let line: Immutable.List<Char.t> = Immutable.List();
-        let lines: t = Immutable.List();
+        let line: List<Char.t> = List();
+        let lines: t = List();
         init.forEach(serial => {
             const char = Char.ofArray(serial);
             if (char.value === "\n") {
                 line = line.push(char);
                 lines = lines.push(line);
-                line = Immutable.List();
+                line = List();
             } else {
                 line = line.push(char);
             }
@@ -176,17 +181,52 @@ export module Crdt {
         return crdt.map(line => line!.map(char => char!.value).join("")).join("");
     }
 
+    function findNewline(line: List<Char.t>): number {
+        return line.findIndex(char => char!.value === '\n');
+    }
+
     function updateCrdtRemove(crdt: t, change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
-        // TODO: multiple lines
-        // TODO: what is "to" and "from" are inverted?
-        const line = crdt.get(change.from.line);
-        const toRemove = line.slice(change.from.ch, change.to.ch).map(RemoteChange.remove);
-        if (toRemove.size !== Math.abs(change.from.ch - change.to.ch)) {
-            throw "size does not match"
+        if (change.from.line > change.to.line || (change.from.line === change.to.line && change.from.ch > change.to.ch)) {
+            throw "TODO: handle inverted from/to"
         }
-        // TODO: what's up with the indexed type?
-        const updatedLine = line.splice(change.from.ch, change.to.ch - change.from.ch) as any;
-        return [crdt.set(change.from.line, updatedLine), toRemove.toArray()];
+
+        const lines = crdt.slice(change.from.line, change.to.line + 1);
+        
+        const linesAndUpdates = lines.map((line, index) => {
+            let startIndex;
+            let endIndex;
+            if (index == 0) {
+                // First line
+                startIndex = change.from.ch;
+            } else {
+                startIndex = 0;
+            }
+            if (index === lines.size - 1) {
+                // Last line
+                endIndex = change.to.ch;
+            } else {
+                endIndex = line!.size;
+            }
+            const toRemove = line!.slice(startIndex, endIndex).map(RemoteChange.remove);
+            if (toRemove.size !== endIndex - startIndex) {
+                throw "size does not match";
+            }
+            const updatedLine = line!.splice(startIndex, endIndex - startIndex).toList();
+            return [updatedLine, toRemove] as [List<Char.t>, List<RemoteChange.t>];
+        });
+        const updatedLines = linesAndUpdates.map(tuple => tuple![0]);
+        const toRemove = linesAndUpdates.flatMap(tuple => tuple![1]);
+
+        // Only the first and last line should be non-empty, so we just keep those.
+        let newCrdt;
+        if (lines.size == 1) {
+            newCrdt = crdt.set(change.from.line, updatedLines.first());
+        } else {
+            const remainingLine = updatedLines.first().concat(updatedLines.last());
+            newCrdt = crdt.splice(change.from.line, lines.size, remainingLine).toList();
+        }
+
+        return [newCrdt, toRemove.toArray()];
     }
 
     function updateCrdtInsert(crdt: t, change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
@@ -214,7 +254,7 @@ export module Crdt {
     // Return the index of the item if found
     // If not found, return the index of the character where it should be if inserted when using "at"
     //               return the index of the character that precedes it when using "before"
-    function binarySearch<U, V>(list: Immutable.List<U>, 
+    function binarySearch<U, V>(list: List<U>, 
                                 item: V, 
                                 comparator: (a: V, b: U) => number,
                                 notFoundBehavior: "at" | "before"): number {
