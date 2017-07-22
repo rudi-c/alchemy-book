@@ -173,7 +173,7 @@ export module Crdt {
     }
 
     export function to_string(crdt: t): string {
-        return crdt.map(line => line.map(char => char.value).join("")).join("");
+        return crdt.map(line => line!.map(char => char!.value).join("")).join("");
     }
 
     function updateCrdtRemove(crdt: t, change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {

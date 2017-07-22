@@ -7,7 +7,8 @@
     "moduleResolution": "node",
     "outDir": "ts-build",
     "allowJs": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true
   },
   "exclude": [
       "node_modules"
