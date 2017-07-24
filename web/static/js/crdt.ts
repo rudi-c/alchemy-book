@@ -1,13 +1,13 @@
-import { List } from 'immutable'
+import { List } from "immutable";
 
-import CodeMirror from "codemirror"
+import CodeMirror from "codemirror";
 
-export module Crdt {
-    export module Char {
-        export module Identifier {
-            export type t = {
-                pos: number
-                site: number
+export namespace Crdt {
+    export namespace Char {
+        export namespace Identifier {
+            export interface t {
+                pos: number;
+                site: number;
             }
             export const BASE = 256;
 
@@ -45,13 +45,13 @@ export module Crdt {
                 return i1.pos === i2.pos && i1.site === i2.site;
             }
         }
-        export type t = {
-            position: Identifier.t[]
-            lamport: number
-            value: string
+        export interface t {
+            position: Identifier.t[];
+            lamport: number;
+            value: string;
         }
 
-        export type Serial = [[number, number][], number, string]
+        export type Serial = [Array<[number, number]>, number, string];
 
         export function create(position: Identifier.t[], lamport: number, value: string) {
             const obj = { position, lamport, value };
@@ -60,11 +60,11 @@ export module Crdt {
         }
 
         export function startOfFile(): t {
-            return create([Identifier.create(0, 0)], 0, '^');
+            return create([Identifier.create(0, 0)], 0, "^");
         }
 
         export function endOfFile(): t {
-            return create([Identifier.create(Identifier.BASE, 0)], 0, '$');
+            return create([Identifier.create(Identifier.BASE, 0)], 0, "$");
         }
 
         export function ofArray(array: Serial): t {
@@ -153,7 +153,7 @@ export module Crdt {
             return diff;
         }
 
-        // Calculate (n1 + n2) where we are guaranteed that n2 << n1 such that 
+        // Calculate (n1 + n2) where we are guaranteed that n2 << n1 such that
         // (n1 + n2) will not have more digits than n1.
         function addNoCarry(n1: number[], n2: number[]): number[] {
             let carry = 0;
@@ -164,7 +164,7 @@ export module Crdt {
                 diff.push(sum % Identifier.BASE);
             }
             if (carry !== 0) {
-                throw "there should be no carry"
+                throw new Error("there should be no carry");
             }
             return diff;
         }
@@ -173,7 +173,7 @@ export module Crdt {
         // do integer truncation (don't add more digits)
         function pseudoIntegerDivision(dividend: number[], divisor: number): number[] {
             if (Identifier.BASE % divisor != 0) {
-                throw "expected divisor to be a factor of base"
+                throw new Error("expected divisor to be a factor of base");
             }
             let carry = 0;
             return dividend.map(digit => {
@@ -196,16 +196,16 @@ export module Crdt {
 
         function needsNewDigit(n: number[], requiredGap: number) {
             if (n[n.length - 1] < requiredGap) {
-                const leadingZeroes = 
+                const leadingZeroes =
                     n.slice(0, n.length - 1)
-                     .every(digit => digit == 0)
+                     .every(digit => digit == 0);
                 return leadingZeroes;
             }
             return false;
         }
     }
-    export module RemoteChange {
-        export type t = ["add" | "remove", Char.t]
+    export namespace RemoteChange {
+        export type t = ["add" | "remove", Char.t];
 
         export function add(char: Char.t): t {
             return ["add", char];
@@ -214,12 +214,12 @@ export module Crdt {
             return ["remove", char];
         }
     }
-    export module LocalChange {
+    export namespace LocalChange {
         export type t = {
             from: CodeMirror.Position
             to: CodeMirror.Position
-            text: string
-        } | null
+            text: string,
+        } | null;
 
         export function create(from: CodeMirror.Position, to: CodeMirror.Position, text: string): t {
             const obj = { from, to, text };
@@ -227,10 +227,10 @@ export module Crdt {
             return obj;
         }
     }
-    export type t = List<List<Char.t>>
+    export type t = List<List<Char.t>>;
 
-    export function updateAndConvertLocalToRemote(crdt: t, lamport: number, 
-                                                  site: number, 
+    export function updateAndConvertLocalToRemote(crdt: t, lamport: number,
+                                                  site: number,
                                                   change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
         switch (change.origin) {
             case "+delete":
@@ -240,8 +240,8 @@ export module Crdt {
             case "paste":
                 const [updatedCrdt, removeChanges] = updateCrdtRemove(crdt, change);
 
-                // TODO: compare the character before and after the cursor. If 
-                // the positions match, then fractional indexing, doesn't work, 
+                // TODO: compare the character before and after the cursor. If
+                // the positions match, then fractional indexing, doesn't work,
                 // even with sites (won't guarantee order intention). Need to
                 // delete the after character and reinsert it with a different
                 // index.
@@ -249,15 +249,15 @@ export module Crdt {
                 const [finalCrdt, insertChanges] = updateCrdtInsert(updatedCrdt, lamport, site, change);
                 return [finalCrdt, removeChanges.concat(insertChanges)];
             default:
-                throw "Unknown change origin " + change.origin;
+                throw new Error("Unknown change origin " + change.origin);
         }
     }
 
     export function updateAndConvertRemoteToLocal(crdt: t, change: RemoteChange.t): [t, LocalChange.t] {
         const char = change[1];
-        switch(change[0]) {
+        switch (change[0]) {
             case "add":
-                throw "TODO";
+                throw new Error("TODO");
             case "remove":
                 const [line, ch, found] = findPosition(crdt, char);
                 if (found === "found" && Char.equals(crdt.get(line).get(ch), char)) {
@@ -270,13 +270,13 @@ export module Crdt {
                         const change = LocalChange.create({line, ch}, {line: line + 1, ch: 0}, "");
                         return [crdt.splice(line, 2, newLine.concat(nextLine)).toList(), change];
                     } else {
-                        const change = LocalChange.create({line, ch}, {line, ch: ch+1}, "");
+                        const change = LocalChange.create({line, ch}, {line, ch: ch + 1}, "");
                         return [crdt.set(line, newLine), change];
                     }
                 } else {
                     return [crdt, null];
                 }
-            default: throw "unknown remote change"
+            default: throw new Error("unknown remote change");
             //default: const _exhaustiveCheck: never = "never";
         }
     }
@@ -302,16 +302,16 @@ export module Crdt {
     }
 
     function findNewline(line: List<Char.t>): number {
-        return line.findIndex(char => char!.value === '\n');
+        return line.findIndex(char => char!.value === "\n");
     }
 
     function updateCrdtRemove(crdt: t, change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
         if (change.from.line > change.to.line || (change.from.line === change.to.line && change.from.ch > change.to.ch)) {
-            throw "TODO: handle inverted from/to"
+            throw new Error("TODO: handle inverted from/to");
         }
 
         const lines = crdt.slice(change.from.line, change.to.line + 1);
-        
+
         const linesAndUpdates = lines.map((line, index) => {
             let startIndex;
             let endIndex;
@@ -329,7 +329,7 @@ export module Crdt {
             }
             const toRemove = line!.slice(startIndex, endIndex).map(RemoteChange.remove);
             if (toRemove.size !== endIndex - startIndex) {
-                throw "size does not match";
+                throw new Error("size does not match");
             }
             const updatedLine = line!.splice(startIndex, endIndex - startIndex).toList();
             return [updatedLine, toRemove] as [List<Char.t>, List<RemoteChange.t>];
@@ -349,11 +349,11 @@ export module Crdt {
         return [newCrdt, toRemove.toArray()];
     }
 
-    function updateCrdtInsert(crdt: t, lamport: number, 
-                              site: number, 
+    function updateCrdtInsert(crdt: t, lamport: number,
+                              site: number,
                               change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
         if (change.from.line > change.to.line || (change.from.line === change.to.line && change.from.ch > change.to.ch)) {
-            throw "TODO: handle inverted from/to"
+            throw new Error("TODO: handle inverted from/to");
         }
 
         const { line: lineIndex, ch } = change.from;
@@ -361,20 +361,20 @@ export module Crdt {
         const before = line.slice(0, ch);
         const after = line.slice(ch, line.size);
 
-        // For now, just insert characters one at a time. Eventually, we may 
-        // want to generate fractional indices in a more clever way when many 
+        // For now, just insert characters one at a time. Eventually, we may
+        // want to generate fractional indices in a more clever way when many
         // characters are inserted at the same time.
         let previousChar = before.size > 0 ? before.last() : Char.startOfFile();
-        let nextChar = after.size > 0 ? after.first() : Char.endOfFile();
+        const nextChar = after.size > 0 ? after.first() : Char.endOfFile();
         let currentLine = before.toList();
-        let lines: List<Char.t>[] = [];
-        let remoteChanges: RemoteChange.t[] = [];
+        const lines: Array<List<Char.t>> = [];
+        const remoteChanges: RemoteChange.t[] = [];
         change.text.forEach(addedLine => {
             Array.from(addedLine).forEach(addedChar => {
                 const newPosition = Char.generatePositionBetween(previousChar, nextChar, site);
                 previousChar = Char.create(newPosition, lamport, addedChar);
                 currentLine = currentLine.push(previousChar);
-                if (addedChar === '\n') {
+                if (addedChar === "\n") {
                     lines.push(currentLine);
                     currentLine = List();
                 }
@@ -389,8 +389,8 @@ export module Crdt {
     }
 
     // If found: return the line number and column number of the character
-    // If not found: return the line number and column number of the character 
-    // where it should be if inserted 
+    // If not found: return the line number and column number of the character
+    // where it should be if inserted
     function findPosition(crdt: t, char: Char.t): [number, number, "found" | "not_found"] {
         // Putting something at the start of the first line (lineIndex == -1) should be in line 0
         const lineIndex = Math.max(0,
@@ -408,8 +408,8 @@ export module Crdt {
     // Return the index of the item if found
     // If not found, return the index of the character where it should be if inserted when using "at"
     //               return the index of the character that precedes it when using "before"
-    function binarySearch<U, V>(list: List<U>, 
-                                item: V, 
+    function binarySearch<U, V>(list: List<U>,
+                                item: V,
                                 comparator: (a: V, b: U) => number,
                                 notFoundBehavior: "at" | "before"): number {
         function _binarySearch<T>(start: number, end: number): number {
@@ -419,7 +419,7 @@ export module Crdt {
                         return start;
                     case "before":
                         return start - 1;
-                    default: throw "Unknown behavior"
+                    default: throw new Error("Unknown behavior");
                 }
             } else {
                 const mid = Math.floor((start + end) / 2);
