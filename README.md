@@ -20,5 +20,5 @@ npm install -g tslint typescript
 and run the linter with
 
 ```
-tslint -c tslint.json 'web/**/*.ts'
+npm run lint
 ```
