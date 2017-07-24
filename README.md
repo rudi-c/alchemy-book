@@ -22,3 +22,11 @@ and run the linter with
 ```
 npm run lint
 ```
+
+## Testing
+
+We use Ava
+
+```
+npm install -g ava
+```

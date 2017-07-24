@@ -5,12 +5,14 @@
     "jsx": "preserve",
     "baseUrl": "web/static/js",
     "moduleResolution": "node",
-    "outDir": "ts-build",
+    "outDir": "./ts-build",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true
   },
   "exclude": [
-      "node_modules"
+      "node_modules",
+      "priv",
+      "ts-build"
   ]
 }
