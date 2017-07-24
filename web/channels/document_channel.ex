@@ -32,11 +32,15 @@ defmodule AlchemyBook.DocumentChannel do
     end
 
     def handle_info(:after_join, socket) do
+        doc_session = DocumentRegistry.lookup(socket.assigns.document_id)
+
         init_value = 
-            DocumentRegistry.lookup(socket.assigns.document_id)
-            |> DocumentSession.get
+            DocumentSession.get(doc_session)
             |> Document.crdt_to_json_ready
-        push socket, "init", %{ state: init_value }
+        
+        site = DocumentSession.request_site_for_user(doc_session, socket.assigns.user_id)
+
+        push socket, "init", %{ state: init_value, site: site }
         {:noreply, socket}
     end
 end

@@ -9,6 +9,7 @@ export module Crdt {
                 pos: number
                 site: number
             }
+            export const BASE = 256;
 
             export function create(pos: number, site: number): t {
                 const obj = { pos, site };
@@ -58,6 +59,14 @@ export module Crdt {
             return obj;
         }
 
+        export function startOfFile(): t {
+            return create([Identifier.create(0, 0)], 0, '^');
+        }
+
+        export function endOfFile(): t {
+            return create([Identifier.create(Identifier.BASE, 0)], 0, '$');
+        }
+
         export function ofArray(array: Serial): t {
             return create(array[0].map(Identifier.ofArray), array[1], array[2]);
         }
@@ -83,6 +92,39 @@ export module Crdt {
             }
         }
 
+        // Generate a position 1/16th of the way from c1 to c2. The idea is that insertions are going
+        // to lean very heavily towards the right.
+        export function generatePositionBetween(c1: Char.t, c2: Char.t, site: number): Identifier.t[] {
+            const gap = 16;
+            const n1 = c1.position.map(ident => ident.pos);
+            const n2 = c2.position.map(ident => ident.pos);
+            matchDigits(n1, n2);
+            const difference = subtractGreaterThan(n2, n1);
+
+            if (needsNewDigit(difference, gap)) {
+                difference.push(0);
+            }
+
+            const offset = pseudoIntegerDivision(difference, gap);
+
+            // TODO: add randomness
+
+            const newPosition = addNoCarry(n1, offset);
+
+            // Pair each digit with a site
+            return newPosition.map((digit, index) => {
+                if (index == newPosition.length - 1) {
+                    return Identifier.create(digit, site);
+                } else if (digit == c1.position[index].pos) {
+                    return Identifier.create(digit, c1.position[index].site);
+                } else if (digit == c2.position[index].pos) {
+                    return Identifier.create(digit, c2.position[index].site);
+                } else {
+                    return Identifier.create(digit, site);
+                }
+            });
+        }
+
         export function equals(c1: Char.t, c2: Char.t): boolean {
             if (c1.position.length !== c2.position.length) return false;
             if (c1.lamport !== c2.lamport) return false;
@@ -91,6 +133,75 @@ export module Crdt {
                 if (!Identifier.equals(c1.position[i], c2.position[i])) return false;
             }
             return true;
+        }
+
+        // Calculate (n1 - n2) where n1 > n2
+        function subtractGreaterThan(n1: number[], n2: number[]): number[] {
+            let carry = 0;
+            const diff: number[] = [];
+            for (let i = n1.length - 1; i >= 0; i--) {
+                const d1 = n1[i] - carry;
+                const d2 = n2[i];
+                if (d1 < d2) {
+                    carry = 1;
+                    diff.push(d1 + Identifier.BASE - d2);
+                } else {
+                    carry = 0;
+                    diff.push(d1 - d2);
+                }
+            }
+            return diff;
+        }
+
+        // Calculate (n1 + n2) where we are guaranteed that n2 << n1 such that 
+        // (n1 + n2) will not have more digits than n1.
+        function addNoCarry(n1: number[], n2: number[]): number[] {
+            let carry = 0;
+            const diff: number[] = [];
+            for (let i = n1.length - 1; i >= 0; i--) {
+                const sum = n1[i] + n2[i] + carry;
+                carry = Math.floor(carry / Identifier.BASE);
+                diff.push(sum % Identifier.BASE);
+            }
+            if (carry !== 0) {
+                throw "there should be no carry"
+            }
+            return diff;
+        }
+
+        // Calculate (dividend / divisor) assuming (BASE % divisor == 0) and
+        // do integer truncation (don't add more digits)
+        function pseudoIntegerDivision(dividend: number[], divisor: number): number[] {
+            if (Identifier.BASE % divisor != 0) {
+                throw "expected divisor to be a factor of base"
+            }
+            let carry = 0;
+            return dividend.map(digit => {
+                const twoDigits = (digit + carry) * Identifier.BASE / divisor;
+                carry = twoDigits % Identifier.BASE;
+                return Math.floor(twoDigits / Identifier.BASE);
+            });
+        }
+
+        // Pad n1 and n2 with 0s at the end such that they have the same
+        // number of digits.
+        function matchDigits(n1: number[], n2: number[]): void {
+            for (let i = n1.length; i < n2.length; i++) {
+                n1.push(0);
+            }
+            for (let i = n2.length; i < n1.length; i++) {
+                n2.push(0);
+            }
+        }
+
+        function needsNewDigit(n: number[], requiredGap: number) {
+            if (n[n.length - 1] < requiredGap) {
+                const leadingZeroes = 
+                    n.slice(0, n.length - 1)
+                     .every(digit => digit == 0)
+                return leadingZeroes;
+            }
+            return false;
         }
     }
     export module RemoteChange {
@@ -118,7 +229,9 @@ export module Crdt {
     }
     export type t = List<List<Char.t>>
 
-    export function updateAndConvertLocalToRemote(crdt: t, change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
+    export function updateAndConvertLocalToRemote(crdt: t, lamport: number, 
+                                                  site: number, 
+                                                  change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
         switch (change.origin) {
             case "+delete":
                 // TODO: put an assertion here
@@ -126,7 +239,14 @@ export module Crdt {
             case "+input":
             case "paste":
                 const [updatedCrdt, removeChanges] = updateCrdtRemove(crdt, change);
-                const [finalCrdt, insertChanges] = updateCrdtInsert(crdt, change);
+
+                // TODO: compare the character before and after the cursor. If 
+                // the positions match, then fractional indexing, doesn't work, 
+                // even with sites (won't guarantee order intention). Need to
+                // delete the after character and reinsert it with a different
+                // index.
+
+                const [finalCrdt, insertChanges] = updateCrdtInsert(updatedCrdt, lamport, site, change);
                 return [finalCrdt, removeChanges.concat(insertChanges)];
             default:
                 throw "Unknown change origin " + change.origin;
@@ -229,9 +349,43 @@ export module Crdt {
         return [newCrdt, toRemove.toArray()];
     }
 
-    function updateCrdtInsert(crdt: t, change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
-        // TODO
-        return [crdt, []];
+    function updateCrdtInsert(crdt: t, lamport: number, 
+                              site: number, 
+                              change: CodeMirror.EditorChange): [t, RemoteChange.t[]] {
+        if (change.from.line > change.to.line || (change.from.line === change.to.line && change.from.ch > change.to.ch)) {
+            throw "TODO: handle inverted from/to"
+        }
+
+        const { line: lineIndex, ch } = change.from;
+        const line = crdt.get(lineIndex);
+        const before = line.slice(0, ch);
+        const after = line.slice(ch, line.size);
+
+        // For now, just insert characters one at a time. Eventually, we may 
+        // want to generate fractional indices in a more clever way when many 
+        // characters are inserted at the same time.
+        let previousChar = before.size > 0 ? before.last() : Char.startOfFile();
+        let nextChar = after.size > 0 ? after.first() : Char.endOfFile();
+        let currentLine = before.toList();
+        let lines: List<Char.t>[] = [];
+        let remoteChanges: RemoteChange.t[] = [];
+        change.text.forEach(addedLine => {
+            Array.from(addedLine).forEach(addedChar => {
+                const newPosition = Char.generatePositionBetween(previousChar, nextChar, site);
+                previousChar = Char.create(newPosition, lamport, addedChar);
+                currentLine = currentLine.push(previousChar);
+                if (addedChar === '\n') {
+                    lines.push(currentLine);
+                    currentLine = List();
+                }
+            });
+        });
+
+        currentLine = currentLine.concat(after).toList();
+        lines.push(currentLine);
+
+        const updatedCrdt = crdt.splice(lineIndex, change.text.length, lines).toList();
+        return [updatedCrdt, remoteChanges];
     }
 
     // If found: return the line number and column number of the character
