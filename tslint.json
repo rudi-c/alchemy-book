@@ -5,7 +5,12 @@
     ],
     "jsRules": {},
     "rules": {
-        "arrow-parens": false
+        "arrow-parens": false,
+        "class-name": false,
+        "curly": [true, "ignore-same-line"],
+        "interface-name": false,
+        "no-namespace": false,
+        "no-shadowed-variable": false
     },
     "rulesDirectory": []
 }

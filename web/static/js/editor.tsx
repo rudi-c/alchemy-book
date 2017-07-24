@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom"
 
 import CodeMirror from "codemirror"
 
-import { Crdt } from "./crdt"
+import * as Crdt from "./crdt"
 import EditorSocket from "./editor-socket"
 
 require('codemirror/lib/codemirror.css');

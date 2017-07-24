@@ -8,13 +8,13 @@ export default class EditorSocket {
   private channel: Channel;
 
   constructor(private documentId: string,
-              private initCallback: (any) => void,
-              private changeCallback: (any) => void) {
+              private initCallback: (_) => void,
+              private changeCallback: (_) => void) {
     this.socket = new Socket("/socket", {
-      params: {token: (window as any).userToken},
       logger: (kind, msg, data) => {
-        //console.log(`${kind}: ${msg}`, data)
+        // console.log(`${kind}: ${msg}`, data)
       },
+      params: {token: (window as any).userToken},
     });
   }
 
