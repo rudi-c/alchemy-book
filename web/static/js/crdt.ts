@@ -172,7 +172,8 @@ function updateCrdtInsert(crdt: t, lamport: number,
     const remoteChanges: RemoteChange.t[] = [];
     change.text.forEach(addedLine => {
         Array.from(addedLine).forEach(addedChar => {
-            const newPosition = Char.generatePositionBetween(previousChar, nextChar, site);
+            const newPosition = Char.generatePositionBetween(
+                previousChar.position, nextChar.position, site);
             previousChar = Char.create(newPosition, lamport, addedChar);
             currentLine = currentLine.push(previousChar);
             if (addedChar === "\n") {

@@ -12,7 +12,7 @@ test('needs new digit', t => {
     t.false(Decimal.needsNewDigit([255], DIVISOR));
 });
 
-test('match digits same', t => {
+test('match digits: same', t => {
     const n1 = [0];
     const n2 = [37];
     Decimal.matchDigits(n1, n2);
@@ -20,7 +20,7 @@ test('match digits same', t => {
     t.deepEqual(n2, [37]);
 });
 
-test('match digits not matching', t => {
+test('match digits: not matching', t => {
     const n1 = [0, 1];
     const n2 = [37];
     Decimal.matchDigits(n1, n2);
@@ -28,7 +28,7 @@ test('match digits not matching', t => {
     t.deepEqual(n2, [37, 0]);
 });
 
-test('match digits not matching', t => {
+test('match digits: not matching', t => {
     const n1 = [0, 1];
     const n2 = [37, 12, 53, 11];
     Decimal.matchDigits(n1, n2);

@@ -1,6 +1,6 @@
 import * as Decimal from "./decimal"
 
-namespace Identifier {
+export namespace Identifier {
     export interface t {
         pos: number;
         site: number;
@@ -90,12 +90,15 @@ export function compare(c1: t, c2: t): number {
 
 // Generate a position 1/16th of the way from c1 to c2. The idea is that insertions are going
 // to lean very heavily towards the right.
-export function generatePositionBetween(c1: t, c2: t, site: number): Identifier.t[] {
+export function generatePositionBetween(p1: Identifier.t[], p2: Identifier.t[], 
+                                        site: number): Identifier.t[] {
     const gap = 16;
-    const n1 = c1.position.map(ident => ident.pos);
-    const n2 = c2.position.map(ident => ident.pos);
+    const n1 = p1.map(ident => ident.pos);
+    const n2 = p2.map(ident => ident.pos);
     Decimal.matchDigits(n1, n2);
     const difference = Decimal.subtractGreaterThan(n2, n1);
+
+    // TODO: handle when there's no difference
 
     if (Decimal.needsNewDigit(difference, gap)) {
         difference.push(0);
@@ -105,16 +108,18 @@ export function generatePositionBetween(c1: t, c2: t, site: number): Identifier.
 
     // TODO: add randomness
 
+    Decimal.matchDigits(n1, offset);
+    Decimal.matchDigits(n2, offset);
     const newPosition = Decimal.addNoCarry(n1, offset);
 
     // Pair each digit with a site
     return newPosition.map((digit, index) => {
         if (index === newPosition.length - 1) {
             return Identifier.create(digit, site);
-        } else if (digit === c1.position[index].pos) {
-            return Identifier.create(digit, c1.position[index].site);
-        } else if (digit === c2.position[index].pos) {
-            return Identifier.create(digit, c2.position[index].site);
+        } else if (digit === n1[index]) {
+            return Identifier.create(digit, p1[index].site);
+        } else if (digit === n2[index]) {
+            return Identifier.create(digit, p2[index].site);
         } else {
             return Identifier.create(digit, site);
         }
