@@ -39,13 +39,6 @@ export function updateAndConvertLocalToRemote(crdt: t, lamport: number,
         case "+input":
         case "paste":
             const [updatedCrdt, removeChanges] = updateCrdtRemove(crdt, change);
-
-            // TODO: compare the character before and after the cursor. If
-            // the positions match, then fractional indexing, doesn't work,
-            // even with sites (won't guarantee order intention). Need to
-            // delete the after character and reinsert it with a different
-            // index.
-
             const [finalCrdt, insertChanges] = updateCrdtInsert(updatedCrdt, lamport, site, change);
             return [finalCrdt, removeChanges.concat(insertChanges)];
         default:
@@ -55,24 +48,48 @@ export function updateAndConvertLocalToRemote(crdt: t, lamport: number,
 
 export function updateAndConvertRemoteToLocal(crdt: t, change: RemoteChange.t): [t, LocalChange.t] {
     const char = change[1];
+    const [lineIndex, ch, found] = findPosition(crdt, char);
+    const line = crdt.get(lineIndex);
     switch (change[0]) {
         case "add":
-            throw new Error("TODO");
+            if (found === "not_found") {
+                const change = LocalChange.create(
+                    {line: lineIndex, ch}, {line: lineIndex, ch: ch + 1}, "\n");
+                if (char.value === "\n") {
+                    const [before, after] = splitLineAt(line, ch);
+                    const newCrdt = crdt
+                        .splice(lineIndex, 1, [before.push(char), after])
+                        .toList();
+                    return [newCrdt, change];
+                } else {
+                    const newCrdt = crdt
+                        .set(lineIndex, line.insert(ch, char));
+                    return [newCrdt, change];
+                }
+            } else {
+                // Probably means we got a duplicate for some reason
+                return [crdt, null];
+            }
         case "remove":
-            const [line, ch, found] = findPosition(crdt, char);
-            if (found === "found" && Char.equals(crdt.get(line).get(ch), char)) {
-                const newLine = crdt.get(line).remove(ch);
-                const nextLine = crdt.get(line + 1);
+            if (found === "found" && Char.equals(line.get(ch), char)) {
+                const newLine = line.remove(ch);
+                const nextLine = crdt.get(lineIndex + 1);
 
                 if (findNewline(newLine) < 0 && nextLine) {
                     // Newline character was removed, need to join with the next line
-                    const change = LocalChange.create({line, ch}, {line: line + 1, ch: 0}, "");
-                    return [crdt.splice(line, 2, newLine.concat(nextLine)).toList(), change];
+                    const change = LocalChange.create(
+                        {line: lineIndex, ch}, {line: lineIndex + 1, ch: 0}, "");
+                    const newCrdt = crdt
+                        .splice(lineIndex, 2, newLine.concat(nextLine))
+                        .toList();
+                    return [newCrdt, change];
                 } else {
-                    const change = LocalChange.create({line, ch}, {line, ch: ch + 1}, "");
-                    return [crdt.set(line, newLine), change];
+                    const change = LocalChange.create(
+                        {line: lineIndex, ch}, {line: lineIndex, ch: ch + 1}, "");
+                    return [crdt.set(lineIndex, newLine), change];
                 }
             } else {
+                // Probably means we got a duplicate for some reason
                 return [crdt, null];
             }
         default: throw new Error("unknown remote change");
@@ -159,8 +176,7 @@ function updateCrdtInsert(crdt: t, lamport: number,
 
     const { line: lineIndex, ch } = change.from;
     const line = crdt.get(lineIndex);
-    const before = line.slice(0, ch);
-    const after = line.slice(ch, line.size);
+    const [before, after] = splitLineAt(line, ch);
 
     // For now, just insert characters one at a time. Eventually, we may
     // want to generate fractional indices in a more clever way when many
@@ -188,6 +204,12 @@ function updateCrdtInsert(crdt: t, lamport: number,
 
     const updatedCrdt = crdt.splice(lineIndex, change.text.length, lines).toList();
     return [updatedCrdt, remoteChanges];
+}
+
+function splitLineAt(line: List<Char.t>, at: number): [List<Char.t>, List<Char.t>] {
+    const before = line.slice(0, at).toList();
+    const after = line.slice(at, line.size).toList();
+    return [before, after];
 }
 
 // If found: return the line number and column number of the character

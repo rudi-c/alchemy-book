@@ -99,6 +99,10 @@ export function generatePositionBetween(p1: Identifier.t[], p2: Identifier.t[],
     const difference = Decimal.subtractGreaterThan(n2, n1);
 
     // TODO: handle when there's no difference
+    // If the positions match, then fractional indexing, doesn't work,
+    // even with sites (won't guarantee order intention). Need to
+    // delete the after character and reinsert it with a different
+    // index.
 
     if (Decimal.needsNewDigit(difference, gap)) {
         difference.push(0);
