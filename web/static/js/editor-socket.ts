@@ -12,7 +12,7 @@ export default class EditorSocket {
               private changeCallback: (_) => void) {
     this.socket = new Socket("/socket", {
       logger: (kind, msg, data) => {
-        // console.log(`${kind}: ${msg}`, data)
+        console.log(`${kind}: ${msg}`, data)
       },
       params: {token: (window as any).userToken},
     });

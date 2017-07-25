@@ -54,11 +54,11 @@ export function updateAndConvertRemoteToLocal(crdt: t, change: RemoteChange.t): 
         case "add":
             if (found === "not_found") {
                 const change = LocalChange.create(
-                    {line: lineIndex, ch}, {line: lineIndex, ch: ch + 1}, "\n");
+                    {line: lineIndex, ch}, {line: lineIndex, ch}, char.value);
                 if (char.value === "\n") {
                     const [before, after] = splitLineAt(line, ch);
                     const newCrdt = crdt
-                        .splice(lineIndex, 1, [before.push(char), after])
+                        .splice(lineIndex, 1, ...[before.push(char), after])
                         .toList();
                     return [newCrdt, change];
                 } else {
@@ -127,6 +127,11 @@ function updateCrdtRemove(crdt: t, change: CodeMirror.EditorChange): [t, RemoteC
         throw new Error("TODO: handle inverted from/to");
     }
 
+    // Insertions has change.removed = [""]
+    if (change.removed.length === 0 && change.removed[0] === "") {
+        return [crdt, []];
+    }
+
     const lines = crdt.slice(change.from.line, change.to.line + 1);
 
     const linesAndUpdates = lines.map((line, index) => {
@@ -159,7 +164,7 @@ function updateCrdtRemove(crdt: t, change: CodeMirror.EditorChange): [t, RemoteC
     if (lines.size === 1) {
         newCrdt = crdt.set(change.from.line, updatedLines.first());
     } else {
-        const remainingLine = updatedLines.first().concat(updatedLines.last());
+        const remainingLine = updatedLines.first().concat(updatedLines.last()).toList();
         newCrdt = crdt.splice(change.from.line, lines.size, remainingLine).toList();
     }
 
@@ -174,6 +179,11 @@ function updateCrdtInsert(crdt: t, lamport: number,
         throw new Error("TODO: handle inverted from/to");
     }
 
+    // Insertions has change.text = [""]
+    if (change.text.length === 0 && change.text[0] === "") {
+        return [crdt, []];
+    }
+
     const { line: lineIndex, ch } = change.from;
     const line = crdt.get(lineIndex);
     const [before, after] = splitLineAt(line, ch);
@@ -183,26 +193,36 @@ function updateCrdtInsert(crdt: t, lamport: number,
     // characters are inserted at the same time.
     let previousChar = before.size > 0 ? before.last() : Char.startOfFile();
     const nextChar = after.size > 0 ? after.first() : Char.endOfFile();
-    let currentLine = before.toList();
+    let currentLine = before;
     const lines: Array<List<Char.t>> = [];
     const remoteChanges: RemoteChange.t[] = [];
-    change.text.forEach(addedLine => {
-        Array.from(addedLine).forEach(addedChar => {
+    change.text.forEach((addedLine, index) => {
+        // All strings expect the last one represent the insertion of a new line
+        const characters = Array.from(addedLine);
+        if (index < change.text.length - 1) {
+            characters.push("\n");
+        }
+
+        characters.forEach(addedChar => {
             const newPosition = Char.generatePositionBetween(
                 previousChar.position, nextChar.position, site);
-            previousChar = Char.create(newPosition, lamport, addedChar);
-            currentLine = currentLine.push(previousChar);
+            const newChar = Char.create(newPosition, lamport, addedChar);
+            currentLine = currentLine.push(newChar);
             if (addedChar === "\n") {
                 lines.push(currentLine);
                 currentLine = List();
             }
+
+            remoteChanges.push(RemoteChange.add(newChar));
+
+            previousChar = newChar;
         });
     });
 
     currentLine = currentLine.concat(after).toList();
     lines.push(currentLine);
 
-    const updatedCrdt = crdt.splice(lineIndex, change.text.length, lines).toList();
+    const updatedCrdt = crdt.splice(lineIndex, 1, ...lines).toList();
     return [updatedCrdt, remoteChanges];
 }
 

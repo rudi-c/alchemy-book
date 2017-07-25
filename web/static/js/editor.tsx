@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 
-import CodeMirror from "codemirror"
+import * as CodeMirror from "codemirror"
 
 import * as Crdt from "./crdt"
 import EditorSocket from "./editor-socket"
@@ -29,6 +29,7 @@ class Editor extends React.Component<any, any> {
 
     onLocalChange = (doc: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
         console.log(change);
+
         // TODO: Handle error
         if (change.origin !== IgnoreRemote && change.origin !== "setValue") {
             this.lamport = this.lamport + 1;
@@ -42,6 +43,7 @@ class Editor extends React.Component<any, any> {
         this.lamport = Math.max(this.lamport, lamport) + 1;
         const [newCrdt, localChange] = Crdt.updateAndConvertRemoteToLocal(this.crdt, change);
         this.crdt = newCrdt;
+        console.log(localChange);
         if (localChange) {
             this.codemirror.getDoc().replaceRange(localChange.text, localChange.from, localChange.to, IgnoreRemote);
         }

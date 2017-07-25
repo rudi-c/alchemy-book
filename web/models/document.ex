@@ -59,7 +59,7 @@ defmodule AlchemyBook.Document do
     |> String.to_charlist
     |> Enum.with_index
     |> Enum.map(fn {char, index} ->
-      identifier = { trunc(index / String.length(string) * @crdt_base), @default_site }
+      identifier = { trunc(index / String.length(string) * @crdt_base) + 1, @default_site }
       { [identifier], index, to_string([char]) }
     end)
   end
