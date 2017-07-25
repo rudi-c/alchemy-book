@@ -191,8 +191,8 @@ function updateCrdtInsert(crdt: t, lamport: number,
     // For now, just insert characters one at a time. Eventually, we may
     // want to generate fractional indices in a more clever way when many
     // characters are inserted at the same time.
-    let previousChar = before.size > 0 ? before.last() : Char.startOfFile();
-    const nextChar = after.size > 0 ? after.first() : Char.endOfFile();
+    let previousChar = getPrecedingChar(crdt, lineIndex, ch);
+    const nextChar = getCharAt(crdt, lineIndex, ch);
     let currentLine = before;
     const lines: Array<List<Char.t>> = [];
     const remoteChanges: RemoteChange.t[] = [];
@@ -232,27 +232,69 @@ function splitLineAt(line: List<Char.t>, at: number): [List<Char.t>, List<Char.t
     return [before, after];
 }
 
+function getPrecedingChar(crdt: t, lineIndex: number, ch: number): Char.t {
+    if (ch === 0) {
+        if (lineIndex === 0) {
+            return Char.startOfFile();
+        } else {
+            return crdt.get(lineIndex - 1).last();
+        }
+    } else {
+        return crdt.get(lineIndex).get(ch - 1);
+    }
+}
+
+function getCharAt(crdt: t, lineIndex: number, ch: number): Char.t {
+    const line = crdt.get(lineIndex);
+    if (ch >= line.size) {
+        if (lineIndex === crdt.size - 1 && ch === line.size) {
+            return Char.endOfFile()
+        } else {
+            throw Error("indexing out of bounds")
+        }
+    } else {
+        return line.get(ch);
+    }
+}
+
+function compareCharWithLine(item: Char.t, line: List<Char.t>): number {
+    // Only the last line might have size 0 because all other lines end with a
+    // newline
+    if (line.size === 0) {
+        return Char.compare(item, Char.endOfFile());
+    } else {
+        return Char.compare(item, line.get(0));
+    }
+}
+
 // If found: return the line number and column number of the character
 // If not found: return the line number and column number of the character
 // where it should be if inserted
 function findPosition(crdt: t, char: Char.t): [number, number, "found" | "not_found"] {
     // Putting something at the start of the first line (lineIndex == -1) should be in line 0
     const lineIndex = Math.max(0,
-        binarySearch(crdt, char, (item, line) => Char.compare(item, line.get(0)), "before"));
+        binarySearch(crdt, char, compareCharWithLine, "before"));
     const line = crdt.get(lineIndex);
     const charIndex = binarySearch(line, char, Char.compare, "at");
     if (charIndex < line.size) {
         const found = Char.compare(crdt.get(lineIndex).get(charIndex), char) === 0;
         return [lineIndex, charIndex, found ? "found" : "not_found"];
     } else {
-        return [lineIndex, line.size - 1, "not_found"];
+        const isAfterNewline = (charIndex === line.size) && (lineIndex !== crdt.size - 1);
+        // All lines except the last one need to end in a newline, so put this character
+        // on the next line if it would go at the end of the line.
+        if (isAfterNewline) {
+            return [lineIndex + 1, 0, "not_found"];
+        } else {
+            return [lineIndex, charIndex, "not_found"];
+        }
     }
 }
 
 // Return the index of the item if found
 // If not found, return the index of the character where it should be if inserted when using "at"
 //               return the index of the character that precedes it when using "before"
-function binarySearch<U, V>(list: List<U>,
+export function binarySearch<U, V>(list: List<U>,
                             item: V,
                             comparator: (a: V, b: U) => number,
                             notFoundBehavior: "at" | "before"): number {
