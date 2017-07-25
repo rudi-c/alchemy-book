@@ -17,11 +17,7 @@ Install the Typescript compiler and linter globally
 npm install -g tslint typescript
 ```
 
-and run the linter with
-
-```
-npm run lint
-```
+and run the linter with `npm run lint`
 
 ## Testing
 
@@ -30,3 +26,5 @@ We use Ava
 ```
 npm install -g ava
 ```
+
+which you can run with `npm test`
