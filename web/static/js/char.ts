@@ -1,4 +1,4 @@
-import * as Decimal from "./decimal"
+import * as Decimal from "./decimal";
 
 export namespace Identifier {
     export interface t {
@@ -90,7 +90,7 @@ export function compare(c1: t, c2: t): number {
 
 // Generate a position 1/16th of the way from c1 to c2. The idea is that insertions are going
 // to lean very heavily towards the right.
-export function generatePositionBetween(p1: Identifier.t[], p2: Identifier.t[], 
+export function generatePositionBetween(p1: Identifier.t[], p2: Identifier.t[],
                                         site: number): Identifier.t[] {
     const gap = 16;
     const n1 = p1.map(ident => ident.pos);

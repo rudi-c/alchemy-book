@@ -2,7 +2,7 @@ import { List } from "immutable";
 
 import CodeMirror from "codemirror";
 
-import * as Char from "./char"
+import * as Char from "./char";
 
 export namespace RemoteChange {
     export type t = ["add" | "remove", Char.t];

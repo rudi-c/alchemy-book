@@ -65,7 +65,7 @@ export function needsNewDigit(n: number[], requiredGap: number): boolean {
     if (n[n.length - 1] < requiredGap) {
         const leadingZeroes =
             n.slice(0, n.length - 1)
-                .every(digit => digit === 0);
+             .every(digit => digit === 0);
         return leadingZeroes;
     }
     return false;
