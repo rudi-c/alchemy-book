@@ -3,16 +3,14 @@ import * as CodeMirror from "codemirror";
 import * as Crdt from "./crdt";
 import EditorSocket from "./editor-socket";
 
-require("codemirror/lib/codemirror.css");
-
 const IgnoreRemote = "ignore_remote";
 
 export default class Editor {
-    private editorSocket: EditorSocket;
-    private crdt: Crdt.t;
-    private lamport: number;
-    private site: number;
-    private codemirror: CodeMirror.Editor;
+    protected editorSocket: EditorSocket;
+    protected crdt: Crdt.t;
+    protected lamport: number;
+    protected site: number;
+    protected codemirror: CodeMirror.Editor;
 
     constructor(domNode: HTMLTextAreaElement, editorSocket: EditorSocket) {
         this.codemirror = CodeMirror.fromTextArea(domNode, {
@@ -24,7 +22,7 @@ export default class Editor {
         this.codemirror.on("change", this.onLocalChange);
     }
 
-    private onLocalChange = (doc: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
+    protected onLocalChange = (doc: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
         // TODO: Handle error
         if (change.origin !== IgnoreRemote && change.origin !== "setValue") {
             this.lamport = this.lamport + 1;
@@ -34,7 +32,7 @@ export default class Editor {
         }
     }
 
-    private onRemoteChange = ({userId, change, lamport}) => {
+    protected onRemoteChange = ({userId, change, lamport}) => {
         this.lamport = Math.max(this.lamport, lamport) + 1;
         const [newCrdt, localChange] = Crdt.updateAndConvertRemoteToLocal(this.crdt, change);
         this.crdt = newCrdt;
@@ -43,7 +41,7 @@ export default class Editor {
         }
     }
 
-    private onInit = (resp) => {
+    protected onInit = (resp) => {
         this.crdt = Crdt.init(resp.state);
         this.site = resp.site;
         this.lamport = 0;
