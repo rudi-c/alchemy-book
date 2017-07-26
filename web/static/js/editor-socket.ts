@@ -6,19 +6,23 @@ const artificialDelay = 3 * 1000;
 export default class EditorSocket {
   private socket: Socket;
   private channel: Channel;
+  private initCallback: (_) => void;
+  private changeCallback: (_) => void;
 
-  constructor(private documentId: string,
-              private initCallback: (_) => void,
-              private changeCallback: (_) => void) {
+  constructor(private documentId: string) {
     this.socket = new Socket("/socket", {
       logger: (kind, msg, data) => {
-        console.log(`${kind}: ${msg}`, data)
+        console.log(`${kind}: ${msg}`, data);
       },
       params: {token: (window as any).userToken},
     });
   }
 
-  public connect = () => {
+  public connect = (initCallback: (_) => void,
+                    changeCallback: (_) => void) => {
+    this.initCallback = initCallback;
+    this.changeCallback = changeCallback;
+
     this.socket.connect();
     this.channel = this.socket.channel("documents:" + this.documentId);
     this.channel.join()
