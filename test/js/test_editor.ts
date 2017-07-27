@@ -66,21 +66,49 @@ class TestEditorSocket extends EditorSocket {
         const message = this.messageQueue.shift();
         this.changeCallback(message);
     }
+
+    public letAllThrough() {
+        while (this.messageQueue.length > 0) {
+            this.letOneThrough();
+        }
+    }
 }
 
 class TestEditor extends Editor {
-    public getText() {
+    public getText(): string {
         if (this.codemirror.getValue() !== Crdt.to_string(this.crdt)) {
             throw Error("Editor text and stored text do no match");
         }
         return this.codemirror.getValue();
     }
 
-    public letOneThrough() {
+    public type(insertion: string): void {
+        const doc = this.codemirror.getDoc();
+        doc.replaceRange(insertion, doc.getCursor(), doc.getCursor(), "+input");
+    }
+
+    public moveCursor(update: (pos: CodeMirror.Position) => CodeMirror.Position): void {
+        const doc = this.codemirror.getDoc();
+        doc.setCursor(update(doc.getCursor()));
+    }
+
+    public moveCursorLeft(amount: number): void {
+        this.moveCursor(({ line, ch }) => ({ line, ch: ch - amount }));
+    }
+
+    public moveCursorRight(amount: number): void {
+        this.moveCursor(({ line, ch }) => ({ line, ch: ch + amount }));
+    }
+
+    public letOneThrough(): void {
         (this.editorSocket as TestEditorSocket).letOneThrough();
     }
 
-    public init(val: Char.Serial[], site: number) {
+    public letAllThrough(): void {
+        (this.editorSocket as TestEditorSocket).letAllThrough();
+    }
+
+    public init(val: Char.Serial[], site: number): void {
         this.onInit({
             state: val,
             site
@@ -105,5 +133,18 @@ function createEditors(n: number): TestEditor[] {
 
 test("simple insertion at various places", t => {
     const [e1, e2] = createEditors(2);
-    t.pass();
+    e1.type("b");
+    e1.moveCursorLeft(1);
+    e1.type("a");
+    e1.moveCursorRight(1);
+    e1.type("c");
+    e1.type("\n");
+    e1.type("b");
+    e1.moveCursorLeft(1);
+    e1.type("a");
+    e1.moveCursorRight(1);
+    e1.type("c");
+    e2.letAllThrough();
+    t.is(e1.getText(), "abc\nabc");
+    t.is(e2.getText(), "abc\nabc");
 });
