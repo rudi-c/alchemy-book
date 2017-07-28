@@ -1,2 +1,8 @@
 /* This file is for your main application css. */
 @import "phoenix.css";
+@import "~codemirror/lib/codemirror.css";
+
+/* Thicker cursor */
+.CodeMirror-cursor {
+    border-left: 2.5px solid black;
+}
