@@ -15,6 +15,7 @@ export default class Editor {
     constructor(domNode: HTMLTextAreaElement, editorSocket: EditorSocket) {
         this.codemirror = CodeMirror.fromTextArea(domNode, {
             lineNumbers: true,
+            theme: "zenburn"
         });
         this.editorSocket = editorSocket;
 

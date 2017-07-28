@@ -1,8 +1,18 @@
 /* This file is for your main application css. */
 @import "phoenix.css";
 @import "~codemirror/lib/codemirror.css";
+@import "zenburn.css";
+
+@font-face {
+    font-family: "Kingthings Trypewriter 2";
+    src: url("~/../fonts/kingthings-trypewriter-2.ttf") format("truetype");
+}
+
+.CodeMirror {
+    font-family: "Kingthings Trypewriter 2";
+}
 
 /* Thicker cursor */
-.CodeMirror-cursor {
-    border-left: 2.5px solid black;
+.cm-s-zenburn .CodeMirror-cursor {
+    border-left: 2.5px solid white;
 }
