@@ -63,16 +63,4 @@ defmodule AlchemyBook.Document do
       { [identifier], index, to_string([char]) }
     end)
   end
-
-  # TODO: probably not needed on the server side?
-  defp _split_by_newline(crdt_charlist) do
-    IO.puts inspect crdt_charlist
-    case Enum.find_index(crdt_charlist, fn {_, char} -> char == "\n" end) do
-      nil ->
-        [crdt_charlist]
-      index ->
-        {line, rest} = Enum.split(crdt_charlist, index + 1)
-        [line | split_by_newline(rest)]
-    end
-  end
 end

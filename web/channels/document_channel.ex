@@ -13,10 +13,13 @@ defmodule AlchemyBook.DocumentChannel do
     end
 
     def handle_in("change", params, socket) do
-        IO.puts inspect params
+        change = parse_change(params["change"])
+
+        DocumentRegistry.lookup(socket.assigns.document_id)
+        |> DocumentSession.update(change)
+
         broadcast! socket, "change", %{
             userId: socket.assigns.user_id,
-            # TODO: probably should do some input validation
             change: params["change"],
             lamport: params["lamport"]
         }
@@ -42,5 +45,12 @@ defmodule AlchemyBook.DocumentChannel do
 
         push socket, "init", %{ state: init_value, site: site }
         {:noreply, socket}
+    end
+
+    defp parse_change([type, char]) do
+        position = 
+            char["position"]
+            |> Enum.map(fn %{"pos" => pos, "site" => site} -> {pos, site} end)
+        [type, { { position, char["lamport"] }, char["value"] }]
     end
 end
