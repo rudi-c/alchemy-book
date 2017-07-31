@@ -31,7 +31,7 @@ defmodule AlchemyBook.DocumentController do
     case Repo.insert(changeset) do
       {:ok, document} ->
         conn
-        |> redirect(to: document_path(conn, :index, document: document))
+        |> redirect(to: document_path(conn, :show, document))
       {:error, changeset} ->
         index(conn, params, user)
     end
