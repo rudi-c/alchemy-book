@@ -1,7 +1,7 @@
 import * as CodeMirror from "codemirror";
 
 import * as Crdt from "./crdt";
-import EditorSocket from "./editor-socket";
+import { EditorSocket } from "./editor-socket";
 
 const IgnoreRemote = "ignore_remote";
 

@@ -5,7 +5,7 @@ import * as Combinatorics from "js-combinatorics"
 import * as Char from "../../web/static/js/char"
 import * as Crdt from "../../web/static/js/crdt"
 import Editor from "../../web/static/js/editor"
-import EditorSocket from "../../web/static/js/editor-socket"
+import { EditorSocket } from "../../web/static/js/editor-socket"
 
 class TestChannel {
     sockets: TestEditorSocket[];
@@ -39,7 +39,7 @@ class TestEditorSocket extends EditorSocket {
     fakeChannel: TestChannel;
 
     constructor(documentId: string, channel: TestChannel) {
-        super(documentId);
+        super(documentId, () => {});
 
         this.messageQueue = [];
         this.fakeChannel = channel;

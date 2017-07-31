@@ -1,6 +1,9 @@
 defmodule AlchemyBook.DocumentChannel do
     use AlchemyBook.Web, :channel
 
+    alias AlchemyBook.Presence
+
+    alias AlchemyBook.User
     alias AlchemyBook.Document
     alias AlchemyBook.DocumentRegistry
     alias AlchemyBook.DocumentSession
@@ -44,7 +47,18 @@ defmodule AlchemyBook.DocumentChannel do
         site = DocumentSession.request_site_for_user(doc_session, socket.assigns.user_id)
 
         push socket, "init", %{ state: init_value, site: site }
+
+        handle_presence(socket)
+
         {:noreply, socket}
+    end
+
+    def handle_presence(socket) do
+        Presence.track(socket, socket.assigns.user_id, %{
+            online_at: :os.system_time(:milli_seconds),
+            username: Repo.get!(User, socket.assigns.user_id).username
+        })
+        push socket, "presence_state", Presence.list(socket)
     end
 
     defp parse_change([type, char]) do
