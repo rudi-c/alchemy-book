@@ -5,5 +5,6 @@
     <p><%= link "Go to recipes", to: document_path(@conn, :index) %></p>
   <% else %>
     <p>Please <%= link "register", to: user_path(@conn, :new) %> or <%= link "log in", to: session_path(@conn, :new) %></p>
+    <p>Or <%= link "try it now!", to: document_path(@conn, :new) %></p>
   <% end %>
 </div>

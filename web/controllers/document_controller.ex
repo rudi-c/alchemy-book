@@ -6,8 +6,16 @@ defmodule AlchemyBook.DocumentController do
 
   # Turns <action>(conn, params) into <action>(conn, params, user)
   def action(conn, _) do
-    apply(__MODULE__, action_name(conn),
-          [conn, conn.params, conn.assigns.current_user])
+    case conn.assigns.current_user do
+      nil ->
+        user = AlchemyBook.UserController.create_anonymous()
+        conn = AlchemyBook.Auth.login(conn, user)
+        apply(__MODULE__, action_name(conn),
+              [conn, conn.params, user])
+      user ->
+        apply(__MODULE__, action_name(conn),
+              [conn, conn.params, user])
+    end
   end
 
   def index(conn, _params, _user) do
