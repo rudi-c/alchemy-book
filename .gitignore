@@ -6,6 +6,8 @@
 /deps
 /.fetch
 /*.ez
+/deploy.sh
+alchemy_book
 
 # Generated on crash by the VM
 erl_crash.dump

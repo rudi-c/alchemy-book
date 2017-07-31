@@ -9,6 +9,29 @@ To start your Phoenix app:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+## Deploying
+
+Create a symbolic link to your `prod.secret.exs` file (and maybe to your deploy script too):
+
+```
+ln -s <path>/prod.secret.exs config/prod.secret.exs
+```
+
+with
+
+```
+config :alchemy_book, AlchemyBook.Endpoint,
+  secret_key_base: "<secret key>"
+
+# Configure your database
+config :alchemy_book, AlchemyBook.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "<username>",
+  password: "<password>",
+  database: "alchemy_book_prod",
+  pool_size: 20
+```
+
 ## Typescript
 
 Install the Typescript compiler and linter globally
