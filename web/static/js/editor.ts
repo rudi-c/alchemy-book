@@ -12,10 +12,12 @@ class RemoteCursor {
     constructor(codemirror: CodeMirror.Editor, color: string) {
         this.codemirror = codemirror;
 
+        const lineHeight = this.codemirror.defaultTextHeight();
+
         this.widget = document.createElement("div");
         this.widget.style.position = "absolute";
         this.widget.style.width = "3px";
-        this.widget.style.height = "20px";
+        this.widget.style.height = `${lineHeight}px`;
         this.widget.style.backgroundColor = color;
         this.widget.style.top = "0px";
     }
