@@ -28,9 +28,12 @@ class Collaborator extends React.Component<any, any> {
     }
 
     render() {
-        // TODO: remove duplicate sites
-        const indicators = this.state.presences.map((presence: UserPresence) => 
-            <div key={presence.userId}>{ presence.username }</div>
+        const users: Map<number, string> = new Map();
+        this.state.presences.forEach((presence: UserPresence) => {
+            users.set(presence.userId, presence.username); 
+        });
+        const indicators = Array.from(users).map(([userId, username]: [number, string]) =>
+            <div key={userId}>{ username }</div>
         );
         return (
             <div>
