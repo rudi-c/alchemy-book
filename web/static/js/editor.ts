@@ -2,16 +2,19 @@ import * as CodeMirror from "codemirror";
 
 import * as Crdt from "./crdt";
 import { EditorSocket, UserPresence } from "./editor_socket";
-import RemoteCursor from "./remote_cursor"
+import History from "./history";
+import RemoteCursor from "./remote_cursor";
 
 const IgnoreRemote = "ignore_remote";
+const UndoRedo = "undo_redo";
 
 export default class Editor {
-    protected editorSocket: EditorSocket;
+    protected codemirror: CodeMirror.Editor;
     protected crdt: Crdt.t;
+    protected editorSocket: EditorSocket;
+    protected history: History;
     protected lamport: number;
     protected site: number;
-    protected codemirror: CodeMirror.Editor;
 
     // Map user_id -> site_id -> cursor element
     // Since the same user could have the same document open on multiple tabs,
@@ -26,10 +29,13 @@ export default class Editor {
         this.editorSocket = editorSocket;
 
         this.editorSocket.connect(this.onInit, this.onRemoteChange);
+        this.codemirror.on("beforeChange", this.beforeChange);
         this.codemirror.on("change", this.onLocalChange);
         this.codemirror.on("cursorActivity", this.onLocalCursor);
 
         this.cursorWidgets = new Map();
+
+        this.history = new History();
     }
 
     // TODO: Inefficient, any one cursor movement causes all others to be redraw
@@ -52,27 +58,52 @@ export default class Editor {
         });
     }
 
+    protected beforeChange = (editor: CodeMirror.Editor, change: CodeMirror.EditorChangeCancellable) => {
+        if (change.origin === "undo") {
+            change.cancel();
+
+            // Creating local changes to the document from inside the beforeChange
+            // event handler is a bad idea, according to the CodeMirror docs. So
+            // we do it at a later iteration of the event loop instead.
+            setTimeout(() => {
+                this.undo();
+            }, 0);
+        }
+
+        // TODO: Not sure how to get the redo event to trigger, Ctrl-Y and Ctrl-Shift-Z don't work
+        if (change.origin === "redo") {
+            change.cancel();
+
+            // Similarly
+            setTimeout(() => {
+                this.redo();
+            }, 0);
+        }
+    }
+
     protected onLocalCursor = (editor: CodeMirror.Editor) => {
         this.editorSocket.sendCursor(editor.getDoc().getCursor());
+
+        // TODO: Invalidating the history based on cursor movements doesn't work right
+        // now because any insertion will cause the cursor to move. Need a way to determine
+        // when a movement is really just a movement.
+        // this.history.onCursorMove();
     }
 
     protected onLocalChange = (editor: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
         // TODO: Handle error
-        if (change.origin !== IgnoreRemote && change.origin !== "setValue") {
+        if (![IgnoreRemote, UndoRedo, "setValue"].includes(change.origin)) {
             this.lamport = this.lamport + 1;
             const [newCrdt, changes] = Crdt.updateAndConvertLocalToRemote(this.crdt, this.lamport, this.site, change);
             this.crdt = newCrdt;
+            this.history.onChanges(changes);
             changes.forEach(change => this.editorSocket.sendChange(change, this.lamport));
         }
     }
 
     protected onRemoteChange = ({userId, change, lamport}) => {
         this.lamport = Math.max(this.lamport, lamport) + 1;
-        const [newCrdt, localChange] = Crdt.updateAndConvertRemoteToLocal(this.crdt, change);
-        this.crdt = newCrdt;
-        if (localChange) {
-            this.codemirror.getDoc().replaceRange(localChange.text, localChange.from, localChange.to, IgnoreRemote);
-        }
+        this.convertRemoteToLocal(change);
     }
 
     protected onInit = (resp) => {
@@ -80,6 +111,34 @@ export default class Editor {
         this.site = resp.site;
         this.lamport = 0;
         this.codemirror.setValue(Crdt.to_string(this.crdt));
+    }
+
+    private undo(): void {
+        this.lamport = this.lamport + 1;
+        this.applyUndoRedo(this.history.makeUndoChanges(this.lamport));
+    }
+
+    private redo(): void {
+        this.lamport = this.lamport + 1;
+        this.applyUndoRedo(this.history.makeRedoChanges(this.lamport));
+    }
+
+    private applyUndoRedo(changes: Crdt.RemoteChange.t[] | null): void {
+        if (changes) {
+            changes.forEach(change => {
+                this.convertRemoteToLocal(change);
+                this.editorSocket.sendChange(change, this.lamport);
+            });
+        }
+    }
+
+    private convertRemoteToLocal(change: Crdt.RemoteChange.t): void {
+        const [newCrdt, localChange] = Crdt.updateAndConvertRemoteToLocal(this.crdt, change);
+        this.crdt = newCrdt;
+        if (localChange) {
+            this.codemirror.getDoc().replaceRange(localChange.text,
+                localChange.from, localChange.to, IgnoreRemote);
+        }
     }
 
     private getCursorFor(presence: UserPresence): RemoteCursor {
