@@ -6,7 +6,7 @@ import { EditorSocket, UserPresence } from "./editor-socket";
 const IgnoreRemote = "ignore_remote";
 
 class RemoteCursor {
-    private widget: HTMLElement
+    private widget: HTMLElement;
     private codemirror: CodeMirror.Editor;
 
     constructor(codemirror: CodeMirror.Editor, color: string) {
@@ -44,13 +44,12 @@ export default class Editor {
     // Map user_id -> site_id -> cursor element
     // Since the same user could have the same document open on multiple tabs,
     // thus have multiple sites.
-    protected cursorWidgets: Map<number, Map<number, RemoteCursor>>
+    protected cursorWidgets: Map<number, Map<number, RemoteCursor>>;
 
     constructor(domNode: HTMLTextAreaElement, editorSocket: EditorSocket) {
         this.codemirror = CodeMirror.fromTextArea(domNode, {
             lineNumbers: true,
-
-            theme: "zenburn"
+            theme: "zenburn",
         });
         this.editorSocket = editorSocket;
 
@@ -61,7 +60,8 @@ export default class Editor {
         this.cursorWidgets = new Map();
     }
 
-    public updateCursors(presences: UserPresence[]) {
+    // TODO: Inefficient, any one cursor movement causes all others to be redraw
+    public updateCursors(presences: UserPresence[]): void {
         presences.forEach(presence => {
             // Don't draw a remote cursor for your own instance!
             if (presence.siteId !== this.site) {
@@ -75,7 +75,7 @@ export default class Editor {
         this.editorSocket.sendCursor(editor.getDoc().getCursor());
     }
 
-    protected onLocalChange = (_editor: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
+    protected onLocalChange = (editor: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
         // TODO: Handle error
         if (change.origin !== IgnoreRemote && change.origin !== "setValue") {
             this.lamport = this.lamport + 1;

@@ -248,9 +248,9 @@ function getCharAt(crdt: t, lineIndex: number, ch: number): Char.t {
     const line = crdt.get(lineIndex);
     if (ch >= line.size) {
         if (lineIndex === crdt.size - 1 && ch === line.size) {
-            return Char.endOfFile()
+            return Char.endOfFile();
         } else {
-            throw Error("indexing out of bounds")
+            throw Error("indexing out of bounds");
         }
     } else {
         return line.get(ch);
@@ -295,9 +295,9 @@ function findPosition(crdt: t, char: Char.t): [number, number, "found" | "not_fo
 // If not found, return the index of the character where it should be if inserted when using "at"
 //               return the index of the character that precedes it when using "before"
 export function binarySearch<U, V>(list: List<U>,
-                            item: V,
-                            comparator: (a: V, b: U) => number,
-                            notFoundBehavior: "at" | "before"): number {
+                                   item: V,
+                                   comparator: (a: V, b: U) => number,
+                                   notFoundBehavior: "at" | "before"): number {
     function _binarySearch<T>(start: number, end: number): number {
         if (start >= end) {
             switch (notFoundBehavior) {

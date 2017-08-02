@@ -56,6 +56,10 @@ class TestEditorSocket extends EditorSocket {
         this.fakeChannel.send(this, {change, lamport});
     }
 
+    public sendCursor(cursor: any) {
+        // TODO: Cursors not tested for now
+    }
+
     public receive(message: any) {
         this.messageQueue.push(message);
     }
