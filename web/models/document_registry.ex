@@ -17,7 +17,8 @@ defmodule AlchemyBook.DocumentRegistry do
             {:ok, session} -> {:reply, session, sessions}
             :error -> 
                 document = AlchemyBook.Repo.get!(Document, document_id)
-                {:ok, session} = DocumentSession.start_link(Document.json_to_crdt(document.contents))
+                {:ok, session} = DocumentSession.start_link(
+                    document_id, Document.json_to_crdt(document.contents))
                 {:reply, session, Map.put(sessions, document_id, session)}
         end
     end

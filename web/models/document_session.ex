@@ -2,6 +2,8 @@ defmodule AlchemyBook.DocumentSession do
     require Logger
 
     alias AlchemyBook.DocumentSession
+
+    @seconds_between_saves 5
  
     # From https://stackoverflow.com/questions/1168260/algorithm-for-generating-unique-colors
     # With black removed
@@ -71,16 +73,37 @@ defmodule AlchemyBook.DocumentSession do
         "#E85EBE"
     ]
 
-    defstruct crdt: %{}, sites: [], color_assign: %{}
+    defstruct document_id: -1, crdt: %{}, sites: [], color_assign: %{}, last_update: 0, last_save: 0
 
-    def start_link(crdt) do
+    def start_link(document_id, crdt) do
+        now = :os.system_time(:millisecond)
         # The server is always site 0 by convention
         # TODO: an ordered map would be ideal if we expect thousands of sites
-        Agent.start_link(fn -> 
-            %DocumentSession{crdt: crdt_as_map(crdt), 
+        {:ok, session} = Agent.start_link(fn -> 
+            %DocumentSession{document_id: document_id,
+                             crdt: crdt_as_map(crdt), 
                              sites: [{0, nil}], 
-                             color_assign: %{}} 
+                             color_assign: %{},
+                             last_update: now, 
+                             last_save: now} 
         end)
+
+        # Save the file every few seconds as needed
+        :timer.apply_interval(:timer.seconds(@seconds_between_saves), DocumentSession, :save, [session])
+
+        {:ok, session}
+    end
+
+    def save(session) do
+        {document_id, last_update, last_save} = Agent.get(session, fn session -> 
+            {session.document_id, session.last_update, session.last_save} 
+        end)
+        now = :os.system_time(:millisecond)
+        if last_save < last_update do
+            crdt = get(session)
+            AlchemyBook.DocumentController.save(document_id, crdt)
+            Agent.update(session, fn session -> %{ session | last_save: now } end)
+        end
     end
 
     def get(session) do
@@ -91,7 +114,10 @@ defmodule AlchemyBook.DocumentSession do
 
     def update(session, change) do
         Agent.update(session, fn session = %DocumentSession{crdt: crdt_map} -> 
-            %{ session | crdt: apply_change(crdt_map, change) } 
+            %{ session | 
+                crdt: apply_change(crdt_map, change),
+                last_update: :os.system_time(:millisecond)
+            } 
         end)
     end
 

@@ -82,6 +82,12 @@ defmodule AlchemyBook.DocumentController do
     |> redirect(to: document_path(conn, :index))
   end
 
+  def save(id, crdt) do
+    document = Repo.get!(Document, id)
+    changeset = Ecto.Changeset.change(document, contents: Document.crdt_to_json(crdt))
+    Repo.update!(changeset)
+  end
+
   defp user_documents(user) do
     assoc(user, :documents)
   end
