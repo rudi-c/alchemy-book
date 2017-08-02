@@ -2,7 +2,7 @@ import * as React from "react"
 import * as ReactDOM from "react-dom"
 
 import Editor from "./editor"
-import { EditorSocket, UserPresence } from "./editor-socket"
+import { EditorSocket, UserPresence } from "./editor_socket"
 
 // Yes, React is overkill right now
 class Collaborator extends React.Component<any, any> {
