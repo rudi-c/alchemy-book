@@ -7,9 +7,11 @@ const IgnoreRemote = "ignore_remote";
 
 class RemoteCursor {
     private widget: HTMLElement;
-    private codemirror: CodeMirror.Editor;
 
-    constructor(codemirror: CodeMirror.Editor, color: string) {
+    constructor(color: string,
+                public userId: number,
+                public siteId: number,
+                private codemirror: CodeMirror.Editor) {
         this.codemirror = codemirror;
 
         const lineHeight = this.codemirror.defaultTextHeight();
@@ -24,14 +26,18 @@ class RemoteCursor {
 
     public moveTo(pos: CodeMirror.Position): void {
         // Reinsert the cursor every time to move it.
-        if (this.widget.parentElement) {
-            this.widget.parentElement.removeChild(this.widget);
-        }
+        this.detach();
 
         if (pos) {
             const coords = this.codemirror.cursorCoords(pos, "local");
             this.widget.style.left = `${coords.left}px`;
             this.codemirror.getDoc().setBookmark(pos, { widget: this.widget });
+        }
+    }
+
+    public detach(): void {
+        if (this.widget.parentElement) {
+            this.widget.parentElement.removeChild(this.widget);
         }
     }
 }
@@ -64,12 +70,21 @@ export default class Editor {
 
     // TODO: Inefficient, any one cursor movement causes all others to be redraw
     public updateCursors(presences: UserPresence[]): void {
+        const cursorsToDelete = this.allCursors();
         presences.forEach(presence => {
             // Don't draw a remote cursor for your own instance!
             if (presence.siteId !== this.site) {
                 const cursor = this.getCursorFor(presence);
                 cursor.moveTo(presence.cursor);
+
+                cursorsToDelete.delete(cursor);
             }
+        });
+
+        // Remaining cursors are probably from old sessions, remove them
+        cursorsToDelete.forEach(cursor => {
+            cursor.detach();
+            this.cursorWidgets.get(cursor.userId)!.delete(cursor.siteId);
         });
     }
 
@@ -116,10 +131,19 @@ export default class Editor {
         if (sites.has(presence.siteId)) {
             cursor = sites.get(presence.siteId);
         } else {
-            cursor = new RemoteCursor(this.codemirror, presence.color);
+            cursor = new RemoteCursor(presence.color,
+                presence.userId, presence.siteId, this.codemirror);
             sites.set(presence.siteId, cursor);
         }
 
         return cursor;
+    }
+
+    private allCursors(): Set<RemoteCursor> {
+        const cursors: Set<RemoteCursor> = new Set();
+        this.cursorWidgets.forEach(sites => {
+            sites.forEach(cursor => cursors.add(cursor));
+        });
+        return cursors;
     }
 }
