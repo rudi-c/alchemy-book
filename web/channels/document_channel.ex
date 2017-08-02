@@ -11,8 +11,17 @@ defmodule AlchemyBook.DocumentChannel do
     intercept ["change"]
 
     def join("documents:" <> document_id, _params, socket) do
+        site_id = 
+            DocumentRegistry.lookup(document_id)
+            |> DocumentSession.request_site_for_user(socket.assigns.user_id)
+
+        socket =
+            socket
+            |> assign(:document_id, String.to_integer(document_id))
+            |> assign(:site_id, site_id)
+
         send(self(), :after_join)
-        {:ok, assign(socket, :document_id, String.to_integer(document_id))}
+        {:ok, socket}
     end
 
     def handle_in("change", params, socket) do
@@ -26,6 +35,14 @@ defmodule AlchemyBook.DocumentChannel do
             change: params["change"],
             lamport: params["lamport"]
         }
+        
+        {:reply, :ok, socket}
+    end
+
+    def handle_in("cursor", params, socket) do
+        Presence.update(socket, socket.assigns.site_id, fn meta ->
+            %{ meta | cursor: %{ line: params["line"], ch: params["ch"] } }
+        end)
         {:reply, :ok, socket}
     end
 
@@ -38,15 +55,12 @@ defmodule AlchemyBook.DocumentChannel do
     end
 
     def handle_info(:after_join, socket) do
-        doc_session = DocumentRegistry.lookup(socket.assigns.document_id)
-
         init_value = 
-            DocumentSession.get(doc_session)
+            DocumentRegistry.lookup(socket.assigns.document_id)
+            |> DocumentSession.get
             |> Document.crdt_to_json_ready
-        
-        site = DocumentSession.request_site_for_user(doc_session, socket.assigns.user_id)
 
-        push socket, "init", %{ state: init_value, site: site }
+        push socket, "init", %{ state: init_value, site: socket.assigns.site_id }
 
         handle_presence(socket)
 
@@ -54,10 +68,18 @@ defmodule AlchemyBook.DocumentChannel do
     end
 
     def handle_presence(socket) do
-        Presence.track(socket, socket.assigns.user_id, %{
+        color =
+            DocumentRegistry.lookup(socket.assigns.document_id)
+            |> DocumentSession.request_color_for_user(socket.assigns.user_id)
+
+        Presence.track(socket, socket.assigns.site_id, %{
+            color: color,
+            cursor: nil,
             online_at: :os.system_time(:milli_seconds),
+            user_id: socket.assigns.user_id,
             username: Repo.get!(User, socket.assigns.user_id).username
         })
+
         push socket, "presence_state", Presence.list(socket)
     end
 

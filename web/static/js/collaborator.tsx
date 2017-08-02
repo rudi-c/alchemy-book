@@ -14,8 +14,9 @@ class Collaborator extends React.Component<any, any> {
         this.state = { presences: [] };
     }
 
-    presenceCallback = (presences) => {
+    presenceCallback = (presences: UserPresence[]) => {
         this.setState({ presences: [...presences] });
+        this.editor.updateCursors(presences);
     }
 
     componentDidMount() {
@@ -27,8 +28,9 @@ class Collaborator extends React.Component<any, any> {
     }
 
     render() {
+        // TODO: remove duplicate sites
         const indicators = this.state.presences.map((presence: UserPresence) => 
-            <div key={presence.user}>{ presence.username }</div>
+            <div key={presence.userId}>{ presence.username }</div>
         );
         return (
             <div>

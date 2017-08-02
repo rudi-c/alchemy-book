@@ -1,11 +1,14 @@
 import { Channel, Socket, Presence } from "phoenix";
 
 // Needed for testing conflicts when you only have one keyboard
-const artificialDelay = 3 * 1000;
+const artificialDelay = 3 * 100;
 
 export interface UserPresence {
-    user: string,
+    color: string,
+    cursor: { line: number, ch: number };
     onlineAt: number,
+    siteId: number,
+    userId: number,
     username: string
 }
 
@@ -57,10 +60,20 @@ export class EditorSocket {
         }, artificialDelay);
     }
 
-    private listPresenceBy(user, {metas: metas}): UserPresence {
+    public sendCursor(cursor: any) {
+        setTimeout(() => {
+            this.channel.push("cursor", cursor)
+              .receive("error", e => { throw e; });
+        }, artificialDelay);
+    }
+
+    private listPresenceBy(siteId, {metas: metas}): UserPresence {
         return {
-            user,
+            color: metas[0].color,
+            cursor: metas[0].cursor,
             onlineAt: metas[0].online_at,
+            siteId: parseInt(siteId),
+            userId: metas[0].user_id,
             username: metas[0].username
         };
     }
