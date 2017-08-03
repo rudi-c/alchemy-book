@@ -1,6 +1,7 @@
 defmodule AlchemyBook.DocumentController do
   use AlchemyBook.Web, :controller
-  plug :authenticate_user when action in [:index, :show]
+  # TODO: reimplement permissions for `show` for private documents
+  plug :authenticate_user when action in [:index]
 
   alias AlchemyBook.Document
 

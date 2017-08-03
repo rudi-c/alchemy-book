@@ -1,7 +1,7 @@
 import { Channel, Presence, Socket } from "phoenix";
 
 // Needed for testing conflicts when you only have one keyboard
-const artificialDelay = 3 * 100;
+const artificialDelay = 0 * 1000;
 
 export interface UserPresence {
     color: string;
