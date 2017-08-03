@@ -8,12 +8,6 @@ defmodule AlchemyBook.DocumentSession do
     # From https://stackoverflow.com/questions/1168260/algorithm-for-generating-unique-colors
     # With black removed
     @colors [
-        "#00FF00",
-        "#0000FF",
-        "#FF0000",
-        "#01FFFE",
-        "#FFA6FE",
-        "#FFDB66",
         "#006401",
         "#010067",
         "#95003A",
@@ -70,7 +64,13 @@ defmodule AlchemyBook.DocumentSession do
         "#A5FFD2",
         "#FFB167",
         "#009BFF",
-        "#E85EBE"
+        "#E85EBE",
+        "#00FF00",
+        "#0000FF",
+        "#FF0000",
+        "#01FFFE",
+        "#FFA6FE",
+        "#FFDB66",
     ]
 
     defstruct document_id: -1, crdt: %{}, sites: [], color_assign: %{}, last_update: 0, last_save: 0

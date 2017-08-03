@@ -28,19 +28,31 @@ class Collaborator extends React.Component<any, any> {
     }
 
     render() {
-        const users: Map<number, string> = new Map();
+        const users: Map<number, UserPresence> = new Map();
         this.state.presences.forEach((presence: UserPresence) => {
-            users.set(presence.userId, presence.username); 
+            users.set(presence.userId, presence); 
         });
-        const indicators = Array.from(users).map(([userId, username]: [number, string]) =>
-            <div key={userId}>{ username }</div>
+        const indicators = Array.from(users).map(([userId, presence]: [number, UserPresence]) =>
+            <div key={userId} className="user">
+                <div className="circle" style={{background: presence.color}}></div>
+                <div className="username">{ presence.username }</div>
+            </div>
         );
         return (
-            <div>
-                <div className="indicators">
-                    { indicators }
+            <div className="page">
+                <header className="header">
+                    <div className="nav-left indicators">
+                        { indicators }
+                    </div>
+                    <div className="nav-right">
+                        <a href="/">back to main</a>
+                    </div>
+                </header>
+                <div className="container">
+                    <div className="code-container">
+                        <textarea />
+                    </div>
                 </div>
-                <textarea />
             </div>
         );
     }

@@ -1,10 +1,46 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}", name: "The Alchemy Book!" %></h2>
-  <p class="lead">A collaborative text editor for alchemists to share their secret formulas!</p>
-  <%= if @current_user do %>
-    <p><%= link "Go to recipes", to: document_path(@conn, :index) %></p>
-  <% else %>
-    <p>Please <%= link "register", to: user_path(@conn, :new) %> or <%= link "log in", to: session_path(@conn, :new) %></p>
-    <p>Or <%= link "try it now!", to: document_path(@conn, :new) %></p>
-  <% end %>
+<div class="page">
+  <header class="header">
+    <!--
+    <ol class="breadcrumb text-right">
+      <%= if @current_user do %>
+        <li><%= @current_user.username %></li>
+      <% end %>
+      <%= if @current_user && !@current_user.anonymous do %>
+        <li>
+          <%= link "Log out", to: session_path(@conn, :delete, @current_user),
+                              method: "delete" %>
+        </li>
+      <% else %>
+        <li><%= link "Register", to: user_path(@conn, :new) %></li>
+        <li><%= link "Log in", to: session_path(@conn, :new) %></li>
+      <% end %>
+    </ol>
+    -->
+  </header>
+
+  <div class="container">
+    <!--
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+    <main role="main">
+      <div class="jumbotron">
+        <h2><%= gettext "Welcome to %{name}", name: "The Alchemy Book!" %></h2>
+        <p class="lead">A collaborative text editor for alchemists to share their secret formulas!</p>
+        <%= if @current_user do %>
+          <p><%= link "Go to recipes", to: document_path(@conn, :index) %></p>
+        <% else %>
+          <p>Please <%= link "register", to: user_path(@conn, :new) %> or <%= link "log in", to: session_path(@conn, :new) %></p>
+          <p>Or <%= link "try it now!", to: document_path(@conn, :new) %></p>
+        <% end %>
+      </div>
+    </main>
+    -->
+    <div class="intro">
+      <h1><%= gettext "Welcome to %{name}", name: "The Alchemy Book!" %></h1>
+      <p>A collaborative text editor for alchemists to share their secret formulas!</p>
+      <p><%= link "> click here to try! <", to: document_path(@conn, :new) %></p>
+    </div>
+
+  </div> <!-- /container -->
 </div>

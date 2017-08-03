@@ -1,3 +1,1 @@
 <div id="collaborator"></div>
-
-<%= link "Back", to: document_path(@conn, :index) %>
