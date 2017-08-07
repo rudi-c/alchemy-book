@@ -48,6 +48,44 @@ test("simple insertion at various places", t => {
     t.is(e2.getText(), "abc\nabc");
 });
 
+test("insertion at a place of former conflict", t => {
+    [0, 1, 2].forEach(inserter => {
+        const editors = createEditors(3);
+        const [e1, e2, e3] = editors;
+
+        e1.type("||");
+        
+        e1.letAllThrough();
+        e2.letAllThrough();
+        e3.letAllThrough();
+
+        e1.moveCursor(() => ({ line: 0, ch: 1 }));
+        e2.moveCursor(() => ({ line: 0, ch: 1 }));
+
+        // Conflict! Two insertions at the same place.
+        e1.type("a");
+        e2.type("b");
+        
+        e1.letAllThrough();
+        e2.letAllThrough();
+        e3.letAllThrough();
+
+        const e = editors[inserter];
+
+        // Type a character between the two conflicting characters.
+        e.moveCursor(() => ({ line: 0, ch: 2 }));
+        e.type("x");
+        
+        e1.letAllThrough();
+        e2.letAllThrough();
+        e3.letAllThrough();
+
+        t.is(e1.getText(), "|axb|");
+        t.is(e2.getText(), "|axb|");
+        t.is(e3.getText(), "|axb|");
+    });
+});
+
 test("insertions and deletes are idempotent", t => {
     runPermutations(2, runPermutation => {
         const [e1, e2] = createEditors(2);
@@ -194,4 +232,36 @@ test("interleaved insertions pushing cursors on new lines", t => {
         t.is(e2.getText(), "a1\nb2\nc3\n");
         t.is(e3.getText(), "a1\nb2\nc3\n");
     });
+});
+
+test("one person typing lots of text", t => {
+    const text = "abcdefghijklmnopqrstuvwxyz\n".repeat(1000);
+    const [e1, e2] = createEditors(2);
+
+    e1.type(text);
+
+    e1.letAllThrough();
+    e2.letAllThrough();
+
+    t.is(e1.getText(), text);
+    t.is(e2.getText(), text);
+});
+
+test("three people typing lots of text on the same spot", t => {
+    const text = "abcdefghijklmnopqrstuvwxyz\n".repeat(100);
+    const [e1, e2, e3] = createEditors(3);
+
+    for (let i = 0; i < text.length; i++) {
+        e1.type(text[i]);
+        e2.type(text[i]);
+        e3.type(text[i]);
+    }
+
+    e1.letAllThrough();
+    e2.letAllThrough();
+    e3.letAllThrough();
+
+    const reference = e1.getText();
+    t.is(e2.getText(), reference);
+    t.is(e3.getText(), reference);
 });

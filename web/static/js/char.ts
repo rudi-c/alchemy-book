@@ -1,5 +1,7 @@
 import * as Decimal from "./decimal";
 
+import { cons, head, rest } from "./utils";
+
 export namespace Identifier {
     export interface t {
         pos: number;
@@ -56,11 +58,15 @@ export function create(position: Identifier.t[], lamport: number, value: string)
 }
 
 export function startOfFile(): t {
-    return create([Identifier.create(0, 0)], 0, "^");
+    // Note that the digit is 1, not 0. We don't want the min to be 0
+    // because we don't want the last digit to be 0, since fractions
+    // would have multiple representations (e.g. 0.1 === 0.10) which
+    // would be bad.
+    return create([Identifier.create(1, 0)], 0, "^");
 }
 
 export function endOfFile(): t {
-    return create([Identifier.create(Decimal.BASE, 0)], 0, "$");
+    return create([Identifier.create(255, 0)], 0, "$");
 }
 
 export function ofArray(array: Serial): t {
@@ -72,62 +78,60 @@ export function toArray(obj: t): Serial {
     return [position, obj.lamport, obj.value];
 }
 
-export function compare(c1: t, c2: t): number {
-    for (let i = 0; i < Math.min(c1.position.length, c2.position.length); i++) {
-        const comp = Identifier.compare(c1.position[i], c2.position[i]);
+export function comparePosition(c1: Identifier.t[], c2: Identifier.t[]): number {
+    for (let i = 0; i < Math.min(c1.length, c2.length); i++) {
+        const comp = Identifier.compare(c1[i], c2[i]);
         if (comp !== 0) {
             return comp;
         }
     }
-    if (c1.position.length < c2.position.length) {
+    if (c1.length < c2.length) {
         return - 1;
-    } else if (c1.position.length > c2.position.length) {
+    } else if (c1.length > c2.length) {
         return 1;
     } else {
         return 0;
     }
 }
 
-// Generate a position 1/16th of the way from c1 to c2. The idea is that insertions are going
-// to lean very heavily towards the right.
+export function compare(c1: t, c2: t): number {
+    return comparePosition(c1.position, c2.position);
+}
+
+// Generate a position between p1 and p2. The generated position will be heavily
+// biased to lean towards the left since character insertions tend to happen on
+// the right side.
 export function generatePositionBetween(p1: Identifier.t[], p2: Identifier.t[],
                                         site: number): Identifier.t[] {
-    const gap = 16;
-    const n1 = p1.map(ident => ident.pos);
-    const n2 = p2.map(ident => ident.pos);
-    Decimal.matchDigits(n1, n2);
-    const difference = Decimal.subtractGreaterThan(n2, n1);
+    const head1 = head(p1) || Identifier.create(0, site);
+    const head2 = head(p2) || Identifier.create(Decimal.BASE, site);
 
-    // TODO: handle when there's no difference
-    // If the positions match, then fractional indexing, doesn't work,
-    // even with sites (won't guarantee order intention). Need to
-    // delete the after character and reinsert it with a different
-    // index.
-
-    if (Decimal.needsNewDigit(difference, gap)) {
-        difference.push(0);
-    }
-
-    const offset = Decimal.pseudoIntegerDivision(difference, gap);
-
-    // TODO: add randomness
-
-    Decimal.matchDigits(n1, offset);
-    Decimal.matchDigits(n2, offset);
-    const newPosition = Decimal.addNoCarry(n1, offset);
-
-    // Pair each digit with a site
-    return newPosition.map((digit, index) => {
-        if (index === newPosition.length - 1) {
-            return Identifier.create(digit, site);
-        } else if (digit === n1[index]) {
-            return Identifier.create(digit, p1[index].site);
-        } else if (digit === n2[index]) {
-            return Identifier.create(digit, p2[index].site);
+    if (head1.pos === head2.pos) {
+        if (head1.site < head2.site) {
+            return cons(head1, generatePositionBetween(rest(p1), [], site));
+        } else if (head1.site === head2.site) {
+            return cons(head1, generatePositionBetween(rest(p1), rest(p2), site));
         } else {
-            return Identifier.create(digit, site);
+            throw new Error("invalid site ordering");
         }
-    });
+    } else {
+        const n1 = p1.map(ident => ident.pos);
+        const n2 = p2.map(ident => ident.pos);
+        const delta = Decimal.subtractGreaterThan(n2, n1);
+
+        const next = Decimal.increment(n1, delta);
+        return next.map((digit, index) => {
+            if (index === next.length - 1) {
+                return Identifier.create(digit, site);
+            } else if (digit === n1[index]) {
+                return Identifier.create(digit, p1[index].site);
+            } else if (digit === n2[index]) {
+                return Identifier.create(digit, p2[index].site);
+            } else {
+                return Identifier.create(digit, site);
+            }
+        });
+    }
 }
 
 export function equals(c1: t, c2: t): boolean {

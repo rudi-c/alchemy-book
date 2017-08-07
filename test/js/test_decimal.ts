@@ -5,63 +5,46 @@ import * as Decimal from "../../web/static/js/decimal"
 const BASE = Decimal.BASE;
 const DIVISOR = Decimal.DIVISOR;
 
-test('needs new digit', t => {
-    t.true(Decimal.needsNewDigit([0], DIVISOR));
-    t.true(Decimal.needsNewDigit([DIVISOR - 1], DIVISOR));
-    t.false(Decimal.needsNewDigit([DIVISOR], DIVISOR));
-    t.false(Decimal.needsNewDigit([255], DIVISOR));
-});
+// Return true if the decimal digits a are greater than
+// the decimal digits b.
+function isGreater(a: number[], b: number[]): boolean {
+    for (let i = 0; i < Math.min(a.length, b.length); i++) {
+        if (a[i] > b[i]) {
+            return true;
+        } else if (a[i] < b[i]) {
+            return false;
+        }
+    }
 
-test('match digits: same', t => {
+    // If we"re here, the digits have been equal so far.
+    return a.length > b.length;
+}
+
+test("match digits: same", t => {
     const n1 = [0];
     const n2 = [37];
-    Decimal.matchDigits(n1, n2);
-    t.deepEqual(n1, [0]);
-    t.deepEqual(n2, [37]);
+    const [m1, m2] = Decimal.matchDigits(n1, n2);
+    t.deepEqual(m1, [0]);
+    t.deepEqual(m2, [37]);
 });
 
-test('match digits: not matching', t => {
+test("match digits: not matching", t => {
     const n1 = [0, 1];
     const n2 = [37];
-    Decimal.matchDigits(n1, n2);
-    t.deepEqual(n1, [0, 1]);
-    t.deepEqual(n2, [37, 0]);
+    const [m1, m2] = Decimal.matchDigits(n1, n2);
+    t.deepEqual(m1, [0, 1]);
+    t.deepEqual(m2, [37, 0]);
 });
 
-test('match digits: not matching', t => {
+test("match digits: not matching", t => {
     const n1 = [0, 1];
     const n2 = [37, 12, 53, 11];
-    Decimal.matchDigits(n1, n2);
-    t.deepEqual(n1, [0, 1, 0, 0]);
-    t.deepEqual(n2, [37, 12, 53, 11]);
+    const [m1, m2] = Decimal.matchDigits(n1, n2);
+    t.deepEqual(m1, [0, 1, 0, 0]);
+    t.deepEqual(m2, [37, 12, 53, 11]);
 });
 
-test('pseudo division', t => {
-    // Divison by 0
-    t.deepEqual(Decimal.pseudoIntegerDivision([0], DIVISOR), [0]);
-    t.deepEqual(Decimal.pseudoIntegerDivision([0, 0], DIVISOR), [0, 0]);
-
-    // Simple division
-    t.deepEqual(Decimal.pseudoIntegerDivision([DIVISOR], DIVISOR), [1]);
-    t.deepEqual(Decimal.pseudoIntegerDivision([DIVISOR * 5], DIVISOR), [5]);
-    t.deepEqual(Decimal.pseudoIntegerDivision([0, DIVISOR], DIVISOR), [0, 1]);
-    t.deepEqual(Decimal.pseudoIntegerDivision([DIVISOR, 0], DIVISOR), [1, 0]);
-    t.deepEqual(Decimal.pseudoIntegerDivision([DIVISOR, DIVISOR], DIVISOR), [1, 1]);
-
-    // Truncation
-    t.deepEqual(Decimal.pseudoIntegerDivision([2], DIVISOR), [0]);
-    t.deepEqual(Decimal.pseudoIntegerDivision([0, DIVISOR + 1], DIVISOR), [0, 1]);
-
-    // Carry
-    t.deepEqual(Decimal.pseudoIntegerDivision([1, 0], DIVISOR), 
-                [0, BASE / DIVISOR]);
-    t.deepEqual(Decimal.pseudoIntegerDivision([1, DIVISOR], DIVISOR), 
-                [0, BASE / DIVISOR + 1]);
-    t.deepEqual(Decimal.pseudoIntegerDivision([BASE - 1, BASE - 1, 1], DIVISOR), 
-                [BASE / DIVISOR - 1, BASE - 1, BASE / DIVISOR * (DIVISOR - 1)]);
-});
-
-test('add without carry', t => {
+test("add without carry", t => {
     // Most basic addition
     t.deepEqual(Decimal.addNoCarry([0, 0], [0, 0]), [0, 0]);
 
@@ -73,7 +56,7 @@ test('add without carry', t => {
                 [BASE - 1, 1]);
 });
 
-test('subtract greater than', t => {
+test("subtract greater than", t => {
     // Most basic subtraction
     t.deepEqual(Decimal.subtractGreaterThan([0, 0], [0, 0]), [0, 0]);
 
@@ -82,4 +65,36 @@ test('subtract greater than', t => {
 
     // Subtraction with carry
     t.deepEqual(Decimal.subtractGreaterThan([11, 2], [3, 4]), [11 - 3 - 1, BASE - 2]);
+
+    // Subtraction with carry and different number of digits
+    t.deepEqual(Decimal.subtractGreaterThan([1], [0, 1]), [0, BASE - 1]);
+});
+
+test("increment: test necessary properties", t => {
+    function incrementAssertCorrect(old: number[], delta: number[]) {
+        const incremented = Decimal.increment(old, delta);
+
+        t.true(isGreater(incremented, old));
+        t.true(incremented[incremented.length - 1] !== 0);
+
+        const [paddedOld, paddedDelta] = Decimal.matchDigits([0].concat(old), [0].concat(delta));
+        t.true(isGreater(
+            Decimal.addNoCarry(paddedOld, paddedDelta), 
+            [0].concat(incremented)
+        ));
+    }
+
+    [[1], [0, 1], [0, 0, 1]].forEach(delta => {
+        incrementAssertCorrect([1], delta);
+        incrementAssertCorrect([0, 1], delta);
+        incrementAssertCorrect([0, 0, 1], delta);
+        incrementAssertCorrect([BASE - 1], delta);
+        incrementAssertCorrect([0, BASE - 1], delta);
+        incrementAssertCorrect([BASE - 2, BASE - 1], delta);
+    });
+});
+
+test("increment: test that a smaller digit is used to be added", t => {
+    t.deepEqual(Decimal.increment([1], [1]), [1, 1]);
+    t.deepEqual(Decimal.increment([1], [0, 1]), [1, 0, 1]);
 });
