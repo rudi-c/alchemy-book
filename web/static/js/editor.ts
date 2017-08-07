@@ -101,7 +101,7 @@ export default class Editor {
         }
     }
 
-    protected onRemoteChange = ({userId, change, lamport}) => {
+    protected onRemoteChange = ({change, lamport}) => {
         this.lamport = Math.max(this.lamport, lamport) + 1;
         this.convertRemoteToLocal(change);
     }

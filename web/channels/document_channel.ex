@@ -31,7 +31,7 @@ defmodule AlchemyBook.DocumentChannel do
         |> DocumentSession.update(change)
 
         broadcast! socket, "change", %{
-            userId: socket.assigns.user_id,
+            siteId: socket.assigns.site_id,
             change: params["change"],
             lamport: params["lamport"]
         }
@@ -48,7 +48,7 @@ defmodule AlchemyBook.DocumentChannel do
 
     def handle_out("change", payload, socket) do
         # Don't send a change event to the originator of the change event
-        if payload[:userId] != socket.assigns.user_id do
+        if payload[:siteId] != socket.assigns.site_id do
             push socket, "change", payload
         end
         {:noreply, socket}
