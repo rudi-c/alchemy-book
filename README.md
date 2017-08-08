@@ -9,6 +9,10 @@ To start your Phoenix app:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+## Static checking
+
+Use `mix dialyzer` to do static checking with Dialyzer. The first time should take a lot of time as it runs on the dependencies too, although the results will be cached. Note that there are still a lot of (what I think are) spurious warnings. This is to be fixed later.
+
 ## Deploying
 
 Create a symbolic link to your `prod.secret.exs` file (and maybe to your deploy script too):

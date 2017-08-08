@@ -73,8 +73,14 @@ defmodule AlchemyBook.DocumentSession do
         "#FFDB66",
     ]
 
+    @type position :: list({integer, integer})
+    @type position_identifier :: {position, integer}
+    @type crdt :: list({position, integer, String.t})
+    @type crdt_map :: %{required(position_identifier) => String.t}
+
     defstruct document_id: -1, crdt: %{}, sites: [], color_assign: %{}, last_update: 0, last_save: 0
 
+    @spec start_link(integer, crdt) :: {:ok, pid()}
     def start_link(document_id, crdt) do
         now = :os.system_time(:millisecond)
         # The server is always site 0 by convention
@@ -94,6 +100,7 @@ defmodule AlchemyBook.DocumentSession do
         {:ok, session}
     end
 
+    @spec save(pid) :: no_return
     def save(session) do
         {document_id, last_update, last_save} = Agent.get(session, fn session -> 
             {session.document_id, session.last_update, session.last_save} 
@@ -106,12 +113,14 @@ defmodule AlchemyBook.DocumentSession do
         end
     end
 
+    @spec get(pid) :: crdt
     def get(session) do
         Agent.get(session, fn %DocumentSession{crdt: crdt_map} -> 
             crdt_from_map(crdt_map) 
         end)
     end
 
+    @spec update(pid, {String.t, {position_identifier, String.t}}) :: no_return
     def update(session, change) do
         Agent.update(session, fn session = %DocumentSession{crdt: crdt_map} -> 
             %{ session | 
@@ -121,6 +130,7 @@ defmodule AlchemyBook.DocumentSession do
         end)
     end
 
+    @spec request_site_for_user(pid, integer) :: integer
     def request_site_for_user(session, user_id) do
         Agent.get_and_update(session, fn session = %DocumentSession{sites: sites} ->
             # Note: we have no garbage collection mechanism right now for sites
@@ -131,6 +141,7 @@ defmodule AlchemyBook.DocumentSession do
         end)
     end
 
+    @spec request_color_for_user(pid, integer) :: String.t
     def request_color_for_user(session, user_id) do
         Agent.get_and_update(session, fn session = %DocumentSession{color_assign: colors} ->
             if Map.has_key?(colors, user_id) do
@@ -147,29 +158,32 @@ defmodule AlchemyBook.DocumentSession do
         end)
     end
 
-    defp apply_change(crdt_map, ["add", {char, value}]) do
+    @spec apply_change(crdt_map, {String.t, {position_identifier, String.t}}) :: crdt_map
+    defp apply_change(crdt_map, {"add", {char, value}}) do
         if Map.has_key?(crdt_map, char) && Map.get(crdt_map, char) != value do
             Logger.error "Map already has key #{char} with different value"
         end
         Map.put(crdt_map, char, value)
     end
-
     defp apply_change(crdt_map, ["remove", {char, _value}]) do
         Map.delete(crdt_map, char)
     end
 
+    @spec crdt_as_map(crdt) :: crdt_map
     defp crdt_as_map(crdt) do
         crdt
         |> Enum.map(fn {identifier, lamport, char} -> {{identifier, lamport}, char} end)
         |> Map.new
     end
 
+    @spec crdt_from_map(crdt_map) :: crdt
     defp crdt_from_map(crdt_map) do
         Map.to_list(crdt_map)
         |> Enum.sort(fn (a, b) -> compare_char(a, b) end)
         |> Enum.map(fn {{identifier, lamport}, char} -> {identifier, lamport, char} end)
     end
 
+    @spec compare_char({position_identifier, String.t}, {position_identifier, String.t}) :: boolean
     defp compare_char({{position1, _lamport1}, _v1}, {{position2, _lamport2}, _v2}) do
         compared =
             Stream.zip(position1, position2)
@@ -183,6 +197,7 @@ defmodule AlchemyBook.DocumentSession do
         end
     end
 
+    @spec compare_identifier({integer, integer}, {integer, integer}) :: boolean | :equal
     defp compare_identifier({pos1, site1}, {pos2, site2}) do
         cond do
             pos1 < pos2 -> true

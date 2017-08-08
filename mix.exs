@@ -9,6 +9,7 @@ defmodule AlchemyBook.Mixfile do
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     dialyxir: [plt_add_deps: :transitive],
      aliases: aliases(),
      deps: deps()]
   end
@@ -39,6 +40,7 @@ defmodule AlchemyBook.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.0"},
+     {:dialyxir, "~> 0.5.0", only: [:dev], runtime: false},
      {:distillery, "~> 1.4", runtime: false}]
   end
 
