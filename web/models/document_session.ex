@@ -80,7 +80,7 @@ defmodule AlchemyBook.DocumentSession do
 
     defstruct document_id: -1, crdt: %{}, sites: [], color_assign: %{}, last_update: 0, last_save: 0
 
-    @spec start_link(integer, crdt) :: {:ok, pid()}
+    @spec start_link(integer, crdt) :: {:ok, pid}
     def start_link(document_id, crdt) do
         now = :os.system_time(:millisecond)
         # The server is always site 0 by convention

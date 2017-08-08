@@ -1,13 +1,14 @@
 import test from "ava"
 
 import * as Decimal from "../../web/static/js/decimal"
+import * as Identifier from "../../web/static/js/identifier"
 import * as Char from "../../web/static/js/char"
 
-function positions(array: Array<[number, number]>): Char.Identifier.t[] {
-    return array.map(Char.Identifier.ofArray);
+function positions(array: Array<[number, number]>): Identifier.t[] {
+    return array.map(Identifier.ofArray);
 }
 
-function areIncreasing(positions: Char.Identifier.t[][]): boolean {
+function areIncreasing(positions: Identifier.t[][]): boolean {
     for (let i = 0; i < positions.length - 1; i++) {
         if (Char.comparePosition(positions[i], positions[i + 1]) >= 0) {
             return false;
@@ -158,7 +159,7 @@ test("generate position between: increment by a small digit", t => {
     const p2 = positions([[Decimal.BASE - 1, 0]]);
     const generated = Char.generatePositionBetween(p1, p2, site);
     t.deepEqual(
-        Decimal.subtractGreaterThan(p2.map(i => i.pos), p1.map(i => i.pos)), 
+        Decimal.subtractGreaterThan(p2.map(i => i.digit), p1.map(i => i.digit)), 
         [0, Decimal.BASE - 1]);
     t.deepEqual(generated, positions([[Decimal.BASE - 2, site], [1, site], [1, site]]));
 });

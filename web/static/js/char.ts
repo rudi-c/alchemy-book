@@ -1,47 +1,7 @@
 import * as Decimal from "./decimal";
+import * as Identifier from "./identifier";
 
 import { cons, head, rest } from "./utils";
-
-export namespace Identifier {
-    export interface t {
-        digit: number;
-        site: number;
-    }
-
-    export function create(digit: number, site: number): t {
-        const obj = { digit, site };
-        Object.freeze(obj);
-        return obj;
-    }
-
-    export function ofArray(array: [number, number]): t {
-        return create(array[0], array[1]);
-    }
-
-    export function toArray(identifier: t): [number, number] {
-        return [identifier.digit, identifier.site];
-    }
-
-    export function compare(i1: Identifier.t, i2: Identifier.t) {
-        if (i1.digit < i2.digit) {
-            return -1;
-        } else if (i1.digit > i2.digit) {
-            return 1;
-        } else {
-            if (i1.site < i2.site) {
-                return -1;
-            } else if (i1.site > i2.site) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    }
-
-    export function equals(i1: Identifier.t, i2: Identifier.t): boolean {
-        return i1.digit === i2.digit && i1.site === i2.site;
-    }
-}
 
 export interface t {
     position: Identifier.t[];
@@ -101,36 +61,36 @@ export function compare(c1: t, c2: t): number {
 // Generate a position between p1 and p2. The generated position will be heavily
 // biased to lean towards the left since character insertions tend to happen on
 // the right side.
-export function generatePositionBetween(p1: Identifier.t[], p2: Identifier.t[],
+export function generatePositionBetween(position1: Identifier.t[], 
+                                        position2: Identifier.t[],
                                         site: number): Identifier.t[] {
-    const head1 = head(p1) || Identifier.create(0, site);
-    const head2 = head(p2) || Identifier.create(Decimal.BASE, site);
+    // Get either the head of the position, or fallback to default value
+    const head1 = head(position1) || Identifier.create(0, site);
+    const head2 = head(position2) || Identifier.create(Decimal.BASE, site);
 
-    if (head1.digit === head2.digit) {
+    if (head1.digit !== head2.digit) {
+        // Case 1: Head digits are different 
+        // It's easy to create a position to insert in-between by doing regular arithmetics.
+        const n1 = Decimal.fromIdentifierList(position1);
+        const n2 = Decimal.fromIdentifierList(position2);
+        const delta = Decimal.subtractGreaterThan(n2, n1);
+
+        // Increment n1 by some amount less than delta
+        const next = Decimal.increment(n1, delta);
+        return Decimal.toIdentifierList(next, position1, position2, site);
+    } else {
         if (head1.site < head2.site) {
-            return cons(head1, generatePositionBetween(rest(p1), [], site));
+            // Case 2: Head digits are the same, sites are different
+            // Since the site acts as a tie breaker, it will always be the case that
+            // cons(head1, anything) < position2
+            return cons(head1, generatePositionBetween(rest(position1), [], site));
         } else if (head1.site === head2.site) {
-            return cons(head1, generatePositionBetween(rest(p1), rest(p2), site));
+            // Case 3: Head digits and sites are the same
+            // Need to recurse on the next digits
+            return cons(head1, generatePositionBetween(rest(position1), rest(position2), site));
         } else {
             throw new Error("invalid site ordering");
         }
-    } else {
-        const n1 = p1.map(ident => ident.digit);
-        const n2 = p2.map(ident => ident.digit);
-        const delta = Decimal.subtractGreaterThan(n2, n1);
-
-        const next = Decimal.increment(n1, delta);
-        return next.map((digit, index) => {
-            if (index === next.length - 1) {
-                return Identifier.create(digit, site);
-            } else if (digit === n1[index]) {
-                return Identifier.create(digit, p1[index].site);
-            } else if (digit === n2[index]) {
-                return Identifier.create(digit, p2[index].site);
-            } else {
-                return Identifier.create(digit, site);
-            }
-        });
     }
 }
 

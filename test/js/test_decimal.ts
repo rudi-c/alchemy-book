@@ -20,39 +20,15 @@ function isGreater(a: number[], b: number[]): boolean {
     return a.length > b.length;
 }
 
-test("match digits: same", t => {
-    const n1 = [0];
-    const n2 = [37];
-    const [m1, m2] = Decimal.matchDigits(n1, n2);
-    t.deepEqual(m1, [0]);
-    t.deepEqual(m2, [37]);
-});
-
-test("match digits: not matching", t => {
-    const n1 = [0, 1];
-    const n2 = [37];
-    const [m1, m2] = Decimal.matchDigits(n1, n2);
-    t.deepEqual(m1, [0, 1]);
-    t.deepEqual(m2, [37, 0]);
-});
-
-test("match digits: not matching", t => {
-    const n1 = [0, 1];
-    const n2 = [37, 12, 53, 11];
-    const [m1, m2] = Decimal.matchDigits(n1, n2);
-    t.deepEqual(m1, [0, 1, 0, 0]);
-    t.deepEqual(m2, [37, 12, 53, 11]);
-});
-
 test("add without carry", t => {
     // Most basic addition
-    t.deepEqual(Decimal.addNoCarry([0, 0], [0, 0]), [0, 0]);
+    t.deepEqual(Decimal.add([0, 0], [0, 0]), [0, 0]);
 
     // Addition without carry
-    t.deepEqual(Decimal.addNoCarry([5, 5], [5, 6]), [5 + 5, 5 + 6]);
+    t.deepEqual(Decimal.add([5, 5], [5, 6]), [5 + 5, 5 + 6]);
 
     // Addition with carry
-    t.deepEqual(Decimal.addNoCarry([BASE - 2, BASE / 2], [0, BASE / 2 + 1]), 
+    t.deepEqual(Decimal.add([BASE - 2, BASE / 2], [0, BASE / 2 + 1]), 
                 [BASE - 1, 1]);
 });
 
@@ -77,9 +53,8 @@ test("increment: test necessary properties", t => {
         t.true(isGreater(incremented, old));
         t.true(incremented[incremented.length - 1] !== 0);
 
-        const [paddedOld, paddedDelta] = Decimal.matchDigits([0].concat(old), [0].concat(delta));
         t.true(isGreater(
-            Decimal.addNoCarry(paddedOld, paddedDelta), 
+            Decimal.add([0].concat(old), [0].concat(delta)), 
             [0].concat(incremented)
         ));
     }
