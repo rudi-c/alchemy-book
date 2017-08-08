@@ -4,12 +4,12 @@ import { cons, head, rest } from "./utils";
 
 export namespace Identifier {
     export interface t {
-        pos: number;
+        digit: number;
         site: number;
     }
 
-    export function create(pos: number, site: number): t {
-        const obj = { pos, site };
+    export function create(digit: number, site: number): t {
+        const obj = { digit, site };
         Object.freeze(obj);
         return obj;
     }
@@ -19,13 +19,13 @@ export namespace Identifier {
     }
 
     export function toArray(identifier: t): [number, number] {
-        return [identifier.pos, identifier.site];
+        return [identifier.digit, identifier.site];
     }
 
     export function compare(i1: Identifier.t, i2: Identifier.t) {
-        if (i1.pos < i2.pos) {
+        if (i1.digit < i2.digit) {
             return -1;
-        } else if (i1.pos > i2.pos) {
+        } else if (i1.digit > i2.digit) {
             return 1;
         } else {
             if (i1.site < i2.site) {
@@ -39,7 +39,7 @@ export namespace Identifier {
     }
 
     export function equals(i1: Identifier.t, i2: Identifier.t): boolean {
-        return i1.pos === i2.pos && i1.site === i2.site;
+        return i1.digit === i2.digit && i1.site === i2.site;
     }
 }
 
@@ -78,16 +78,16 @@ export function toArray(obj: t): Serial {
     return [position, obj.lamport, obj.value];
 }
 
-export function comparePosition(c1: Identifier.t[], c2: Identifier.t[]): number {
-    for (let i = 0; i < Math.min(c1.length, c2.length); i++) {
-        const comp = Identifier.compare(c1[i], c2[i]);
+export function comparePosition(p1: Identifier.t[], p2: Identifier.t[]): number {
+    for (let i = 0; i < Math.min(p1.length, p2.length); i++) {
+        const comp = Identifier.compare(p1[i], p2[i]);
         if (comp !== 0) {
             return comp;
         }
     }
-    if (c1.length < c2.length) {
+    if (p1.length < p2.length) {
         return - 1;
-    } else if (c1.length > c2.length) {
+    } else if (p1.length > p2.length) {
         return 1;
     } else {
         return 0;
@@ -106,7 +106,7 @@ export function generatePositionBetween(p1: Identifier.t[], p2: Identifier.t[],
     const head1 = head(p1) || Identifier.create(0, site);
     const head2 = head(p2) || Identifier.create(Decimal.BASE, site);
 
-    if (head1.pos === head2.pos) {
+    if (head1.digit === head2.digit) {
         if (head1.site < head2.site) {
             return cons(head1, generatePositionBetween(rest(p1), [], site));
         } else if (head1.site === head2.site) {
@@ -115,8 +115,8 @@ export function generatePositionBetween(p1: Identifier.t[], p2: Identifier.t[],
             throw new Error("invalid site ordering");
         }
     } else {
-        const n1 = p1.map(ident => ident.pos);
-        const n2 = p2.map(ident => ident.pos);
+        const n1 = p1.map(ident => ident.digit);
+        const n2 = p2.map(ident => ident.digit);
         const delta = Decimal.subtractGreaterThan(n2, n1);
 
         const next = Decimal.increment(n1, delta);
