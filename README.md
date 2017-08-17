@@ -1,13 +1,6 @@
 # The Alchemy Book
 
-To start your Phoenix app:
-
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+This application is currently "pre-launch", as in the demo is working, but there's still tons of bugs to fix. A blog post on this project is also coming soon.
 
 ## Static checking
 
