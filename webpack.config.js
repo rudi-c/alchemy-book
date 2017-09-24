@@ -29,15 +29,24 @@ const config = {
                     use: "css-loader"
                 })
             },
-            {
-                test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-                loader: 'file-loader?name=fonts/[name].[ext]'
-            },
+            // Not sure why this doesn't work, use CopyWebpackPlugin instead for now
+            // {
+            //     test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+            //     use: [{
+            //         loader: "file-loader",
+            //         options: {
+            //             name: "fonts/[name].[ext]"
+            //         },
+            //     }]
+            // },
         ]
     },
     plugins: [
         new ExtractTextPlugin("css/app.css"),
-        new CopyWebpackPlugin([{ from: "./web/static/assets" }])
+        new CopyWebpackPlugin([
+            { from: "./web/static/assets" },
+            { from: "./web/static/fonts", to: "fonts" }
+        ])
     ]
 };
 
