@@ -31,7 +31,7 @@ defmodule AlchemyBook.Document do
     json
     |> Poison.decode!
     |> Enum.map(fn [position_identifier, lamport, char] ->
-      {Enum.map(position_identifier, fn [pos, site] -> {pos, site} end), lamport, char}
+      {Enum.map(position_identifier, fn [digit, site] -> {digit, site} end), lamport, char}
     end)
   end
 
@@ -44,7 +44,7 @@ defmodule AlchemyBook.Document do
     IO.puts inspect crdt
     crdt
     |> Enum.map(fn {position_identifier, lamport, char} ->
-      [Enum.map(position_identifier, fn {pos, site} -> [pos, site] end), lamport, char]
+      [Enum.map(position_identifier, fn {digit, site} -> [digit, site] end), lamport, char]
     end)
   end
 

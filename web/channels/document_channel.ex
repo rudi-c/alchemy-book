@@ -86,7 +86,7 @@ defmodule AlchemyBook.DocumentChannel do
     defp parse_change([type, char]) do
         position = 
             char["position"]
-            |> Enum.map(fn %{"pos" => pos, "site" => site} -> {pos, site} end)
+            |> Enum.map(fn %{"digit" => digit, "site" => site} -> {digit, site} end)
         [type, { { position, char["lamport"] }, char["value"] }]
     end
 end
