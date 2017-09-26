@@ -1,5 +1,4 @@
 import * as Char from "../../web/static/js/char"
-import * as Crdt from "../../web/static/js/crdt"
 
 import Editor from "../../web/static/js/editor"
 import { EditorSocket } from "../../web/static/js/editor_socket"
@@ -83,7 +82,7 @@ export class TestEditorSocket extends EditorSocket {
 
 export class TestEditor extends Editor {
     public getText(): string {
-        if (this.codemirror.getValue() !== Crdt.to_string(this.crdt)) {
+        if (this.codemirror.getValue() !== this.crdt.toString()) {
             throw Error("Editor text and stored text do no match");
         }
         return this.codemirror.getValue();

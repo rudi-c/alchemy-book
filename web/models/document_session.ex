@@ -159,7 +159,7 @@ defmodule AlchemyBook.DocumentSession do
     end
 
     @spec apply_change(crdt_map, {String.t, {position_identifier, String.t}}) :: crdt_map
-    defp apply_change(crdt_map, {"add", {char, value}}) do
+    defp apply_change(crdt_map, ["add", {char, value}]) do
         if Map.has_key?(crdt_map, char) && Map.get(crdt_map, char) != value do
             Logger.error "Map already has key #{char} with different value"
         end

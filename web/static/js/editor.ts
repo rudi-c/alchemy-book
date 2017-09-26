@@ -1,6 +1,13 @@
 import * as CodeMirror from "codemirror";
 
-import * as Crdt from "./crdt";
+import {
+    Crdt,
+    LocalChange,
+    RemoteChange,
+    updateAndConvertLocalToRemote,
+    updateAndConvertRemoteToLocal
+} from "./crdt";
+import { LinearCrdt } from "./crdt_linear"
 import { EditorSocket, UserPresence } from "./editor_socket";
 import History from "./history";
 import RemoteCursor from "./remote_cursor";
@@ -10,7 +17,7 @@ const UndoRedo = "undo_redo";
 
 export default class Editor {
     protected codemirror: CodeMirror.Editor;
-    protected crdt: Crdt.t;
+    protected crdt: Crdt;
     protected editorSocket: EditorSocket;
     protected history: History;
     protected lamport: number;
@@ -94,8 +101,7 @@ export default class Editor {
         // TODO: Handle error
         if (![IgnoreRemote, UndoRedo, "setValue"].includes(change.origin)) {
             this.lamport = this.lamport + 1;
-            const [newCrdt, changes] = Crdt.updateAndConvertLocalToRemote(this.crdt, this.lamport, this.site, change);
-            this.crdt = newCrdt;
+            const changes = updateAndConvertLocalToRemote(this.crdt, this.lamport, this.site, change);
             this.history.onChanges(changes);
             changes.forEach(change => this.editorSocket.sendChange(change, this.lamport));
         }
@@ -107,10 +113,11 @@ export default class Editor {
     }
 
     protected onInit = (resp) => {
-        this.crdt = Crdt.init(resp.state);
+        this.crdt = new LinearCrdt();
+        this.crdt.init(resp.state);
         this.site = resp.site;
         this.lamport = 0;
-        this.codemirror.setValue(Crdt.to_string(this.crdt));
+        this.codemirror.setValue(this.crdt.toString());
     }
 
     private undo(): void {
@@ -123,7 +130,7 @@ export default class Editor {
         this.applyUndoRedo(this.history.makeRedoChanges(this.lamport));
     }
 
-    private applyUndoRedo(changes: Crdt.RemoteChange.t[] | null): void {
+    private applyUndoRedo(changes: RemoteChange.t[] | null): void {
         if (changes) {
             changes.forEach(change => {
                 this.convertRemoteToLocal(change);
@@ -132,9 +139,8 @@ export default class Editor {
         }
     }
 
-    private convertRemoteToLocal(change: Crdt.RemoteChange.t): void {
-        const [newCrdt, localChange] = Crdt.updateAndConvertRemoteToLocal(this.crdt, change);
-        this.crdt = newCrdt;
+    private convertRemoteToLocal(change: RemoteChange.t): void {
+        const localChange = updateAndConvertRemoteToLocal(this.crdt, change);
         if (localChange) {
             this.codemirror.getDoc().replaceRange(localChange.text,
                 localChange.from, localChange.to, IgnoreRemote);

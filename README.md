@@ -2,6 +2,13 @@
 
 This application is currently "pre-launch", as in the demo is working, but there's still tons of bugs to fix. A blog post on this project is also coming soon.
 
+## Setup
+
+```
+mix ecto.create
+mix ecto.migrate
+```
+
 ## Static checking
 
 Use `mix dialyzer` to do static checking with Dialyzer. The first time should take a lot of time as it runs on the dependencies too, although the results will be cached. Note that there are still a lot of (what I think are) spurious warnings. This is to be fixed later.
