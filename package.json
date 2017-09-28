@@ -13,7 +13,7 @@
     ]
   },
   "dependencies": {
-    "augmented-aa-tree": "https://github.com/rudi-c/augmented-aa-tree#v0.0.2",
+    "augmented-aa-tree": "https://github.com/rudi-c/augmented-aa-tree#v0.0.3",
     "babel-preset-react": "^6.24.1",
     "codemirror": "^5.27.4",
     "immutable": "^3.8.1",
