@@ -23,6 +23,13 @@ export default class Editor {
     protected lamport: number;
     protected site: number;
 
+    // This stores the previous cursor position in order to know if the cursor
+    // has actually moved when cursorActivity gets triggered. We are only
+    // interested in cursor movements that are not due to edits, so edits
+    // will update `previousCursorPosition` before the cursor callback gets
+    // triggered.
+    protected previousCursorPosition: CodeMirror.Position;
+
     // Map user_id -> site_id -> cursor element
     // Since the same user could have the same document open on multiple tabs,
     // thus have multiple sites.
@@ -46,7 +53,9 @@ export default class Editor {
         this.history = new History();
     }
 
-    // TODO: Inefficient, any one cursor movement causes all others to be redraw
+    // Note: this method is currently inefficient in that any one cursor
+    // movement causes all others to be redraw. However, there should be
+    // few cursors in total so this is probably not going to be a concern.
     public updateCursors(presences: UserPresence[]): void {
         const cursorsToDelete = this.allCursors();
         presences.forEach(presence => {
@@ -93,25 +102,33 @@ export default class Editor {
     protected onLocalCursor = (editor: CodeMirror.Editor) => {
         this.editorSocket.sendCursor(editor.getDoc().getCursor());
 
-        // TODO: Invalidating the history based on cursor movements doesn't work right
-        // now because any insertion will cause the cursor to move. Need a way to determine
-        // when a movement is really just a movement.
-        // this.history.onCursorMove();
+        const currentPosition = this.codemirror.getDoc().getCursor();
+        if (this.previousCursorPosition) {
+            if (currentPosition.ch != this.previousCursorPosition.ch ||
+                currentPosition.line != this.previousCursorPosition.line) {
+                this.history.onCursorMove();
+            }
+        }
+        this.previousCursorPosition = currentPosition;
     }
 
     protected onLocalChange = (editor: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
-        // TODO: Handle error
-        if (![IgnoreRemote, UndoRedo, "setValue"].includes(change.origin)) {
+        const isUserInput = ![IgnoreRemote, UndoRedo, "setValue"].includes(change.origin)
+        if (isUserInput) {
             this.lamport = this.lamport + 1;
             const changes = updateAndConvertLocalToRemote(this.crdt, this.lamport, this.site, change);
             this.history.onChanges(changes);
             changes.forEach(change => this.editorSocket.sendChange(change, this.lamport));
         }
+
+        this.previousCursorPosition = this.codemirror.getDoc().getCursor();
     }
 
     protected onRemoteChange = ({change, lamport}) => {
         this.lamport = Math.max(this.lamport, lamport) + 1;
         this.convertRemoteToLocal(change);
+
+        this.previousCursorPosition = this.codemirror.getDoc().getCursor();
     }
 
     protected onInit = (resp) => {
@@ -134,19 +151,40 @@ export default class Editor {
 
     private applyUndoRedo(changes: RemoteChange.t[] | null): void {
         if (changes) {
+            let lastChange: any = null;
             changes.forEach(change => {
-                this.convertRemoteToLocal(change);
+                const localChange = this.convertRemoteToLocal(change);
+
+                // Want to move the cursor to wherever text changed.
+                if (localChange) {
+                    lastChange = localChange;
+                }
+
                 this.editorSocket.sendChange(change, this.lamport);
             });
+
+            if (lastChange) {
+                if (lastChange.text === "") {
+                    // Deletion: cursor should go where the text used be
+                    this.codemirror.getDoc().setCursor(lastChange.from);
+                } else {
+                    // Insertion: cursor should go at the end of the text
+                    this.codemirror.getDoc().setCursor({
+                        line: lastChange.to.line,
+                        ch: lastChange.to.ch + 1,
+                    });
+                }
+            }
         }
     }
 
-    private convertRemoteToLocal(change: RemoteChange.t): void {
+    private convertRemoteToLocal(change: RemoteChange.t): LocalChange.t | null {
         const localChange = updateAndConvertRemoteToLocal(this.crdt, change);
         if (localChange) {
             this.codemirror.getDoc().replaceRange(localChange.text,
                 localChange.from, localChange.to, IgnoreRemote);
         }
+        return localChange;
     }
 
     private getCursorFor(presence: UserPresence): RemoteCursor {
