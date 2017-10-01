@@ -4,74 +4,6 @@ defmodule AlchemyBook.DocumentSession do
     alias AlchemyBook.DocumentSession
 
     @seconds_between_saves 5
- 
-    # From https://stackoverflow.com/questions/1168260/algorithm-for-generating-unique-colors
-    # With black removed
-    @colors [
-        "#006401",
-        "#010067",
-        "#95003A",
-        "#007DB5",
-        "#FF00F6",
-        "#FFEEE8",
-        "#774D00",
-        "#90FB92",
-        "#0076FF",
-        "#D5FF00",
-        "#FF937E",
-        "#6A826C",
-        "#FF029D",
-        "#FE8900",
-        "#7A4782",
-        "#7E2DD2",
-        "#85A900",
-        "#FF0056",
-        "#A42400",
-        "#00AE7E",
-        "#683D3B",
-        "#BDC6FF",
-        "#263400",
-        "#BDD393",
-        "#00B917",
-        "#9E008E",
-        "#001544",
-        "#C28C9F",
-        "#FF74A3",
-        "#01D0FF",
-        "#004754",
-        "#E56FFE",
-        "#788231",
-        "#0E4CA1",
-        "#91D0CB",
-        "#BE9970",
-        "#968AE8",
-        "#BB8800",
-        "#43002C",
-        "#DEFF74",
-        "#00FFC6",
-        "#FFE502",
-        "#620E00",
-        "#008F9C",
-        "#98FF52",
-        "#7544B1",
-        "#B500FF",
-        "#00FF78",
-        "#FF6E41",
-        "#005F39",
-        "#6B6882",
-        "#5FAD4E",
-        "#A75740",
-        "#A5FFD2",
-        "#FFB167",
-        "#009BFF",
-        "#E85EBE",
-        "#00FF00",
-        "#0000FF",
-        "#FF0000",
-        "#01FFFE",
-        "#FFA6FE",
-        "#FFDB66",
-    ]
 
     @type position :: list({integer, integer})
     @type position_identifier :: {position, integer}
@@ -147,12 +79,11 @@ defmodule AlchemyBook.DocumentSession do
             if Map.has_key?(colors, user_id) do
                 { Map.get(colors, user_id), session }
             else
-                color = if map_size(colors) >= length(@colors) do
-                    # If we've ran out of colors, just using random ones
-                    Enum.at(@colors, :rand.uniform(length(@colors)) - 1)
-                else
-                    Enum.at(@colors, map_size(colors))
-                end
+                # Start with h = 180 (light blue)
+                hue = rem(180 + map_size(colors) * 7 * 11, 256)
+                color = %ColorUtils.HSV{hue: hue, saturation: 64, value: 100.0}
+                    |> ColorUtils.hsv_to_rgb
+                    |> ColorUtils.rgb_to_hex
                 { color, %{ session | color_assign: Map.put(colors, user_id, color) } }
             end
         end)

@@ -41,6 +41,7 @@ defmodule AlchemyBook.Mixfile do
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.0"},
      {:hashids, "~> 2.0"},
+     {:color_utils, "0.2.0"},
      {:dialyxir, "~> 0.5.0", only: [:dev], runtime: false},
      {:distillery, "~> 1.4", runtime: false}]
   end
