@@ -37,6 +37,7 @@ body {
 
 .code-container {
     padding: 20px 0px;
+    height: calc(100vh - 67px - 40px);
 }
 
 .intro {
