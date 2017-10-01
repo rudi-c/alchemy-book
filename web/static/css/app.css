@@ -70,16 +70,18 @@ a:hover {
 }
 
 .nav-left {
-    text-align: left;
-    float: left;
     margin-top: 15px;
+    position: absolute;
+    left: 0px;
     padding: 0px 20px;
+
+    white-space: nowrap;
 }
 
 .nav-right {
-    text-align: right;
-    float: right;
-    margin-top: 20px;
+    position: absolute;
+    right: 0px;
+    top: 20px;
     padding: 0px 20px;
 }
 
