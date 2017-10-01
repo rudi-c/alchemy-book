@@ -45,7 +45,11 @@
     <div class="intro">
       <h1><%= gettext "Welcome to %{name}", name: "The Alchemy Book!" %></h1>
       <p>A collaborative text editor for alchemists to share their secret formulas!</p>
-      <p><%= link "> click here to try! <", to: document_path(@conn, :new) %></p>
+      <h2><%= link "> click here to try! <", to: document_path(@conn, :new) %></h2>
+      <p>Links created with Alchemy Book can be shared for multiple people to edit.</p>
+      <p>This is a demo project that demonstrates the use of CRDTs for collaborative editing. Don't store important or private documents here!</p>
+      <p>Built with Elixir, Phoenix and Typescript!</p>
+      <p>Check out the <a href="https://github.com/rudi-c/alchemy-book">project on Github!</a></p>
     </div>
 
   </div> <!-- /container -->

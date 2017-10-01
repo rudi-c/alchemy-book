@@ -50,6 +50,9 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    padding: 50px;
+    height: calc(100% - 100px);
 }
 
 .intro a:visited {
