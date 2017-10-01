@@ -40,15 +40,24 @@ defmodule AlchemyBook.DocumentController do
     case Repo.insert(changeset) do
       {:ok, document} ->
         conn
-        |> redirect(to: document_path(conn, :show, document))
+        |> redirect(to: Path.join(document_path(conn, :index),
+          Document.slug_from_id(document.id)))
       {:error, changeset} ->
         index(conn, params, user)
     end
   end
 
   def show(conn, %{"id" => id}, _user) do
-    document = Repo.get!(Document, id)
-    render(conn, "show.html", document: document)
+    with {:ok, [actual_id]} <- Document.id_from_slug(id),
+         document = %Document{} <- Repo.get(Document, actual_id)
+    do
+      render(conn, "show.html", document: document)
+    else
+      _ ->
+        conn
+        |> put_status(404)
+        |> render(AlchemyBook.ErrorView, :"404", message: "not found")
+    end
   end
 
   def edit(conn, %{"id" => id}, _user) do

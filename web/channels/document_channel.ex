@@ -10,14 +10,15 @@ defmodule AlchemyBook.DocumentChannel do
 
     intercept ["change"]
 
-    def join("documents:" <> document_id, _params, socket) do
+    def join("documents:" <> slug, _params, socket) do
+        {:ok, [document_id]} = Document.id_from_slug(slug)
         site_id = 
             DocumentRegistry.lookup(document_id)
             |> DocumentSession.request_site_for_user(socket.assigns.user_id)
 
         socket =
             socket
-            |> assign(:document_id, String.to_integer(document_id))
+            |> assign(:document_id, document_id)
             |> assign(:site_id, site_id)
 
         send(self(), :after_join)
