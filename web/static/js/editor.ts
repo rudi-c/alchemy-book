@@ -39,6 +39,7 @@ export default class Editor {
         this.codemirror.on("beforeChange", this.beforeChange);
         this.codemirror.on("change", this.onLocalChange);
         this.codemirror.on("cursorActivity", this.onLocalCursor);
+        this.codemirror.on("keyup", this.onKeyUp as any)
 
         this.cursorWidgets = new Map();
 
@@ -66,25 +67,26 @@ export default class Editor {
     }
 
     protected beforeChange = (editor: CodeMirror.Editor, change: CodeMirror.EditorChangeCancellable) => {
-        if (change.origin === "undo") {
+        if (change.origin === "undo" || change.origin === "redo") {
+            // We use custom CRDT logic to handle undo/redo history, don't use CodeMirror's
             change.cancel();
 
-            // Creating local changes to the document from inside the beforeChange
-            // event handler is a bad idea, according to the CodeMirror docs. So
-            // we do it at a later iteration of the event loop instead.
-            setTimeout(() => {
-                this.undo();
-            }, 0);
+            // This is just to prevent CodeMirror's history from taking up memory
+            this.codemirror.getDoc().clearHistory();
+        }
+    }
+
+    protected onKeyUp = (editor: CodeMirror.Editor, e: KeyboardEvent) => {
+        const hasModifier = e.ctrlKey || e.metaKey;
+        if (hasModifier && !e.shiftKey && e.key.toLowerCase() === "z") {
+            e.preventDefault();
+            this.undo();
         }
 
-        // TODO: Not sure how to get the redo event to trigger, Ctrl-Y and Ctrl-Shift-Z don't work
-        if (change.origin === "redo") {
-            change.cancel();
-
-            // Similarly
-            setTimeout(() => {
-                this.redo();
-            }, 0);
+        if ((hasModifier && !e.shiftKey && e.key.toLowerCase() === "y") ||
+            (hasModifier && e.shiftKey && e.key.toLowerCase() === "z")) {
+            e.preventDefault();
+            this.redo();
         }
     }
 
