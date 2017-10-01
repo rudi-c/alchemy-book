@@ -24,7 +24,7 @@ defmodule AlchemyBook.UserController do
   end
 
   def create_anonymous() do
-    unique_user = "Guest" <> to_string(:rand.uniform(999999));
+    unique_user = "Guest" <> to_string(:rand.uniform(99999));
     if Repo.get_by(User, username: unique_user) == nil do
       anonymous = %AlchemyBook.User{name: unique_user, username: unique_user, anonymous: true}
       Repo.insert!(anonymous)
