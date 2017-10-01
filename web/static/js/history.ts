@@ -5,38 +5,34 @@ import * as Crdt from "./crdt";
 const DELAY_BETWEEN_BATCHES_MS = 1000;
 
 export default class History {
-    // Points at the index into history that the previous set of changes can
-    // be found at
-    private indexIntoHistory: number;
+    // TODO comment
     private invalidated: boolean;
+
+    // Undo stack
     private history: Crdt.RemoteChange.t[][];
+    // Redo stack
+    private future: Crdt.RemoteChange.t[][];
+
     // Lamport values at the time of undos (needed to redo the operations)
-    private lamportUndoStack: number[];
     private lastActionTimestamp: number;
 
     constructor() {
         this.invalidated = false;
         this.history = [];
-        this.indexIntoHistory = -1;
-        this.lamportUndoStack = [];
+        this.future = [];
         this.lastActionTimestamp = 0;
     }
 
     public makeUndoChanges(lamport: number): Crdt.RemoteChange.t[] | null {
-        if (this.indexIntoHistory < 0) {
+        if (this.history.length === 0) {
             // No history to undo
             return null;
         }
 
-        if (this.indexIntoHistory < this.history.length - 1) {
-            console.warn("Multiple undos not currently supported");
-        }
-
-        const undoChanges = this.history[this.indexIntoHistory]
+        const undoChanges = this.history.pop()!
             .map(change => this.invert(change, lamport));
 
-        this.indexIntoHistory -= 1;
-        this.lamportUndoStack.push(lamport);
+        this.future.push(undoChanges);
 
         this.invalidated = true;
 
@@ -44,21 +40,15 @@ export default class History {
     }
 
     public makeRedoChanges(lamport: number): Crdt.RemoteChange.t[] | null {
-        if (this.indexIntoHistory >= this.history.length - 1) {
+        if (this.future.length === 0) {
             // No history to redo
             return null;
         }
 
-        this.indexIntoHistory += 1;
-        const lamportAtTimeOfUndo = this.lamportUndoStack.pop()!;
-
-        const redoChanges = this.history[this.indexIntoHistory]
-            .map(change => this.invert(change, lamportAtTimeOfUndo))
+        const redoChanges = this.future.pop()!
             .map(change => this.invert(change, lamport));
 
-        // Update the history because if we want to undo again, we'll want to
-        // undo the "redone" changes which have newer timestamps.
-        this.history[this.indexIntoHistory] = redoChanges;
+        this.history.push(redoChanges);
 
         this.invalidated = true;
 
@@ -70,10 +60,11 @@ export default class History {
 
         const newBatch = this.shouldCreateNewActionBatch(now, changes);
         if (newBatch) {
-            this.indexIntoHistory += 1;
-            this.history.splice(this.indexIntoHistory, this.history.length - this.indexIntoHistory, changes);
+            this.history.push(changes);
         } else {
-            this.history[this.indexIntoHistory] = this.history[this.indexIntoHistory].concat(changes);
+            changes.forEach(change => {
+                this.history[this.history.length - 1].push(change);
+            });
         }
 
         this.invalidated = false;
@@ -115,12 +106,12 @@ export default class History {
         }
 
         // Nothing to batch if there is no previous history
-        if (this.indexIntoHistory < 0) {
+        if (this.history.length === 0) {
             return true;
         }
 
-        const additions = this.history[this.indexIntoHistory]
-            .reduce((sum, change) => sum + (change[0] === "add" ? 1 : 0), 0);
+        const lastChanges = this.history[this.history.length - 1];
+        const additions = lastChanges.reduce((sum, change) => sum + (change[0] === "add" ? 1 : 0), 0);
 
         switch (change[0]) {
             case "add":
@@ -139,7 +130,7 @@ export default class History {
                     return true;
                 }
                 // Break large deletes into pieces
-                if (this.history[this.indexIntoHistory].length >= 10) {
+                if (lastChanges.length >= 10) {
                     return true;
                 }
                 break;

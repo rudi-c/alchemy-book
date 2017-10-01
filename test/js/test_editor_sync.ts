@@ -265,3 +265,85 @@ test("three people typing lots of text on the same spot", t => {
     t.is(e2.getText(), reference);
     t.is(e3.getText(), reference);
 });
+
+test("cannot undo another person's changes", t => {
+    const [e1, e2] = createEditors(2);
+
+    e1.type("test");
+
+    e1.letAllThrough();
+    e2.letAllThrough();
+
+    e2.doUndo();
+
+    e1.letAllThrough();
+    e2.letAllThrough();
+
+    t.is(e1.getText(), "test");
+    t.is(e2.getText(), "test");
+});
+
+test("undo works with insertion and deletion", t => {
+    runPermutations(3, runPermutation => {
+        const [e1, e2, e3] = createEditors(3);
+
+        e1.type("abc");
+
+        e1.letAllThrough();
+        e2.letAllThrough();
+        e3.letAllThrough();
+
+        e2.moveCursor(() => ({ line: 0, ch: 1 }));
+        e3.moveCursor(() => ({ line: 0, ch: 3 }));
+
+        runPermutation([
+            () => e1.doUndo(),
+            () => e2.type("d"),
+            () => e3.backspace(),
+        ]);
+
+        e1.letAllThrough();
+        e2.letAllThrough();
+        e3.letAllThrough();
+
+        t.is(e1.getText(), "d");
+        t.is(e2.getText(), "d");
+        t.is(e3.getText(), "d");
+    });
+});
+
+test("undo + redo cancels out and works with insertion and deletion", t => {
+    for (let i = 1; i < 4; i++) {
+        runPermutations(3, runPermutation => {
+            const [e1, e2, e3] = createEditors(3);
+
+            e1.type("abc");
+
+            e1.letAllThrough();
+            e2.letAllThrough();
+            e3.letAllThrough();
+
+            e2.moveCursor(() => ({ line: 0, ch: 1 }));
+            e3.moveCursor(() => ({ line: 0, ch: 3 }));
+
+            runPermutation([
+                () => {
+                    for (let j = 0; j < i; j++) {
+                        e1.doUndo();
+                        e1.doRedo();
+                    }
+                },
+                () => e2.type("d"),
+                () => e3.backspace(),
+            ]);
+
+            e1.letAllThrough();
+            e2.letAllThrough();
+            e3.letAllThrough();
+
+            t.is(e1.getText(), "adbc");
+            t.is(e2.getText(), "adbc");
+            t.is(e3.getText(), "adbc");
+        });
+    }
+});

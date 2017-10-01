@@ -105,6 +105,14 @@ export class TestEditor extends Editor {
         }
     }
 
+    public doUndo(): void {
+        this.undo();
+    }
+
+    public doRedo(): void {
+        this.redo();
+    }
+
     public moveCursor(update: (pos: CodeMirror.Position) => CodeMirror.Position): void {
         const doc = this.codemirror.getDoc();
         doc.setCursor(update(doc.getCursor()));

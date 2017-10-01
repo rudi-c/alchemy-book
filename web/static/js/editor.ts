@@ -120,12 +120,12 @@ export default class Editor {
         this.codemirror.setValue(this.crdt.toString());
     }
 
-    private undo(): void {
+    protected undo(): void {
         this.lamport = this.lamport + 1;
         this.applyUndoRedo(this.history.makeUndoChanges(this.lamport));
     }
 
-    private redo(): void {
+    protected redo(): void {
         this.lamport = this.lamport + 1;
         this.applyUndoRedo(this.history.makeRedoChanges(this.lamport));
     }
