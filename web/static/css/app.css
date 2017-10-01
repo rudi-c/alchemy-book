@@ -19,12 +19,26 @@ body {
     font-family: "Kingthings Trypewriter 2";
 }
 
+a {
+    color: ghostwhite;
+}
+
+a:visited {
+    color: ghostwhite;
+}
+
+a:hover {
+    color: antiquewhite;
+}
+
 .header {
     background-image: url("/images/wood_header.png");
     top: 0px;
 
     width: 100%;
     height: 67px;
+
+    min-width: 500px;
 }
 
 .container {
@@ -55,14 +69,6 @@ body {
     height: calc(100% - 100px);
 }
 
-.intro a:visited {
-    color: ghostwhite;
-}
-
-.intro a:hover {
-    color: antiquewhite;
-}
-
 .nav-left {
     text-align: left;
     float: left;
@@ -75,14 +81,6 @@ body {
     float: right;
     margin-top: 20px;
     padding: 0px 20px;
-}
-
-.nav-right a:visited {
-    color: ghostwhite;
-}
-
-.nav-right a:hover {
-    color: antiquewhite;
 }
 
 .user {
