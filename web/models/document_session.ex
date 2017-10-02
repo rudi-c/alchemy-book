@@ -32,6 +32,12 @@ defmodule AlchemyBook.DocumentSession do
         {:ok, session}
     end
 
+    @spec close(pid) :: no_return
+    def close(session) do
+        save(session)
+        Agent.stop(session)
+    end
+
     @spec save(pid) :: no_return
     def save(session) do
         {document_id, last_update, last_save} = Agent.get(session, fn session -> 

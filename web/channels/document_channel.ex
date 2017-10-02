@@ -12,7 +12,7 @@ defmodule AlchemyBook.DocumentChannel do
 
     def join("documents:" <> slug, _params, socket) do
         {:ok, [document_id]} = Document.id_from_slug(slug)
-        site_id = 
+        site_id =
             DocumentRegistry.lookup(document_id)
             |> DocumentSession.request_site_for_user(socket.assigns.user_id)
 
@@ -36,7 +36,7 @@ defmodule AlchemyBook.DocumentChannel do
             change: params["change"],
             lamport: params["lamport"]
         }
-        
+
         {:reply, :ok, socket}
     end
 
@@ -55,8 +55,15 @@ defmodule AlchemyBook.DocumentChannel do
         {:noreply, socket}
     end
 
+    def terminate(reason, socket) do
+        if Dict.size(Presence.list(socket)) <= 1 do
+            # Last connection
+            DocumentRegistry.close(socket.assigns.document_id)
+        end
+    end
+
     def handle_info(:after_join, socket) do
-        init_value = 
+        init_value =
             DocumentRegistry.lookup(socket.assigns.document_id)
             |> DocumentSession.get
             |> Document.crdt_to_json_ready
@@ -85,7 +92,7 @@ defmodule AlchemyBook.DocumentChannel do
     end
 
     defp parse_change([type, char]) do
-        position = 
+        position =
             char["position"]
             |> Enum.map(fn %{"digit" => digit, "site" => site} -> {digit, site} end)
         [type, { { position, char["lamport"] }, char["value"] }]
