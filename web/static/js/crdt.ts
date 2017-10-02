@@ -42,7 +42,7 @@ export interface Crdt {
     localDelete(change: LocalChange.t): Char.t[]
 }
 
-export function updateAndConvertLocalToRemote(crdt: Crdt, 
+export function updateAndConvertLocalToRemote(crdt: Crdt,
                                               lamport: number,
                                               site: number,
                                               change: CodeMirror.EditorChange): RemoteChange.t[] {

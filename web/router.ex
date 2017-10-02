@@ -23,8 +23,9 @@ defmodule AlchemyBook.Router do
     resources "/documents", DocumentController, only: [:new, :create, :show, :index]
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", AlchemyBook do
-  #   pipe_through :api
-  # end
+  scope "/api", AlchemyBook do
+    pipe_through :api
+
+    post "/reporterror", ReportErrorController, :handle
+  end
 end
