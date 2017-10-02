@@ -8,15 +8,19 @@ import { EditorSocket, UserPresence } from "./editor_socket"
 class Collaborator extends React.Component<any, any> {
     editor: Editor
 
-    constructor() {
-        super();
-
-        this.state = { presences: [], exceededLimit: false };
-    }
+    state = {
+        presences: [],
+        exceededLimit: false,
+        disconnected: false
+    };
 
     presenceCallback = (presences: UserPresence[]) => {
         this.setState({ presences: [...presences] });
         this.editor.updateCursors(presences);
+    }
+
+    disconnectCallback = () => {
+        this.setState({ disconnected: true })
     }
 
     limitCallback = (exceeded: boolean) => {
@@ -26,7 +30,9 @@ class Collaborator extends React.Component<any, any> {
     componentDidMount() {
         const url = window.location.pathname;
         const documentId = url.substring(url.lastIndexOf('/') + 1);
-        const editorSocket = new EditorSocket(documentId, this.presenceCallback);
+        const editorSocket = new EditorSocket(
+            documentId, this.presenceCallback, this.disconnectCallback
+        );
         const textarea = ReactDOM.findDOMNode(this).getElementsByTagName("textarea").item(0);
         this.editor = new Editor(textarea, editorSocket, this.limitCallback);
     }
@@ -34,7 +40,7 @@ class Collaborator extends React.Component<any, any> {
     render() {
         const users: Map<number, UserPresence> = new Map();
         this.state.presences.forEach((presence: UserPresence) => {
-            users.set(presence.userId, presence); 
+            users.set(presence.userId, presence);
         });
         const indicators = Array.from(users).map(([userId, presence]: [number, UserPresence]) =>
             <div key={userId} className="user">
@@ -53,8 +59,13 @@ class Collaborator extends React.Component<any, any> {
                     </div>
                 </header>
                 <div className="container">
+                    { this.state.disconnected &&
+                        <div className="warning">
+                            <p>Disconnected due to connection error - please refresh</p>
+                        </div>
+                    }
                     { this.state.exceededLimit &&
-                        <div className="exceeded-warning">
+                        <div className="warning">
                             <p>Operation cancelled: Exceeded the 2500 character limit of this document</p>
                             <p>I know you'd like to stress test this application but my server is pretty small! Please run tests on your own machine instead and let me know what you find!</p>
                         </div>

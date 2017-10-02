@@ -20,7 +20,8 @@ export class EditorSocket {
     protected presences: any;
 
     constructor(protected documentId: string,
-                protected presenceCallback: (_) => void) {
+                protected presenceCallback: (_) => void,
+                protected disconnectCallback: () => void) {
         this.socket = new Socket("/socket", {
             logger: (kind, msg, data) => {
                 // console.log(`${kind}: ${msg}`, data);
@@ -51,6 +52,9 @@ export class EditorSocket {
             this.presences = Presence.syncDiff(this.presences, diff);
             this.presenceCallback(Presence.list(this.presences, this.listPresenceBy));
         });
+
+        this.channel.onClose(this.disconnectCallback)
+        this.socket.onClose(this.disconnectCallback)
     }
 
     public sendChange(change: any, lamport: number): void {
