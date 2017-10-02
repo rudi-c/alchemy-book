@@ -14,6 +14,9 @@ import RemoteCursor from "./remote_cursor";
 
 const IgnoreRemote = "ignore_remote";
 const UndoRedo = "undo_redo";
+const Initialize = "setValue";
+
+const MAX_CHAR_COUNT = 2500;
 
 export default class Editor {
     protected codemirror: CodeMirror.Editor;
@@ -22,6 +25,7 @@ export default class Editor {
     protected history: History;
     protected lamport: number;
     protected site: number;
+    protected exceededLimit: boolean;
 
     // This stores the previous cursor position in order to know if the cursor
     // has actually moved when cursorActivity gets triggered. We are only
@@ -35,7 +39,9 @@ export default class Editor {
     // thus have multiple sites.
     protected cursorWidgets: Map<number, Map<number, RemoteCursor>>;
 
-    constructor(domNode: HTMLTextAreaElement, editorSocket: EditorSocket) {
+    constructor(domNode: HTMLTextAreaElement,
+                editorSocket: EditorSocket,
+                private limitCallback: (exceeded: boolean) => void) {
         this.codemirror = CodeMirror.fromTextArea(domNode, {
             lineNumbers: true,
             theme: "zenburn",
@@ -51,6 +57,8 @@ export default class Editor {
         this.cursorWidgets = new Map();
 
         this.history = new History();
+
+        this.exceededLimit = false;
     }
 
     // Note: this method is currently inefficient in that any one cursor
@@ -82,6 +90,32 @@ export default class Editor {
 
             // This is just to prevent CodeMirror's history from taking up memory
             this.codemirror.getDoc().clearHistory();
+        } else {
+            let editorCharCount = 0;
+            // The +1s are to count newline characters
+            editor.getDoc().eachLine(line => {
+                editorCharCount += line.text.length + 1
+            });
+            let delta = 0;
+            if (change.text) {
+                change.text.forEach(line => {
+                    delta += line.length + 1
+                });
+            }
+            if (change.removed) {
+                change.removed.forEach(line => {
+                    delta -= line.length + 1
+                });
+            }
+
+            const exceededLimit = editorCharCount + delta > MAX_CHAR_COUNT;
+            if (delta > 0 && exceededLimit && change.origin !== Initialize) {
+                change.cancel();
+            }
+            if (exceededLimit !== this.exceededLimit) {
+                this.limitCallback(exceededLimit);
+            }
+            this.exceededLimit = exceededLimit;
         }
     }
 
@@ -113,7 +147,7 @@ export default class Editor {
     }
 
     protected onLocalChange = (editor: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
-        const isUserInput = ![IgnoreRemote, UndoRedo, "setValue"].includes(change.origin)
+        const isUserInput = ![IgnoreRemote, UndoRedo, Initialize].includes(change.origin)
         if (isUserInput) {
             this.lamport = this.lamport + 1;
             const changes = updateAndConvertLocalToRemote(this.crdt, this.lamport, this.site, change);

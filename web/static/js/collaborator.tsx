@@ -11,7 +11,7 @@ class Collaborator extends React.Component<any, any> {
     constructor() {
         super();
 
-        this.state = { presences: [] };
+        this.state = { presences: [], exceededLimit: false };
     }
 
     presenceCallback = (presences: UserPresence[]) => {
@@ -19,12 +19,16 @@ class Collaborator extends React.Component<any, any> {
         this.editor.updateCursors(presences);
     }
 
+    limitCallback = (exceeded: boolean) => {
+        this.setState({ exceededLimit: exceeded });
+    }
+
     componentDidMount() {
         const url = window.location.pathname;
         const documentId = url.substring(url.lastIndexOf('/') + 1);
         const editorSocket = new EditorSocket(documentId, this.presenceCallback);
         const textarea = ReactDOM.findDOMNode(this).getElementsByTagName("textarea").item(0);
-        this.editor = new Editor(textarea, editorSocket);
+        this.editor = new Editor(textarea, editorSocket, this.limitCallback);
     }
 
     render() {
@@ -49,6 +53,12 @@ class Collaborator extends React.Component<any, any> {
                     </div>
                 </header>
                 <div className="container">
+                    { this.state.exceededLimit &&
+                        <div className="exceeded-warning">
+                            <p>Operation cancelled: Exceeded the 2500 character limit of this document</p>
+                            <p>I know you'd like to stress test this application but my server is pretty small! Please run tests on your own machine instead and let me know what you find!</p>
+                        </div>
+                    }
                     <div className="code-container">
                         <textarea />
                     </div>

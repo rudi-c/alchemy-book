@@ -7,6 +7,35 @@
     src: url("~/../fonts/kingthings-trypewriter-2.ttf") format("truetype");
 }
 
+.CodeMirror {
+    height: 100%;
+
+    font-family: "Kingthings Trypewriter 2";
+    font-size: 1.5em;
+    background-color: transparent;
+
+    float: left;
+}
+
+.CodeMirror-linenumber {
+    padding-left: 10px;
+    padding-right: 25px;
+}
+
+/* Thicker cursor */
+.cm-s-zenburn {
+    color: ghostwhite;
+}
+
+.cm-s-zenburn .CodeMirror-cursor {
+    border-left: 2.5px solid white;
+}
+
+.cm-s-zenburn .CodeMirror-gutters  {
+    background-color: transparent !important;
+    border: 0px;
+}
+
 html, body {
     height: 100vh;
 }
@@ -47,11 +76,21 @@ a:hover {
     margin: 0px;
     height: calc(100vh - 67px);
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.exceeded-warning {
+    padding: 10px 40px;
+    text-align: center;
 }
 
 .code-container {
     padding: 20px 0px;
-    height: calc(100vh - 67px - 40px);
+    overflow-x: auto;
+    overflow-y: auto;
+    flex-grow: 1;
 }
 
 .intro {
@@ -103,31 +142,4 @@ a:hover {
     border-radius: 50%;
     width: 30px;
     height: 30px;
-}
-
-.CodeMirror {
-    height: 100%;
-
-    font-family: "Kingthings Trypewriter 2";
-    font-size: 1.5em;
-    background-color: transparent;
-}
-
-.CodeMirror-linenumber {
-    padding-left: 10px;
-    padding-right: 25px;
-}
-
-/* Thicker cursor */
-.cm-s-zenburn {
-    color: ghostwhite;
-}
-
-.cm-s-zenburn .CodeMirror-cursor {
-    border-left: 2.5px solid white;
-}
-
-.cm-s-zenburn .CodeMirror-gutters  {
-    background-color: transparent !important;
-    border: 0px;
 }
