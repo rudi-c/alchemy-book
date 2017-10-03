@@ -5,19 +5,18 @@ import * as Crdt from "./crdt";
 const DELAY_BETWEEN_BATCHES_MS = 1000;
 
 export default class History {
-    // TODO comment
-    private invalidated: boolean;
-
     // Undo stack
     private history: Crdt.RemoteChange.t[][];
     // Redo stack
     private future: Crdt.RemoteChange.t[][];
 
+    private shouldStoreInNewBatch: boolean;
+
     // Lamport values at the time of undos (needed to redo the operations)
     private lastActionTimestamp: number;
 
     constructor() {
-        this.invalidated = false;
+        this.shouldStoreInNewBatch = false;
         this.history = [];
         this.future = [];
         this.lastActionTimestamp = 0;
@@ -34,7 +33,7 @@ export default class History {
 
         this.future.push(undoChanges);
 
-        this.invalidated = true;
+        this.shouldStoreInNewBatch = true;
 
         return undoChanges;
     }
@@ -50,7 +49,7 @@ export default class History {
 
         this.history.push(redoChanges);
 
-        this.invalidated = true;
+        this.shouldStoreInNewBatch = true;
 
         return redoChanges;
     }
@@ -67,13 +66,13 @@ export default class History {
             });
         }
 
-        this.invalidated = false;
+        this.shouldStoreInNewBatch = false;
         this.lastActionTimestamp = now;
     }
 
     public onCursorMove(): void {
         // Cursor movements break batches
-        this.invalidated = true;
+        this.shouldStoreInNewBatch = true;
     }
 
     private invert(change: Crdt.RemoteChange.t, lamport: number): Crdt.RemoteChange.t {
@@ -89,7 +88,7 @@ export default class History {
     }
 
     private shouldCreateNewActionBatch(now: number, changes: Crdt.RemoteChange.t[]): boolean {
-        if (this.invalidated) {
+        if (this.shouldStoreInNewBatch) {
             return true;
         }
 

@@ -16,7 +16,8 @@ defmodule AlchemyBook.DocumentSession do
     def start_link(document_id, crdt) do
         now = :os.system_time(:millisecond)
         # The server is always site 0 by convention
-        # TODO: an ordered map would be ideal if we expect thousands of sites
+        # An ordered map would be ideal if we expect thousands of sites, but this
+        # isn't necessary for now
         {:ok, session} = Agent.start_link(fn ->
             %DocumentSession{document_id: document_id,
                              crdt: crdt_as_map(crdt),
