@@ -4,25 +4,25 @@ import { AATree } from "augmented-aa-tree";
 
 import * as Char from "./char";
 
-export namespace RemoteChange {
-    export type t = ["add" | "remove", Char.t];
+export type RemoteChange = ["add" | "remove", Char.t];
 
-    export function add(char: Char.t): t {
+export namespace RemoteChange {
+    export function add(char: Char.t): RemoteChange {
         return ["add", char];
     }
-    export function remove(char: Char.t): t {
+    export function remove(char: Char.t): RemoteChange {
         return ["remove", char];
     }
 }
 
-export namespace LocalChange {
-    export type t = {
-        from: CodeMirror.Position
-        to: CodeMirror.Position
-        text: string,
-    };
+export interface LocalChange {
+    from: CodeMirror.Position;
+    to: CodeMirror.Position;
+    text: string;
+}
 
-    export function create(from: CodeMirror.Position, to: CodeMirror.Position, text: string): t {
+export namespace LocalChange {
+    export function create(from: CodeMirror.Position, to: CodeMirror.Position, text: string): LocalChange {
         const obj = { from, to, text };
         Object.freeze(obj);
         return obj;
@@ -30,22 +30,22 @@ export namespace LocalChange {
 }
 
 export interface Crdt {
-    init(init: Char.Serial[])
-    toString(): string
-    remoteInsert(char: Char.t): LocalChange.t | null
-    remoteDelete(char: Char.t): LocalChange.t | null
+    init(init: Char.Serial[]);
+    toString(): string;
+    remoteInsert(char: Char.t): LocalChange | null;
+    remoteDelete(char: Char.t): LocalChange | null;
 
     // Returns inserted characters
-    localInsert(lamport: number, site: number, change: LocalChange.t): Char.t[]
+    localInsert(lamport: number, site: number, change: LocalChange): Char.t[];
 
     // Returns deleted characters
-    localDelete(change: LocalChange.t): Char.t[]
+    localDelete(change: LocalChange): Char.t[];
 }
 
 export function updateAndConvertLocalToRemote(crdt: Crdt,
                                               lamport: number,
                                               site: number,
-                                              change: CodeMirror.EditorChange): RemoteChange.t[] {
+                                              change: CodeMirror.EditorChange): RemoteChange[] {
     if (change.from.line > change.to.line ||
         (change.from.line === change.to.line && change.from.ch > change.to.ch)) {
         throw new Error("got inverted inverted from/to");
@@ -58,7 +58,7 @@ export function updateAndConvertLocalToRemote(crdt: Crdt,
         case "+input":
         case "paste":
             // Pure insertions have change.removed = [""]
-            let removeChanges: RemoteChange.t[] = [];
+            let removeChanges: RemoteChange[] = [];
             if (!(change.removed.length === 1 && change.removed[0] === "")) {
                 const deletion = LocalChange.create(change.from, change.to, "");
                 removeChanges = crdt.localDelete(deletion).map(RemoteChange.remove);
@@ -72,7 +72,7 @@ export function updateAndConvertLocalToRemote(crdt: Crdt,
     }
 }
 
-export function updateAndConvertRemoteToLocal(crdt: Crdt, change: RemoteChange.t): LocalChange.t | null {
+export function updateAndConvertRemoteToLocal(crdt: Crdt, change: RemoteChange): LocalChange | null {
     const char = change[1];
     switch (change[0]) {
         case "add":

@@ -53,8 +53,8 @@ export class EditorSocket {
             this.presenceCallback(Presence.list(this.presences, this.listPresenceBy));
         });
 
-        this.channel.onClose(this.disconnectCallback)
-        this.socket.onClose(this.disconnectCallback)
+        this.channel.onClose(this.disconnectCallback);
+        this.socket.onClose(this.disconnectCallback);
     }
 
     public sendChange(change: any, lamport: number): void {

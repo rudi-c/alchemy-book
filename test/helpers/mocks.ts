@@ -31,11 +31,11 @@ export class TestChannel {
 export class TestEditorSocket extends EditorSocket {
     // Don't expect a lot of messages while testing, so a simple array
     // will do instead of a queue
-    messageQueue: any[];
-    fakeChannel: TestChannel;
+    private messageQueue: any[];
+    private fakeChannel: TestChannel;
 
     constructor(documentId: string, channel: TestChannel) {
-        super(documentId, () => {});
+        super(documentId, () => {}, () => {});
 
         this.messageQueue = [];
         this.fakeChannel = channel;
@@ -153,7 +153,7 @@ export function createEditors(n: number): TestEditor[] {
         const textarea = document.createElement("textarea");
         document.body.appendChild(textarea);
         const editor = new TestEditor(
-            textarea, new TestEditorSocket("mydoc", channel)
+            textarea, new TestEditorSocket("mydoc", channel), () => {},
         );
         editor.init([], i);
         editors.push(editor);

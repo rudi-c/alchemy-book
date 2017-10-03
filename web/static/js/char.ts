@@ -61,7 +61,7 @@ export function compare(c1: t, c2: t): number {
 // Generate a position between p1 and p2. The generated position will be heavily
 // biased to lean towards the left since character insertions tend to happen on
 // the right side.
-export function generatePositionBetween(position1: Identifier.t[], 
+export function generatePositionBetween(position1: Identifier.t[],
                                         position2: Identifier.t[],
                                         site: number): Identifier.t[] {
     // Get either the head of the position, or fallback to default value
@@ -69,7 +69,7 @@ export function generatePositionBetween(position1: Identifier.t[],
     const head2 = head(position2) || Identifier.create(Decimal.BASE, site);
 
     if (head1.digit !== head2.digit) {
-        // Case 1: Head digits are different 
+        // Case 1: Head digits are different
         // It's easy to create a position to insert in-between by doing regular arithmetics.
         const n1 = Decimal.fromIdentifierList(position1);
         const n2 = Decimal.fromIdentifierList(position2);

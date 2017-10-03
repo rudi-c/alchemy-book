@@ -5,16 +5,16 @@ import {
     LocalChange,
     RemoteChange,
     updateAndConvertLocalToRemote,
-    updateAndConvertRemoteToLocal
+    updateAndConvertRemoteToLocal,
 } from "./crdt";
-import { LinearCrdt } from "./crdt_linear"
+import { LinearCrdt } from "./crdt_linear";
 import { EditorSocket, UserPresence } from "./editor_socket";
 import History from "./history";
 import RemoteCursor from "./remote_cursor";
 
-const IgnoreRemote = "ignore_remote";
-const UndoRedo = "undo_redo";
-const Initialize = "setValue";
+const IGNORE_REMOTE = "ignore_remote";
+const UNDO_REDO = "undo_redo";
+const INITIALIZE = "setValue";
 
 const MAX_CHAR_COUNT = 2500;
 
@@ -52,7 +52,7 @@ export default class Editor {
         this.codemirror.on("beforeChange", this.beforeChange);
         this.codemirror.on("change", this.onLocalChange);
         this.codemirror.on("cursorActivity", this.onLocalCursor);
-        this.codemirror.on("keyup", this.onKeyUp as any)
+        this.codemirror.on("keyup", this.onKeyUp as any);
 
         this.cursorWidgets = new Map();
 
@@ -94,22 +94,22 @@ export default class Editor {
             let editorCharCount = 0;
             // The +1s are to count newline characters
             editor.getDoc().eachLine(line => {
-                editorCharCount += line.text.length + 1
+                editorCharCount += line.text.length + 1;
             });
             let delta = 0;
             if (change.text) {
                 change.text.forEach(line => {
-                    delta += line.length + 1
+                    delta += line.length + 1;
                 });
             }
             if (change.removed) {
                 change.removed.forEach(line => {
-                    delta -= line.length + 1
+                    delta -= line.length + 1;
                 });
             }
 
             const exceededLimit = editorCharCount + delta > MAX_CHAR_COUNT;
-            if (delta > 0 && exceededLimit && change.origin !== Initialize) {
+            if (delta > 0 && exceededLimit && change.origin !== INITIALIZE) {
                 change.cancel();
             }
             if (exceededLimit !== this.exceededLimit) {
@@ -138,8 +138,8 @@ export default class Editor {
 
         const currentPosition = this.codemirror.getDoc().getCursor();
         if (this.previousCursorPosition) {
-            if (currentPosition.ch != this.previousCursorPosition.ch ||
-                currentPosition.line != this.previousCursorPosition.line) {
+            if (currentPosition.ch !== this.previousCursorPosition.ch ||
+                currentPosition.line !== this.previousCursorPosition.line) {
                 this.history.onCursorMove();
             }
         }
@@ -147,7 +147,7 @@ export default class Editor {
     }
 
     protected onLocalChange = (editor: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
-        const isUserInput = ![IgnoreRemote, UndoRedo, Initialize].includes(change.origin)
+        const isUserInput = ![IGNORE_REMOTE, UNDO_REDO, INITIALIZE].includes(change.origin);
         if (isUserInput) {
             this.lamport = this.lamport + 1;
             const changes = updateAndConvertLocalToRemote(this.crdt, this.lamport, this.site, change);
@@ -175,15 +175,15 @@ export default class Editor {
 
     protected undo(): void {
         this.lamport = this.lamport + 1;
-        this.applyUndoRedo(this.history.makeUndoChanges(this.lamport));
+        this.applyUNDO_REDO(this.history.makeUndoChanges(this.lamport));
     }
 
     protected redo(): void {
         this.lamport = this.lamport + 1;
-        this.applyUndoRedo(this.history.makeRedoChanges(this.lamport));
+        this.applyUNDO_REDO(this.history.makeRedoChanges(this.lamport));
     }
 
-    private applyUndoRedo(changes: RemoteChange.t[] | null): void {
+    private applyUNDO_REDO(changes: RemoteChange[] | null): void {
         if (changes) {
             let lastChange: any = null;
             changes.forEach(change => {
@@ -204,19 +204,19 @@ export default class Editor {
                 } else {
                     // Insertion: cursor should go at the end of the text
                     this.codemirror.getDoc().setCursor({
-                        line: lastChange.to.line,
                         ch: lastChange.to.ch + 1,
+                        line: lastChange.to.line,
                     });
                 }
             }
         }
     }
 
-    private convertRemoteToLocal(change: RemoteChange.t): LocalChange.t | null {
+    private convertRemoteToLocal(change: RemoteChange): LocalChange | null {
         const localChange = updateAndConvertRemoteToLocal(this.crdt, change);
         if (localChange) {
             this.codemirror.getDoc().replaceRange(localChange.text,
-                localChange.from, localChange.to, IgnoreRemote);
+                localChange.from, localChange.to, IGNORE_REMOTE);
         }
         return localChange;
     }

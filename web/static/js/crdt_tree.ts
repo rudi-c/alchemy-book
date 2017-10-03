@@ -1,20 +1,20 @@
 // WIP tentative implementation
 
-import { AATree, OrderStats } from "augmented-aa-tree"
+import { AATree, OrderStats } from "augmented-aa-tree";
 
 import * as Char from "./char";
 import * as Identifier from "./identifier";
 
-import { Crdt, LocalChange } from "./crdt"
+import { Crdt, LocalChange } from "./crdt";
 
-type Position = Identifier.t[]
+type Position = Identifier.t[];
 
 function comparePosition(p1: Position, p2: Position): "eq" | "gt" | "lt" {
     switch (Char.comparePosition(p1, p2)) {
-        case 0: return "eq"
-        case 1: return "gt"
-        case -1: return "lt"
-        default: throw Error("should be 0, 1 or -1")
+        case 0: return "eq";
+        case 1: return "gt";
+        case -1: return "lt";
+        default: throw Error("should be 0, 1 or -1");
     }
 }
 
@@ -35,17 +35,17 @@ class LineOrderStats implements OrderStats<Position, Char.t> {
 }
 
 export class TreeCrdt implements Crdt {
-    crdt: AATree<Position, Char.t>
+    private crdt: AATree<Position, Char.t>;
 
     public init(init: Char.Serial[]) {
-        this.crdt = new AATree<Position, Char.t>(comparePosition, new LineOrderStats(0))
+        this.crdt = new AATree<Position, Char.t>(comparePosition, new LineOrderStats(0));
     }
 
     public toString(): string {
         return Array.from(this.crdt.iter()).map(([key, char]) => char).join("");
     }
 
-    public remoteInsert(char: Char.t): LocalChange.t | null {
+    public remoteInsert(char: Char.t): LocalChange | null {
         if (this.crdt.find(char.position)) {
             // Idempotency: ignore insert operation if character is already there
             return null;
@@ -58,15 +58,15 @@ export class TreeCrdt implements Crdt {
         }
     }
 
-    public remoteDelete(char: Char.t): LocalChange.t | null {
+    public remoteDelete(char: Char.t): LocalChange | null {
         return null;
     }
 
-    public localInsert(lamport: number, site: number, change: LocalChange.t): Char.t[] {
+    public localInsert(lamport: number, site: number, change: LocalChange): Char.t[] {
         return [];
     }
 
-    public localDelete(change: LocalChange.t): Char.t[] {
+    public localDelete(change: LocalChange): Char.t[] {
         return [];
     }
 }

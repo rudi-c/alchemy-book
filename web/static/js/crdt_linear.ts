@@ -2,7 +2,7 @@ import { List } from "immutable";
 
 import * as Char from "./char";
 
-import { Crdt, LocalChange } from "./crdt"
+import { Crdt, LocalChange } from "./crdt";
 
 export type t = List<List<Char.t>>;
 
@@ -10,7 +10,7 @@ function findNewline(line: List<Char.t>): number {
     return line.findIndex(char => char!.value === "\n");
 }
 
-function updateCrdtRemove(crdt: t, change: LocalChange.t): [t, Char.t[]] {
+function updateCrdtRemove(crdt: t, change: LocalChange): [t, Char.t[]] {
     const lines = crdt.slice(change.from.line, change.to.line + 1);
 
     const linesAndUpdates = lines.map((line, index) => {
@@ -51,7 +51,7 @@ function updateCrdtRemove(crdt: t, change: LocalChange.t): [t, Char.t[]] {
 }
 
 function updateCrdtInsert(crdt: t, lamport: number, site: number,
-                          change: LocalChange.t): [t, Char.t[]] {
+                          change: LocalChange): [t, Char.t[]] {
     const { line: lineIndex, ch } = change.from;
     const line = crdt.get(lineIndex);
     const [before, after] = splitLineAt(line, ch);
@@ -155,9 +155,9 @@ function findPosition(crdt: t, char: Char.t): [number, number, "found" | "not_fo
 // If not found, return the index of the character where it should be if inserted when using "at"
 //               return the index of the character that precedes it when using "before"
 export function binarySearch<U, V>(list: List<U>,
-                                item: V,
-                                comparator: (a: V, b: U) => number,
-                                notFoundBehavior: "at" | "before"): number {
+                                   item: V,
+                                   comparator: (a: V, b: U) => number,
+                                   notFoundBehavior: "at" | "before"): number {
     function _binarySearch<T>(start: number, end: number): number {
         if (start >= end) {
             switch (notFoundBehavior) {
@@ -183,7 +183,7 @@ export function binarySearch<U, V>(list: List<U>,
 }
 
 export class LinearCrdt implements Crdt {
-    crdt: t
+    private crdt: t;
 
     public init(init: Char.Serial[]) {
         let line: List<Char.t> = List();
@@ -206,7 +206,7 @@ export class LinearCrdt implements Crdt {
         return this.crdt.map(line => line!.map(char => char!.value).join("")).join("");
     }
 
-    public remoteInsert(char: Char.t): LocalChange.t | null {
+    public remoteInsert(char: Char.t): LocalChange | null {
         const [lineIndex, ch, found] = findPosition(this.crdt, char);
         const line = this.crdt.get(lineIndex);
         if (found === "not_found") {
@@ -229,7 +229,7 @@ export class LinearCrdt implements Crdt {
         }
     }
 
-    public remoteDelete(char: Char.t): LocalChange.t | null {
+    public remoteDelete(char: Char.t): LocalChange | null {
         const [lineIndex, ch, found] = findPosition(this.crdt, char);
         const line = this.crdt.get(lineIndex);
         if (found === "found" && Char.equals(line.get(ch), char)) {
@@ -256,13 +256,13 @@ export class LinearCrdt implements Crdt {
         }
     }
 
-    public localInsert(lamport: number, site: number, change: LocalChange.t): Char.t[] {
+    public localInsert(lamport: number, site: number, change: LocalChange): Char.t[] {
         const [newCrdt, remoteChanges] = updateCrdtInsert(this.crdt, lamport, site, change);
         this.crdt = newCrdt;
         return remoteChanges;
     }
 
-    public localDelete(change: LocalChange.t): Char.t[] {
+    public localDelete(change: LocalChange): Char.t[] {
         const [newCrdt, remoteChanges] = updateCrdtRemove(this.crdt, change);
         this.crdt = newCrdt;
         return remoteChanges;

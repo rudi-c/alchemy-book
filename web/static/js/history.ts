@@ -6,9 +6,9 @@ const DELAY_BETWEEN_BATCHES_MS = 1000;
 
 export default class History {
     // Undo stack
-    private history: Crdt.RemoteChange.t[][];
+    private history: Crdt.RemoteChange[][];
     // Redo stack
-    private future: Crdt.RemoteChange.t[][];
+    private future: Crdt.RemoteChange[][];
 
     private shouldStoreInNewBatch: boolean;
 
@@ -22,7 +22,7 @@ export default class History {
         this.lastActionTimestamp = 0;
     }
 
-    public makeUndoChanges(lamport: number): Crdt.RemoteChange.t[] | null {
+    public makeUndoChanges(lamport: number): Crdt.RemoteChange[] | null {
         if (this.history.length === 0) {
             // No history to undo
             return null;
@@ -38,7 +38,7 @@ export default class History {
         return undoChanges;
     }
 
-    public makeRedoChanges(lamport: number): Crdt.RemoteChange.t[] | null {
+    public makeRedoChanges(lamport: number): Crdt.RemoteChange[] | null {
         if (this.future.length === 0) {
             // No history to redo
             return null;
@@ -54,7 +54,7 @@ export default class History {
         return redoChanges;
     }
 
-    public onChanges(changes: Crdt.RemoteChange.t[]): void {
+    public onChanges(changes: Crdt.RemoteChange[]): void {
         const now = Date.now();
 
         const newBatch = this.shouldCreateNewActionBatch(now, changes);
@@ -75,7 +75,7 @@ export default class History {
         this.shouldStoreInNewBatch = true;
     }
 
-    private invert(change: Crdt.RemoteChange.t, lamport: number): Crdt.RemoteChange.t {
+    private invert(change: Crdt.RemoteChange, lamport: number): Crdt.RemoteChange {
         const char = change[1];
         switch (change[0]) {
             case "add":
@@ -87,7 +87,7 @@ export default class History {
         }
     }
 
-    private shouldCreateNewActionBatch(now: number, changes: Crdt.RemoteChange.t[]): boolean {
+    private shouldCreateNewActionBatch(now: number, changes: Crdt.RemoteChange[]): boolean {
         if (this.shouldStoreInNewBatch) {
             return true;
         }

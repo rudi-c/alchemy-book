@@ -5,15 +5,15 @@ export const DIVISOR = 16;
 
 // Represents an arbitrary precision number between 0 and 1. That is,
 // only the decimal digits are stored.
-export type t = number[]
+export type t = number[];
 
 export function fromIdentifierList(identifiers: Identifier.t[]) {
     return identifiers.map(ident => ident.digit);
 }
 
-export function toIdentifierList(n: t, 
-                                 before: Identifier.t[], 
-                                 after: Identifier.t[], 
+export function toIdentifierList(n: t,
+                                 before: Identifier.t[],
+                                 after: Identifier.t[],
                                  creationSite: number): Identifier.t[] {
     // Implements the constructPosition rules from the Logoot paper
     return n.map((digit, index) => {
