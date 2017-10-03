@@ -1,6 +1,11 @@
 defmodule AlchemyBook.UserSocket do
+  require Logger
+
   use Phoenix.Socket
 
+  alias AlchemyBook.Presence
+
+  @all "all_users"
   @max_token_age 2 * 7 * 24 * 60 * 60
 
   ## Channels
@@ -24,6 +29,8 @@ defmodule AlchemyBook.UserSocket do
   def connect(%{"token" => token}, socket) do
     case Phoenix.Token.verify(socket, "user socket", token, max_age: @max_token_age) do
       {:ok, user_id} ->
+        Presence.track(self(), @all, user_id, %{})
+        Logger.info "User #{user_id} joined, #{Dict.size(Presence.list(@all))} connections total"
         {:ok, assign(socket, :user_id, user_id)}
       {:error, _reason} ->
         :error

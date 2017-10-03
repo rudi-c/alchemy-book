@@ -1,4 +1,6 @@
 defmodule AlchemyBook.DocumentChannel do
+    require Logger
+
     use AlchemyBook.Web, :channel
 
     alias AlchemyBook.Presence
@@ -56,6 +58,8 @@ defmodule AlchemyBook.DocumentChannel do
     end
 
     def terminate(reason, socket) do
+        Logger.info "User #{socket.assigns.user_id} leaving document #{socket.assigns.document_id}"
+
         if Dict.size(Presence.list(socket)) <= 1 do
             # Last connection
             DocumentRegistry.close(socket.assigns.document_id)
@@ -76,17 +80,22 @@ defmodule AlchemyBook.DocumentChannel do
     end
 
     def handle_presence(socket) do
+        document_id = socket.assigns.document_id
+        user_id = socket.assigns.user_id
         color =
-            DocumentRegistry.lookup(socket.assigns.document_id)
-            |> DocumentSession.request_color_for_user(socket.assigns.user_id)
+            DocumentRegistry.lookup(document_id)
+            |> DocumentSession.request_color_for_user(user_id)
 
         Presence.track(socket, socket.assigns.site_id, %{
             color: color,
             cursor: nil,
             online_at: :os.system_time(:milli_seconds),
-            user_id: socket.assigns.user_id,
-            username: Repo.get!(User, socket.assigns.user_id).username
+            user_id: user_id,
+            username: Repo.get!(User, user_id).username
         })
+
+        Logger.info "Document #{document_id} now has " <>
+                    "#{Dict.size(Presence.list(socket))} users, "
 
         push socket, "presence_state", Presence.list(socket)
     end

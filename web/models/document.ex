@@ -26,7 +26,7 @@ defmodule AlchemyBook.Document do
   end
 
   def default() do
-    %{ "title" => "untitled", 
+    %{ "title" => "untitled",
        "contents" => crdt_to_json(string_to_crdt("Time to do some alchemy!\nReady to have some fun?"))
     }
   end
@@ -47,13 +47,12 @@ defmodule AlchemyBook.Document do
     end)
   end
 
-  def crdt_to_json(crdt) do 
+  def crdt_to_json(crdt) do
     crdt_to_json_ready(crdt)
     |> Poison.encode!
   end
 
-  def crdt_to_json_ready(crdt) do 
-    IO.puts inspect crdt
+  def crdt_to_json_ready(crdt) do
     crdt
     |> Enum.map(fn {position_identifier, lamport, char} ->
       [Enum.map(position_identifier, fn {digit, site} -> [digit, site] end), lamport, char]

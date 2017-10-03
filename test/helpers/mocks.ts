@@ -18,7 +18,7 @@ export class TestChannel {
         this.sockets.forEach(socket => {
             if (socket !== sender) {
                 socket.receive(message);
-            } 
+            }
         });
     }
 }
@@ -53,7 +53,7 @@ export class TestEditorSocket extends EditorSocket {
     }
 
     public sendCursor(cursor: any) {
-        // TODO: Cursors not tested for now
+        // Cursors not tested for now
     }
 
     public receive(message: any) {

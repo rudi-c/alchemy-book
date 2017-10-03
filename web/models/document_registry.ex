@@ -1,4 +1,6 @@
 defmodule AlchemyBook.DocumentRegistry do
+    require Logger
+
     use GenServer
 
     alias AlchemyBook.Document
@@ -19,7 +21,8 @@ defmodule AlchemyBook.DocumentRegistry do
     def handle_call({:lookup, document_id}, _from, sessions) do
         case Map.fetch(sessions, document_id) do
             {:ok, session} -> {:reply, session, sessions}
-            :error -> 
+            :error ->
+                Logger.info "Opening session for document #{document_id}"
                 document = AlchemyBook.Repo.get!(Document, document_id)
                 {:ok, session} = DocumentSession.start_link(
                     document_id, Document.json_to_crdt(document.contents))
@@ -30,6 +33,7 @@ defmodule AlchemyBook.DocumentRegistry do
     def handle_cast({:close, document_id}, sessions) do
         case Map.fetch(sessions, document_id) do
             {:ok, session} ->
+                Logger.info "Closing session for document #{document_id}"
                 DocumentSession.close(session)
                 {:noreply, Map.delete(sessions, document_id)}
             :error -> {:noreply, sessions}

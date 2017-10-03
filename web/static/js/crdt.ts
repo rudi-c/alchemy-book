@@ -48,7 +48,7 @@ export function updateAndConvertLocalToRemote(crdt: Crdt,
                                               change: CodeMirror.EditorChange): RemoteChange.t[] {
     if (change.from.line > change.to.line ||
         (change.from.line === change.to.line && change.from.ch > change.to.ch)) {
-        throw new Error("TODO: handle inverted from/to");
+        throw new Error("got inverted inverted from/to");
     }
 
     switch (change.origin) {

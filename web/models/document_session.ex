@@ -17,13 +17,13 @@ defmodule AlchemyBook.DocumentSession do
         now = :os.system_time(:millisecond)
         # The server is always site 0 by convention
         # TODO: an ordered map would be ideal if we expect thousands of sites
-        {:ok, session} = Agent.start_link(fn -> 
+        {:ok, session} = Agent.start_link(fn ->
             %DocumentSession{document_id: document_id,
-                             crdt: crdt_as_map(crdt), 
-                             sites: [{0, nil}], 
+                             crdt: crdt_as_map(crdt),
+                             sites: [{0, nil}],
                              color_assign: %{},
-                             last_update: now, 
-                             last_save: now} 
+                             last_update: now,
+                             last_save: now}
         end)
 
         # Save the file every few seconds as needed
@@ -40,8 +40,8 @@ defmodule AlchemyBook.DocumentSession do
 
     @spec save(pid) :: no_return
     def save(session) do
-        {document_id, last_update, last_save} = Agent.get(session, fn session -> 
-            {session.document_id, session.last_update, session.last_save} 
+        {document_id, last_update, last_save} = Agent.get(session, fn session ->
+            {session.document_id, session.last_update, session.last_save}
         end)
         now = :os.system_time(:millisecond)
         if last_save < last_update do
@@ -53,18 +53,18 @@ defmodule AlchemyBook.DocumentSession do
 
     @spec get(pid) :: crdt
     def get(session) do
-        Agent.get(session, fn %DocumentSession{crdt: crdt_map} -> 
-            crdt_from_map(crdt_map) 
+        Agent.get(session, fn %DocumentSession{crdt: crdt_map} ->
+            crdt_from_map(crdt_map)
         end)
     end
 
     @spec update(pid, {String.t, {position_identifier, String.t}}) :: no_return
     def update(session, change) do
-        Agent.update(session, fn session = %DocumentSession{crdt: crdt_map} -> 
-            %{ session | 
+        Agent.update(session, fn session = %DocumentSession{crdt: crdt_map} ->
+            %{ session |
                 crdt: apply_change(crdt_map, change),
                 last_update: :os.system_time(:millisecond)
-            } 
+            }
         end)
     end
 
@@ -126,7 +126,7 @@ defmodule AlchemyBook.DocumentSession do
             Stream.zip(position1, position2)
             |> Stream.map(fn {i1, i2} -> compare_identifier(i1, i2) end)
             |> Enum.find(fn compared -> compared != :equal end)
-        
+
         cond do
             compared != nil -> compared
             length(position1) <= length(position2) -> true
@@ -141,7 +141,7 @@ defmodule AlchemyBook.DocumentSession do
             pos1 > pos2 -> false
             site1 < site2 -> true
             site1 > site2 -> false
-            true -> :equal 
+            true -> :equal
         end
     end
 end
