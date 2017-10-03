@@ -1,10 +1,10 @@
-import * as Char from "../../web/static/js/char"
+import * as Char from "../../web/static/js/char";
 
-import Editor from "../../web/static/js/editor"
-import { EditorSocket } from "../../web/static/js/editor_socket"
+import Editor from "../../web/static/js/editor";
+import { EditorSocket } from "../../web/static/js/editor_socket";
 
 export class TestChannel {
-    sockets: TestEditorSocket[];
+    private sockets: TestEditorSocket[];
 
     constructor() {
         this.sockets = [];
@@ -140,8 +140,8 @@ export class TestEditor extends Editor {
 
     public init(val: Char.Serial[], site: number): void {
         this.onInit({
+            site,
             state: val,
-            site
         });
     }
 }

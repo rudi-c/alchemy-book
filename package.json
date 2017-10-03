@@ -3,7 +3,7 @@
   "license": "MIT",
   "scripts": {
     "deploy": "webpack -p",
-    "lint": "tslint -c tslint.json 'web/**/*.ts' || true",
+    "lint": "tslint -c tslint.json 'web/**/*.ts' 'test/**/*.ts' || true",
     "test": "tsc && ava --verbose ts-build/test/js",
     "watch": "webpack --watch-stdin --progress --color"
   },

@@ -1,13 +1,13 @@
-import test from "ava"
+import test from "ava";
 
-import * as Combinatorics from "js-combinatorics"
+import * as Combinatorics from "js-combinatorics";
 
-import * as Char from "../../web/static/js/char"
-import * as Crdt from "../../web/static/js/crdt"
-import Editor from "../../web/static/js/editor"
-import { EditorSocket } from "../../web/static/js/editor_socket"
+import * as Char from "../../web/static/js/char";
+import * as Crdt from "../../web/static/js/crdt";
+import Editor from "../../web/static/js/editor";
+import { EditorSocket } from "../../web/static/js/editor_socket";
 
-import { createEditors, TestChannel, TestEditor, TestEditorSocket } from "../helpers/mocks"
+import { createEditors, TestChannel, TestEditor, TestEditorSocket } from "../helpers/mocks";
 
 // To make sure that the system behaves as expected regardless of the order that
 // different events happen on the client, we want to test all permutations on the
@@ -16,16 +16,16 @@ import { createEditors, TestChannel, TestEditor, TestEditorSocket } from "../hel
 // The function `runPermutations` permutes the action of `editorCount` editors
 // by giving the test function a permutation runner that takes an array of thunks,
 // and runs those thunks in some order.
-type RunPermutation = (thunks: (() => void)[]) => void
+type RunPermutation = (thunks: Array<() => void>) => void;
 function runPermutations(editorCount: number, test: (_: RunPermutation) => void): void {
     Combinatorics.permutation([...Array(editorCount).keys()])
                  .forEach(permutation => {
         test(thunks => {
             permutation.forEach(i => {
                 thunks[i]();
-            })
+            });
         });
-    })
+    });
 }
 
 test("simple insertion at various places", t => {
@@ -54,7 +54,7 @@ test("insertion at a place of former conflict", t => {
         const [e1, e2, e3] = editors;
 
         e1.type("||");
-        
+
         e1.letAllThrough();
         e2.letAllThrough();
         e3.letAllThrough();
@@ -65,7 +65,7 @@ test("insertion at a place of former conflict", t => {
         // Conflict! Two insertions at the same place.
         e1.type("a");
         e2.type("b");
-        
+
         e1.letAllThrough();
         e2.letAllThrough();
         e3.letAllThrough();
@@ -75,7 +75,7 @@ test("insertion at a place of former conflict", t => {
         // Type a character between the two conflicting characters.
         e.moveCursor(() => ({ line: 0, ch: 2 }));
         e.type("x");
-        
+
         e1.letAllThrough();
         e2.letAllThrough();
         e3.letAllThrough();
@@ -95,15 +95,15 @@ test("insertions and deletes are idempotent", t => {
         e2.letAllThrough();
 
         runPermutation([
-            () => { 
+            () => {
                 e1.backspace();
                 e1.type("b");
             },
             () => {
                 e2.moveCursorRight(2);
                 e2.backspace();
-            }
-        ])
+            },
+        ]);
 
         e1.duplicateAllMessages();
         e2.duplicateAllMessages();
@@ -132,7 +132,7 @@ test("conflicting simple insertions at the same place", t => {
         runPermutation([
             () => e1.type("z"),
             () => e2.type("y"),
-            () => e3.type("x")
+            () => e3.type("x"),
         ]);
 
         e1.letAllThrough();
@@ -161,7 +161,7 @@ test("conflicting insertion between deleted markers", t => {
         runPermutation([
             () => e1.backspace(2),
             () => e2.type("x"),
-            () => e3.type("y")
+            () => e3.type("y"),
         ]);
 
         e1.letAllThrough();
@@ -191,7 +191,7 @@ test("interleaved insertions affecting offsets on the same line", t => {
         runPermutation([
             () => e1.type("1"),
             () => e2.type("2"),
-            () => e3.type("3")
+            () => e3.type("3"),
         ]);
 
         e1.letAllThrough();
@@ -221,7 +221,7 @@ test("interleaved insertions pushing cursors on new lines", t => {
         runPermutation([
             () => e1.type("1\n"),
             () => e2.type("2\n"),
-            () => e3.type("3\n")
+            () => e3.type("3\n"),
         ]);
 
         e1.letAllThrough();
@@ -235,7 +235,7 @@ test("interleaved insertions pushing cursors on new lines", t => {
 });
 
 test("one person typing lots of text", t => {
-    const text = "abcdefghijklmnopqrstuvwxyz\n".repeat(1000);
+    const text = "abcdefghijklmnopqrstuvwxyz\n".repeat(50);
     const [e1, e2] = createEditors(2);
 
     e1.type(text);
@@ -248,7 +248,7 @@ test("one person typing lots of text", t => {
 });
 
 test("three people typing lots of text on the same spot", t => {
-    const text = "abcdefghijklmnopqrstuvwxyz\n".repeat(100);
+    const text = "abcdefghijklmnopqrstuvwxyz\n".repeat(15);
     const [e1, e2, e3] = createEditors(3);
 
     for (let i = 0; i < text.length; i++) {

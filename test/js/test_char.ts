@@ -1,8 +1,8 @@
-import test from "ava"
+import test from "ava";
 
-import * as Decimal from "../../web/static/js/decimal"
-import * as Identifier from "../../web/static/js/identifier"
-import * as Char from "../../web/static/js/char"
+import * as Char from "../../web/static/js/char";
+import * as Decimal from "../../web/static/js/decimal";
+import * as Identifier from "../../web/static/js/identifier";
 
 function positions(array: Array<[number, number]>): Identifier.t[] {
     return array.map(Identifier.ofArray);
@@ -21,7 +21,7 @@ test("serialization/deserialization", t => {
     const c: Char.Serial = [
         [[10, 1], [11, 1], [0, 2]],
         24,
-        "c"
+        "c",
     ];
     t.deepEqual(c, Char.toArray(Char.ofArray(c)));
 });
@@ -30,12 +30,12 @@ test("compare and equals: equals", t => {
     const c1 = Char.ofArray([
         [[10, 1], [11, 1], [0, 2]],
         24,
-        "c"
+        "c",
     ]);
     const c2 = Char.ofArray([
         [[10, 1], [11, 1], [0, 2]],
         24,
-        "c"
+        "c",
     ]);
     t.true(Char.equals(c1, c2));
     t.true(Char.equals(c2, c1));
@@ -47,12 +47,12 @@ test("compare and equals: site not equal", t => {
     const c1 = Char.ofArray([
         [[10, 1], [11, 2], [0, 2]],
         24,
-        "c"
+        "c",
     ]);
     const c2 = Char.ofArray([
         [[10, 1], [11, 1], [0, 2]],
         24,
-        "c"
+        "c",
     ]);
     t.false(Char.equals(c1, c2));
     t.false(Char.equals(c2, c1));
@@ -64,12 +64,12 @@ test("compare and equals: digit not equal", t => {
     const c1 = Char.ofArray([
         [[10, 1], [12, 1], [0, 2]],
         24,
-        "c"
+        "c",
     ]);
     const c2 = Char.ofArray([
         [[10, 1], [11, 1], [0, 2]],
         24,
-        "c"
+        "c",
     ]);
     t.false(Char.equals(c1, c2));
     t.false(Char.equals(c2, c1));
@@ -81,12 +81,12 @@ test("compare and equals: lamport not equal", t => {
     const c1 = Char.ofArray([
         [[10, 1], [11, 1], [0, 2]],
         25,
-        "c"
+        "c",
     ]);
     const c2 = Char.ofArray([
         [[10, 1], [11, 1], [0, 2]],
         24,
-        "c"
+        "c",
     ]);
     t.false(Char.equals(c1, c2));
     t.false(Char.equals(c2, c1));
@@ -159,7 +159,7 @@ test("generate position between: increment by a small digit", t => {
     const p2 = positions([[Decimal.BASE - 1, 0]]);
     const generated = Char.generatePositionBetween(p1, p2, site);
     t.deepEqual(
-        Decimal.subtractGreaterThan(p2.map(i => i.digit), p1.map(i => i.digit)), 
+        Decimal.subtractGreaterThan(p2.map(i => i.digit), p1.map(i => i.digit)),
         [0, Decimal.BASE - 1]);
     t.deepEqual(generated, positions([[Decimal.BASE - 2, site], [1, site], [1, site]]));
 });

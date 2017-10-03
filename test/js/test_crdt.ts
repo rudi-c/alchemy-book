@@ -1,7 +1,7 @@
-import test from "ava"
+import test from "ava";
 import { List } from "immutable";
 
-import { binarySearch } from "../../web/static/js/crdt_linear"
+import { binarySearch } from "../../web/static/js/crdt_linear";
 
 function doBinarySearch(item: number, behavior: "at" | "before"): number {
     const bsearchList = List([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);

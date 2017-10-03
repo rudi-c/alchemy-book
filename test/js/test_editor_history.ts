@@ -1,7 +1,7 @@
-import test from "ava"
+import test from "ava";
 
-import * as Char from "../../web/static/js/char"
-import History from "../../web/static/js/history"
+import * as Char from "../../web/static/js/char";
+import History from "../../web/static/js/history";
 
 test("cannot undo or redo nothing", t => {
     const history = new History();
@@ -118,11 +118,11 @@ test("cursor movement between two inserts creates two batches", t => {
         ["add", Char.ofArray([[[111, 1]], 0, "a"])],
     ]);
     history.onChanges([
-        ["add", Char.ofArray([[[112, 1]], 1, "b"])]
+        ["add", Char.ofArray([[[112, 1]], 1, "b"])],
     ]);
     history.onCursorMove();
     history.onChanges([
-        ["add", Char.ofArray([[[112, 1]], 2, "c"])]
+        ["add", Char.ofArray([[[112, 1]], 2, "c"])],
     ]);
     t.is(history.makeUndoChanges(3)!.length, 1);
 });
@@ -133,13 +133,13 @@ test("time delay between two inserts creates two batches", async t => {
         ["add", Char.ofArray([[[111, 1]], 0, "a"])],
     ]);
     history.onChanges([
-        ["add", Char.ofArray([[[112, 1]], 1, "b"])]
+        ["add", Char.ofArray([[[112, 1]], 1, "b"])],
     ]);
 
     await (new Promise(resolve => setTimeout(resolve, 1100)));
 
     history.onChanges([
-        ["add", Char.ofArray([[[112, 1]], 2, "c"])]
+        ["add", Char.ofArray([[[112, 1]], 2, "c"])],
     ]);
     t.is(history.makeUndoChanges(3)!.length, 1);
 });

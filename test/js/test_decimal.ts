@@ -1,6 +1,6 @@
-import test from "ava"
+import test from "ava";
 
-import * as Decimal from "../../web/static/js/decimal"
+import * as Decimal from "../../web/static/js/decimal";
 
 const BASE = Decimal.BASE;
 const DIVISOR = Decimal.DIVISOR;
@@ -28,7 +28,7 @@ test("add without carry", t => {
     t.deepEqual(Decimal.add([5, 5], [5, 6]), [5 + 5, 5 + 6]);
 
     // Addition with carry
-    t.deepEqual(Decimal.add([BASE - 2, BASE / 2], [0, BASE / 2 + 1]), 
+    t.deepEqual(Decimal.add([BASE - 2, BASE / 2], [0, BASE / 2 + 1]),
                 [BASE - 1, 1]);
 });
 
@@ -54,8 +54,8 @@ test("increment: test necessary properties", t => {
         t.true(incremented[incremented.length - 1] !== 0);
 
         t.true(isGreater(
-            Decimal.add([0].concat(old), [0].concat(delta)), 
-            [0].concat(incremented)
+            Decimal.add([0].concat(old), [0].concat(delta)),
+            [0].concat(incremented),
         ));
     }
 

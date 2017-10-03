@@ -13,6 +13,7 @@
         "no-empty": false,
         "no-namespace": false,
         "no-shadowed-variable": false,
+        "prefer-for-of": false,
         "variable-name": [ true, "allow-leading-underscore" ]
     },
     "rulesDirectory": []
