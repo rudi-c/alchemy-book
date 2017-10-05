@@ -90,6 +90,11 @@ export default class Editor {
 
             // This is just to prevent CodeMirror's history from taking up memory
             this.codemirror.getDoc().clearHistory();
+
+            if (change.origin === "undo") {
+                setTimeout(() => this.undo(), 0);
+            }
+            // setTimeout(() => this.redo(), 0);
         } else {
             let editorCharCount = 0;
             // The +1s are to count newline characters
@@ -121,11 +126,17 @@ export default class Editor {
 
     protected onKeyUp = (editor: CodeMirror.Editor, e: KeyboardEvent) => {
         const hasModifier = e.ctrlKey || e.metaKey;
-        if (hasModifier && !e.shiftKey && e.key.toLowerCase() === "z") {
-            e.preventDefault();
-            this.undo();
-        }
 
+        // This doesn't work on Mac, no key event is registered. So instead,
+        // rely on CodeMirror's event in beforeChange.
+        // if (hasModifier && !e.shiftKey && e.key.toLowerCase() === "z") {
+        //     e.preventDefault();
+        //     this.undo();
+        // }
+
+        // But I don't know how to get redo working, because I'm not using CodeMirror's
+        // history so it won't give me a redo event. Redo will only work on Windows
+        // for now I guess.
         if ((hasModifier && !e.shiftKey && e.key.toLowerCase() === "y") ||
             (hasModifier && e.shiftKey && e.key.toLowerCase() === "z")) {
             e.preventDefault();
