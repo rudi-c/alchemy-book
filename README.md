@@ -1,6 +1,8 @@
 # The Alchemy Book
 
-This application is currently "pre-launch", as in the demo is working, but there's still tons of bugs to fix. A blog post on this project is also coming soon.
+This application is a toy collaborative editor written to demonstrate using CRDTs (Logoot) to achieve real-time synchronization. The server is written in Elixir and mostly of the CRDT logic is written in Typescript.
+
+The aim of this project is educative and optimized for understandability rather than performance. The blog post that explains the intuition behind this technique can be found at [A simple approach to building a real-time collaborative text editor](http://digitalfreepen.com/2017/10/06/simple-real-time-collaborative-text-editor.html).
 
 ## Setup
 
@@ -18,7 +20,7 @@ Run with
 mix phoenix.server
 ```
 
-## Elixir tatic checking
+## Elixir static checking
 
 Use `mix dialyzer` to do static checking with Dialyzer. The first time should
 take a lot of time as it runs on the dependencies too, although the results will
