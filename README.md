@@ -1,4 +1,4 @@
-[[https://github.com/rudi-c/alchemy-book/blob/master/img/alchemybook.gif|alt=Alchemy Book]]
+![Alchemy Book](https://raw.githubusercontent.com/rudi-c/alchemy-book/master/alchemybook.gif)
 
 # The Alchemy Book
 
