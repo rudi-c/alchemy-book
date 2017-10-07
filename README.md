@@ -2,9 +2,9 @@
 
 # The Alchemy Book
 
-This application is a toy collaborative editor written to demonstrate using
-CRDTs (Logoot) to achieve real-time synchronization. The server is written in
-Elixir and mostly of the CRDT logic is written in Typescript.
+This application is a toy collaborative editor that demonstrates using
+Conflict-Free Replicated Data Types (CRDTs) to achieve real-time synchronization. The server 
+is written in  Elixir and mostly of the CRDT logic is written in Typescript.
 
 The aim of this project is educative and optimized for understandability rather
 than performance. The blog post that explains the intuition behind this technique
