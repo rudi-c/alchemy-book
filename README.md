@@ -1,12 +1,24 @@
+[[https://github.com/rudi-c/alchemy-book/blob/master/img/alchemybook.gif|alt=Alchemy Book]]
+
 # The Alchemy Book
 
-This application is a toy collaborative editor written to demonstrate using CRDTs (Logoot) to achieve real-time synchronization. The server is written in Elixir and mostly of the CRDT logic is written in Typescript.
+This application is a toy collaborative editor written to demonstrate using
+CRDTs (Logoot) to achieve real-time synchronization. The server is written in
+Elixir and mostly of the CRDT logic is written in Typescript.
 
-The aim of this project is educative and optimized for understandability rather than performance. The blog post that explains the intuition behind this technique can be found at [A simple approach to building a real-time collaborative text editor](http://digitalfreepen.com/2017/10/06/simple-real-time-collaborative-text-editor.html).
+The aim of this project is educative and optimized for understandability rather
+than performance. The blog post that explains the intuition behind this technique
+can be found at
+[A simple approach to building a real-time collaborative text editor](http://digitalfreepen.com/2017/10/06/simple-real-time-collaborative-text-editor.html).
+
+I named the project Alchemy Book since I thought it would look nice with a blackboard
+theme. Since this is not going to compete with Google Docs/Dropbox Paper/etc anyway, practicality
+is not a concern.
 
 ## Setup
 
-Assuming you have Elixir installed
+Assuming you have Elixir installed, and Postgres installed and running
+(see Elixir & Phoenix [setup guide](https://hexdocs.pm/phoenix/up_and_running.html))
 
 ```
 mix deps.get
@@ -19,13 +31,6 @@ Run with
 ```
 mix phoenix.server
 ```
-
-## Elixir static checking
-
-Use `mix dialyzer` to do static checking with Dialyzer. The first time should
-take a lot of time as it runs on the dependencies too, although the results will
-be cached. Note that there are still a lot of (what I think are) spurious
-warnings. This is to be fixed later.
 
 ## Typescript
 
@@ -46,6 +51,13 @@ npm install -g ava
 ```
 
 which you can run with `npm test`
+
+## Elixir static checking
+
+Use `mix dialyzer` to do static checking with Dialyzer. The first time should
+take a lot of time as it runs on the dependencies too, although the results will
+be cached. Note that there are still a lot of (what I think are) spurious
+warnings. This is to be fixed later.
 
 ## Deploying
 
@@ -101,3 +113,43 @@ And run with
 ```
 PORT=8080 _build/prod/rel/alchemy_book/bin/alchemy_book <console/foreground/start>
 ```
+
+# Technical notes
+
+## Logoot
+
+This repository contains a mostly faithful implementation of [Logoot](https://hal.archives-ouvertes.fr/inria-00432368/document).
+Note that Logoot was not originally designed for real-time editing. It was designed as a way
+to implement a decentralized Wikipedia with a unique ID for each line and sending line
+insertion/removals. I just changed it to be character-based (send individual character changes). This
+means that the memory overhead is huge (10x the size of the text itself)
+but that should be ok as most people don't write text documents of more than a few megabytes.
+
+Logoot is supposed to work in the absence of a central server, and I think it should
+still be possible here, with some minor changes. The current implementation uses a
+centralized server though to relay messages between clients.
+
+## Notes about the code
+
+I tried to keep a reasonably good code quality and write comments so that it's easy
+for people to poke around the code. However, a couple of heads-up:
+
+- There is some unused code laying around for signing up, logging in and creating documents
+per user. It originally started that way, but I figured that it's simpler to just have
+anonymous document sessions for the purpose of a demo.
+
+- There's an unfinished attempt at using a more efficient order statistics tree for storing
+CRDT characters. I left it there since it makes the array-based implementation better abstracted
+even if it's not used.
+
+- I used immutable data structures where possible (it's hard when CodeMirror is inherently
+stateful). It's not really necessary, but you'll notice there's a bit of functional-style
+programming inspired from OCaml at places.
+
+## Things that would be nice to implement
+
+- [ ] Re-enable user login and implement access control
+- [ ] Linting for .tsx and .ex files
+- [ ] Upgrade to Elixir 1.5 and Phoenix 3
+- [ ] Having characters fade-in and fade-out when remote changes arrive would be cool
+- [ ] Fuzzy testing for the CRDT logic
