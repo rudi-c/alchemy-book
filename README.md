@@ -129,6 +129,10 @@ Logoot is supposed to work in the absence of a central server, and I think it sh
 still be possible here, with some minor changes. The current implementation uses a
 centralized server though to relay messages between clients.
 
+## Phoenix Presence CRDT
+
+The presence indicator (that shows who else is present in the document) as well as cursor position is implemented using the Presence library that ships with Phoenix. Fun fact, Presence is itself a CRDT.
+
 ## Notes about the code
 
 I tried to keep a reasonably good code quality and write comments so that it's easy
